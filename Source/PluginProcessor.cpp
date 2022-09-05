@@ -9,6 +9,15 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+namespace
+{
+    //Parameters Def
+    const juce::String InputID = "INPUT";
+    const juce::String InputName = "InputGain";
+
+    const juce::String DriveID = "DRIVE";
+    const juce::String DriveName = "Drive";
+}
 //==============================================================================
 DaKog_DistortAudioProcessor::DaKog_DistortAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -22,10 +31,12 @@ DaKog_DistortAudioProcessor::DaKog_DistortAudioProcessor()
                        ), m_ParametersTreeState(*this,nullptr,"Parameters",SetupParameters())
 #endif
 {
+    //m_ParametersTreeState.addParameterListener(InputID,this);
 }
 
 DaKog_DistortAudioProcessor::~DaKog_DistortAudioProcessor()
 {
+    //m_ParametersTreeState.removeParameterListener(InputID, this);
 }
 
 //==============================================================================
@@ -140,8 +151,6 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
 
     //Get Parameters
     const float inputGain = m_ParametersTreeState.getRawParameterValue("INPUTGAIN")->load();
-    const float drive = m_ParametersTreeState.getRawParameterValue("DRIVE")->load();
-    const float clipFactor = m_ParametersTreeState.getRawParameterValue("CLIPFACTOR")->load();
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
@@ -149,13 +158,10 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
             float inSample = buffer.getSample(channel, sample) * inputGain;
-            const float drySignal = inSample;
-
-            //Distortion
-            inSample = inSample  * drive;
+            //const float drySignal = inSample;
 
             //Output
-            channelData[sample] = inSample
+            channelData[sample] = inSample;
 
         }
     }
@@ -197,22 +203,22 @@ void DaKog_DistortAudioProcessor::setStateInformation (const void* data, int siz
 juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor::SetupParameters()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("INPUTGAIN","InputGain",0.f,1.f,0.5f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(InputID,InputName,0.f,1.f,0.5f));
     //Distortion
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("DRIVE","Drive",0.f,1.f,0.5f));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("CLIPFACTOR","ClipFactor",0.f,1.f,0.5f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName,0.f,1.f,0.5f));
+    //parameters.add(std::make_unique<juce::AudioParameterFloat>("CLIPFACTOR","ClipFactor",0.f,1.f,0.5f));
     //SineWave
-    parameters.add(std::make_unique<juce::AudioParameterBool>("SINE_TOGGLE","SineWave",false));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("SINE_FREQ","SineFrequency",0.f, 1.f, 0.5f));
+    //parameters.add(std::make_unique<juce::AudioParameterBool>("SINE_TOGGLE","SineWave",false));
+    //parameters.add(std::make_unique<juce::AudioParameterFloat>("SINE_FREQ","SineFrequency",0.f, 1.f, 0.5f));
     //Filters
-    parameters.add(std::make_unique<juce::AudioParameterBool>("LOWPASS_TOGGLE","LowPass",false));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("LOWPASS_CUTOFF","LowPassCutoff", 20.f, 20000.f, 20000.f));
-    parameters.add(std::make_unique<juce::AudioParameterBool>("HIPASS_TOGGLE", "HighPass", true));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>("HIPASS_CUTOFF", "HighPassCutoff", 20.f, 20000.f, 20.f));
+    //parameters.add(std::make_unique<juce::AudioParameterBool>("LOWPASS_TOGGLE","LowPass",false));
+    //parameters.add(std::make_unique<juce::AudioParameterFloat>("LOWPASS_CUTOFF","LowPassCutoff", 20.f, 20000.f, 20000.f));
+    //parameters.add(std::make_unique<juce::AudioParameterBool>("HIPASS_TOGGLE", "HighPass", true));
+    //parameters.add(std::make_unique<juce::AudioParameterFloat>("HIPASS_CUTOFF", "HighPassCutoff", 20.f, 20000.f, 20.f));
     //Output
-    parameters.add(std::make_unique<juce::AudioParameterBool>("WETGAIN", "WetGain", 0.f, 1.f, 0.5f));
-    parameters.add(std::make_unique<juce::AudioParameterBool>("DRYWET", "DryWet", 0.f, 1.f, 0.5f));
-    parameters.add(std::make_unique<juce::AudioParameterBool>("OUTPUTGAIN", "OutputGain", 0.f, 1.f, 0.5f));
+    //parameters.add(std::make_unique<juce::AudioParameterFloat>("WETGAIN", "WetGain", 0.f, 1.f, 0.5f));
+    //parameters.add(std::make_unique<juce::AudioParameterFloat>("DRYWET", "DryWet", 0.f, 1.f, 0.5f));
+    //parameters.add(std::make_unique<juce::AudioParameterFloat>("OUTPUTGAIN", "OutputGain", 0.f, 1.f, 0.5f));
     
 
     return parameters;

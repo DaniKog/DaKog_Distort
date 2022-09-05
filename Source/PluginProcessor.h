@@ -16,7 +16,7 @@
 class DaKog_DistortAudioProcessor  : public juce::AudioProcessor
                             #if JucePlugin_Enable_ARA
                              , public juce::AudioProcessorARAExtension
-                            #endif
+                            #endif, juce::AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================

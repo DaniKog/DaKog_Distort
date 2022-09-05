@@ -6,6 +6,10 @@
               pluginVST3Category="Distortion" cppLanguageStandard="latest">
   <MAINGROUP id="onTKsJ" name="DaKog_Distort">
     <GROUP id="{9E50EAA1-846B-0338-9BF2-7021677BC841}" name="Source">
+      <GROUP id="{5D2D7066-EAB5-3EE8-BCD4-DAEBACA3DA42}" name="DSP">
+        <FILE id="XLxyV8" name="Distortion.cpp" compile="1" resource="0" file="Source/DSP/Distortion.cpp"/>
+        <FILE id="p6BDwr" name="Distortion.h" compile="0" resource="0" file="Source/DSP/Distortion.h"/>
+      </GROUP>
       <FILE id="cCRh3M" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="PloFCU" name="PluginProcessor.h" compile="0" resource="0"
@@ -35,6 +39,7 @@
         <MODULEPATH id="juce_graphics" path="../../VST_Dev/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../VST_Dev/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../VST_Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../juce-7.0.2-windows/JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>
@@ -48,6 +53,7 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

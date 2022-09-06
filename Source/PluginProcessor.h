@@ -10,13 +10,16 @@
 
 #include <JuceHeader.h>
 
+#include "DSP/Distortion.h"
+#include "DSP/SineWave.h"
+
 //==============================================================================
 /**
 */
-class DaKog_DistortAudioProcessor  : public juce::AudioProcessor
+class DaKog_DistortAudioProcessor  : public juce::AudioProcessor , public juce::AudioProcessorValueTreeState::Listener
                             #if JucePlugin_Enable_ARA
                              , public juce::AudioProcessorARAExtension
-                            #endif, juce::AudioProcessorValueTreeState::Listener
+                            #endif 
 {
 public:
     //==============================================================================
@@ -60,6 +63,21 @@ public:
 
 private:
     juce::AudioProcessorValueTreeState::ParameterLayout SetupParameters();
+    void parameterChanged(const juce::String& parameterID, float newValue) override;
+    void UpdateParameters();
+    void UpdateSineWaves(const juce::String& parameterID);
+
+    //DSP
+    Distortion<float> m_DistortionDSP;
+    std::vector<SineWave<float>> m_SineWaves;
+
+    //Internal Parameters
+    juce::SmoothedValue<float> m_InputGain = 0.5f;
+    juce::SmoothedValue<float> m_WetGain = 0.5f;
+    juce::SmoothedValue<float> m_Mix = 1.f;
+    juce::SmoothedValue<float> m_OutputGain = 0.5f;
+    bool m_ToggleSineWave = false;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DaKog_DistortAudioProcessor)
 };

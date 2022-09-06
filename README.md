@@ -1,2 +1,2 @@
 # DaKog_Distort
- Interesting Distortion VST
+Interesting Distortion Exprimentation VST

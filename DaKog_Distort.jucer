@@ -9,6 +9,8 @@
       <GROUP id="{5D2D7066-EAB5-3EE8-BCD4-DAEBACA3DA42}" name="DSP">
         <FILE id="XLxyV8" name="Distortion.cpp" compile="1" resource="0" file="Source/DSP/Distortion.cpp"/>
         <FILE id="p6BDwr" name="Distortion.h" compile="0" resource="0" file="Source/DSP/Distortion.h"/>
+        <FILE id="xcFGDi" name="SineWave.cpp" compile="1" resource="0" file="Source/DSP/SineWave.cpp"/>
+        <FILE id="qXun4B" name="SineWave.h" compile="0" resource="0" file="Source/DSP/SineWave.h"/>
       </GROUP>
       <FILE id="cCRh3M" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

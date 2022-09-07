@@ -92,7 +92,7 @@ DaKog_DistortAudioProcessor::~DaKog_DistortAudioProcessor()
     m_ParametersTreeState.removeParameterListener(OutputGainID, this);
 }
 
-void DaKog_DistortAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue)
+void DaKog_DistortAudioProcessor::parameterChanged(const juce::String& parameterID, float /*newValue*/)
 {
     //TODO find a better solution to remove this if/else madness
     if (parameterID == InputID)
@@ -119,14 +119,14 @@ void DaKog_DistortAudioProcessor::UpdateSineWaves(const juce::String& parameterI
 {
     if (parameterID == SineFrequencyID)
     {
-        for (int i = 0; i < getNumOutputChannels(); ++i)
+        for (int i = 0; i < getTotalNumOutputChannels(); ++i)
         {
             m_SineWaves[i].SetFrequecncy(m_ParametersTreeState.getRawParameterValue(SineFrequencyID)->load());
         }
     }
     else if (parameterID == SineGainID)
     {
-        for (int i = 0; i < getNumOutputChannels(); ++i)
+        for (int i = 0; i < getTotalNumOutputChannels(); ++i)
         {
             m_SineWaves[i].SetSineGain(m_ParametersTreeState.getRawParameterValue(SineGainID)->load());
         }
@@ -193,16 +193,16 @@ int DaKog_DistortAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void DaKog_DistortAudioProcessor::setCurrentProgram (int index)
+void DaKog_DistortAudioProcessor::setCurrentProgram (int /*index*/)
 {
 }
 
-const juce::String DaKog_DistortAudioProcessor::getProgramName (int index)
+const juce::String DaKog_DistortAudioProcessor::getProgramName (int /*index*/)
 {
     return {};
 }
 
-void DaKog_DistortAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void DaKog_DistortAudioProcessor::changeProgramName (int /*index*/, const juce::String& /*newName*/)
 {
 }
 
@@ -266,7 +266,7 @@ bool DaKog_DistortAudioProcessor::isBusesLayoutSupported (const BusesLayout& lay
 }
 #endif
 
-void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& /*midiMessages*/)
 {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
@@ -295,7 +295,6 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
 
             //Safety Hardclip
             inSample = inSample > 1.0f ? 1.0f : inSample < -1.0f ? -1.0f : inSample;
-
             //Output
             inSample = inSample * m_WetGain.getNextValue();
             inSample = (drySample * (1.0f - m_Mix.getNextValue())) + (inSample * m_Mix.getNextValue());
@@ -347,7 +346,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     parameters.add(std::make_unique<juce::AudioParameterFloat>(ClipFactorID, ClipFactorName,0.1f,30.f,1.f));
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(SineFrequencyID, SineFrequencyName, 20.f, 20000.f, 220.0f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(SineFrequencyID, SineFrequencyName, 20, 20000, 220));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(SineGainID, SineGainName, 0.f, 1.f, 0.5f));
     //Filters
     //parameters.add(std::make_unique<juce::AudioParameterBool>("LOWPASS_TOGGLE","LowPass",false));

@@ -12,6 +12,7 @@
 
 #include "DSP/Distortion.h"
 #include "DSP/SineWave.h"
+#include "DSP/HiLoPassFilter.h"
 
 //==============================================================================
 /**
@@ -70,12 +71,13 @@ private:
     //DSP
     Distortion<float> m_DistortionDSP;
     std::vector<SineWave<float>> m_SineWaves;
+    HiLoPassFilter<float> m_Filter;
 
     //Internal Parameters
-    juce::SmoothedValue<float> m_InputGain = 0.5f;
-    juce::SmoothedValue<float> m_WetGain = 0.5f;
+    juce::SmoothedValue<float> m_InputGain = 1.0f;
+    juce::SmoothedValue<float> m_WetGain = 1.0f;
     juce::SmoothedValue<float> m_Mix = 1.f;
-    juce::SmoothedValue<float> m_OutputGain = 0.5f;
+    juce::SmoothedValue<float> m_OutputGain = 1.0f;
     bool m_ToggleSineWave = false;
 
     //==============================================================================

@@ -6,9 +6,16 @@
               pluginVST3Category="Distortion" cppLanguageStandard="latest">
   <MAINGROUP id="onTKsJ" name="DaKog_Distort">
     <GROUP id="{9E50EAA1-846B-0338-9BF2-7021677BC841}" name="Source">
+      <GROUP id="{E398F57F-2431-B901-6240-36F1C8E63187}" name="Util">
+        <FILE id="uhLcMe" name="Range.h" compile="0" resource="0" file="Source/Util/Range.h"/>
+      </GROUP>
       <GROUP id="{5D2D7066-EAB5-3EE8-BCD4-DAEBACA3DA42}" name="DSP">
         <FILE id="XLxyV8" name="Distortion.cpp" compile="1" resource="0" file="Source/DSP/Distortion.cpp"/>
         <FILE id="p6BDwr" name="Distortion.h" compile="0" resource="0" file="Source/DSP/Distortion.h"/>
+        <FILE id="iIm0B7" name="HiLoPassFilter.cpp" compile="1" resource="0"
+              file="Source/DSP/HiLoPassFilter.cpp"/>
+        <FILE id="EnMZ2g" name="HiLoPassFilter.h" compile="0" resource="0"
+              file="Source/DSP/HiLoPassFilter.h"/>
         <FILE id="xcFGDi" name="SineWave.cpp" compile="1" resource="0" file="Source/DSP/SineWave.cpp"/>
         <FILE id="qXun4B" name="SineWave.h" compile="0" resource="0" file="Source/DSP/SineWave.h"/>
       </GROUP>

@@ -67,11 +67,13 @@ private:
     void parameterChanged(const juce::String& parameterID, float newValue) override;
     void UpdateParameters();
     void UpdateSineWaves(const juce::String& parameterID);
+    void UpdateFilters(const juce::String& parameterID);
 
     //DSP
     Distortion<float> m_DistortionDSP;
     std::vector<SineWave<float>> m_SineWaves;
-    HiLoPassFilter<float> m_Filter;
+    std::vector <juce::dsp::IIR::Filter<float>> m_LoPassFilter;
+    std::vector <juce::dsp::IIR::Filter<float>> m_HiPassFilter;
 
     //Internal Parameters
     juce::SmoothedValue<float> m_InputGain = 1.0f;

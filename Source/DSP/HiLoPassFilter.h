@@ -29,7 +29,7 @@ public:
     {
         SampleType filteredSample = m_a1 * inSample + m_StoredBuffer[channel];
         m_StoredBuffer[channel] = inSample - m_a1 * filteredSample;
-        return 0.5f * (inSample + m_Sign * filteredSample);
+        return (inSample + m_Sign * filteredSample);
     }
 
     void Reset();

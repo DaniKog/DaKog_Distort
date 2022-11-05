@@ -6,7 +6,20 @@
               pluginVST3Category="Distortion" cppLanguageStandard="latest">
   <MAINGROUP id="onTKsJ" name="DaKog_Distort">
     <GROUP id="{9E50EAA1-846B-0338-9BF2-7021677BC841}" name="Source">
+      <GROUP id="{A7742256-7F2B-7790-8CDA-49C101CB0943}" name="GUI">
+        <FILE id="p1XPkd" name="DaKog_LookAndFeel.cpp" compile="1" resource="0"
+              file="Source/GUI/DaKog_LookAndFeel.cpp"/>
+        <FILE id="JFLFzV" name="DaKog_LookAndFeel.h" compile="0" resource="0"
+              file="Source/GUI/DaKog_LookAndFeel.h"/>
+        <FILE id="DdrpFK" name="DaKog_RotorSlider.cpp" compile="1" resource="0"
+              file="Source/GUI/DaKog_RotorSlider.cpp"/>
+        <FILE id="BypIuv" name="DaKog_RotorSlider.h" compile="0" resource="0"
+              file="Source/GUI/DaKog_RotorSlider.h"/>
+        <FILE id="CzesGw" name="GUI.cpp" compile="1" resource="0" file="Source/GUI/GUI.cpp"/>
+        <FILE id="eACgj1" name="GUI.h" compile="0" resource="0" file="Source/GUI/GUI.h"/>
+      </GROUP>
       <GROUP id="{E398F57F-2431-B901-6240-36F1C8E63187}" name="Util">
+        <FILE id="KEgjVw" name="Parameters.h" compile="0" resource="0" file="Source/Util/Parameters.h"/>
         <FILE id="uhLcMe" name="Range.h" compile="0" resource="0" file="Source/Util/Range.h"/>
       </GROUP>
       <GROUP id="{5D2D7066-EAB5-3EE8-BCD4-DAEBACA3DA42}" name="DSP">

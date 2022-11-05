@@ -9,50 +9,11 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "util/Range.h"
+#include "util/Parameters.h"
 
 namespace
 {
     static const int s_ButterWorthFilterPole = 4;
-}
-namespace
-{
-    //Parameters Def
-    const juce::String InputID = "INPUTGAIN";
-    const juce::String InputName = "InputGain";
-
-    //Filter
-    const juce::String LoPassFilterCutOffID = "LOWPASSCUTOFF";
-    const juce::String LoPassFilterCutOffName = "LowPassCutOff";
-
-    const juce::String HiPassFilterCutOffID = "HIPASSCUTOFF";
-    const juce::String HiPassFilterCutOffName = "HiPassCutOff";
-
-    //SineWave
-    const juce::String SineFrequencyID = "SINEFREQ";
-    const juce::String SineFrequencyName = "Frequency";
-
-    const juce::String SineGainID = "SINEGAIN";
-    const juce::String SineGainName = "SineGain";
-
-    const juce::String SineToggleID = "SINETOGGLE";
-    const juce::String SineToggleName = "SineToggle";
-
-    //Distortion
-    const juce::String DriveID = "DRIVE";
-    const juce::String DriveName = "Drive";
-
-    const juce::String ClipFactorID = "CLIPFACTOR";
-    const juce::String ClipFactorName = "ClipFactor";
-
-    //Output
-    const juce::String WetGainID = "WETGAIN";
-    const juce::String WetGainName = "WetGain";
-
-    const juce::String MixID = "MIX";
-    const juce::String MixName = "Mix";
-
-    const juce::String OutputGainID = "OUTPUTGAIN";
-    const juce::String OutputGainName = "OutputGain";
 }
 
 //==============================================================================
@@ -111,6 +72,7 @@ DaKog_DistortAudioProcessor::~DaKog_DistortAudioProcessor()
 
 void DaKog_DistortAudioProcessor::parameterChanged(const juce::String& parameterID, float /*newValue*/)
 {
+
     //TODO find a better solution to remove this if/else madness
     if (parameterID == InputID)
         m_InputGain = m_ParametersTreeState.getRawParameterValue(InputID)->load();
@@ -380,13 +342,14 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
 //==============================================================================
 bool DaKog_DistortAudioProcessor::hasEditor() const
 {
-    return false; // (change this to false if you choose to not supply an editor)
+    return true; // (change this to false if you choose to not supply an editor)
 }
 
 juce::AudioProcessorEditor* DaKog_DistortAudioProcessor::createEditor()
 {
-    //return new DaKog_DistortAudioProcessorEditor (*this);
-    return new juce::GenericAudioProcessorEditor(*this);
+   //return new GUI(*this);
+   return new DaKog_DistortAudioProcessorEditor(*this);
+   //return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================

@@ -25,6 +25,14 @@
 #include "DaKog_LookAndFeel.h"
 //[/Headers]
 
+#include "DaKog_RotorSlider.h"
+#include "DaKog_VerticalSlider.h"
+#include "DaKog_RotorSlider.h"
+#include "DaKog_VerticalSlider.h"
+#include "DaKog_VerticalSlider.h"
+#include "DaKog_VerticalSlider.h"
+#include "DaKog_RotorSlider.h"
+#include "DaKog_RotorSlider.h"
 
 
 //==============================================================================
@@ -35,7 +43,8 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class GUI  : public juce::Component
+class GUI  : public juce::Component,
+             public juce::Slider::Listener
 {
 public:
     //==============================================================================
@@ -47,18 +56,19 @@ public:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
         AttachSlider(const juce::String& ID,
         juce::AudioProcessorValueTreeState& parametersTreeState);
-
-    void SetDebugText(const juce::String& string) { WowLabel2->setText(string, juce::NotificationType::dontSendNotification); WowLabel2->repaint(); }
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
+    void sliderValueChanged (juce::Slider* sliderThatWasMoved) override;
 
     // Binary resources:
     static const char* _800600_backGround_png;
     static const int _800600_backGround_pngSize;
     static const char* blackSquare_png;
     static const int blackSquare_pngSize;
+    static const char* title800_png;
+    static const int title800_pngSize;
 
 
 private:
@@ -68,11 +78,25 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Slider> m_DriveSlider;
-    std::unique_ptr<juce::Label> juce__label;
-    std::unique_ptr<juce::Label> WowLabel2;
+    std::unique_ptr<juce::GroupComponent> m_DriveGroup4;
+    std::unique_ptr<juce::GroupComponent> m_DriveGroup3;
+    std::unique_ptr<juce::GroupComponent> m_DriveGroup;
+    std::unique_ptr<juce::GroupComponent> m_DriveGroup2;
+    std::unique_ptr<DaKog_RotorSlider> m_DriveRotor;
+    std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
+    std::unique_ptr<DaKog_RotorSlider> m_ClippingFactorRotor;
+    std::unique_ptr<juce::Slider> m_SineFrequency;
+    std::unique_ptr<juce::GroupComponent> m_FilterGroup;
+    std::unique_ptr<DaKog_VerticalSlider> m_WetGain;
+    std::unique_ptr<DaKog_VerticalSlider> m_Mix;
+    std::unique_ptr<DaKog_VerticalSlider> m_OutPut;
+    std::unique_ptr<DaKog_RotorSlider> m_LoPassFilterRotor;
+    std::unique_ptr<DaKog_RotorSlider> m_HighPassFilterRotor;
+    std::unique_ptr<juce::Slider> juce__slider;
+    std::unique_ptr<juce::ToggleButton> m_SineToggle;
     juce::Image cachedImage__800600_backGround_png_1;
     juce::Image cachedImage_blackSquare_png_2;
+    juce::Image cachedImage_title800_png_3;
 
 
     //==============================================================================

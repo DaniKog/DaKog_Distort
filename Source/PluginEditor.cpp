@@ -36,23 +36,12 @@ DaKog_DistortAudioProcessorEditor::~DaKog_DistortAudioProcessorEditor()
 
 void DaKog_DistortAudioProcessorEditor::SetupRotors()
 {
-    juce::Rectangle<int> bound = getLocalBounds();
-    bound = bound.removeFromBottom(500); // Removes 500 pixels from the bottom as there is Title
-    m_GUI->SetDebugText(bound.toString());
-
-    m_DriveRotor.reset(new DaKog_RotorSlider);
-    SetupRotor(m_DriveSliderValue, DriveID, *m_DriveRotor.get(), bound);
-
-    m_InputGain.reset(new DaKog_RotorSlider);
-    SetupRotor(m_InputGainSliderValue,InputID, *m_InputGain.get(), bound);
-
-    
+    //TODO Do all in GUI or Here 
+    //SetupRotor(m_DriveSliderValue, DriveID);
 }
-void DaKog_DistortAudioProcessorEditor::SetupRotor(std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& sliderAttachment,const juce::String& parameterID, DaKog_RotorSlider& rotor, juce::Rectangle<int>& bound)
+void DaKog_DistortAudioProcessorEditor::SetupRotor(std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& sliderAttachment,const juce::String& parameterID, DaKog_RotorSlider& rotor)
 {
-    addAndMakeVisible(rotor);
-    rotor.setBounds(bound);
-
+    //TODO Store all UI Info per ParamterID in a mapped Struct
     juce::Slider& slider = rotor.GetSlider();
     juce::AudioProcessorValueTreeState& parametersTreeState = audioProcessor.m_ParametersTreeState;
     juce::RangedAudioParameter& rangedParameter = *parametersTreeState.getParameter(parameterID);

@@ -21,7 +21,6 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
-#include "DaKog_LookAndFeel.h"
 //[/Headers]
 
 
@@ -34,25 +33,20 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class DaKog_RotorSlider  : public juce::Component
+class DaKog_VerticalSlider  : public juce::Component
 {
 public:
     //==============================================================================
-    DaKog_RotorSlider ();
-    ~DaKog_RotorSlider() override;
+    DaKog_VerticalSlider ();
+    ~DaKog_VerticalSlider() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    juce::Slider& GetSlider() { return *m_DaKogRotorSilder.get();}
-    DaKog_LookandFeel m_LookAndFeel;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
 
-    // Binary resources:
-    static const char* rotor144_png;
-    static const int rotor144_pngSize;
 
 
 private:
@@ -60,13 +54,12 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Slider> m_DaKogRotorSilder;
-    std::unique_ptr<juce::Label> m_LeftLabel;
-    std::unique_ptr<juce::Label> m_LeftLabel2;
+    std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Slider> m_DaKogVerticalSlider;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DaKog_RotorSlider)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DaKog_VerticalSlider)
 };
 
 //[EndFile] You can add extra defines here...

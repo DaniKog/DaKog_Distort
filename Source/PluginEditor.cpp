@@ -25,7 +25,13 @@ DaKog_DistortAudioProcessorEditor::DaKog_DistortAudioProcessorEditor (DaKog_Dist
     setSize(800, 600);
 
     //Setup attachements
+    m_InputGainSliderValue = m_GUI->AttachSlider(InputID, audioProcessor.m_ParametersTreeState);
+    //Drive
     m_DriveSliderValue = m_GUI->AttachSlider(DriveID, audioProcessor.m_ParametersTreeState);
+    m_ClippingFactorValue = m_GUI->AttachSlider(ClipFactorID, audioProcessor.m_ParametersTreeState);
+    //Filter
+    m_LoCutFilterValue = m_GUI->AttachSlider(LoPassFilterCutOffID, audioProcessor.m_ParametersTreeState);
+    m_HiCutFilterValue = m_GUI->AttachSlider(HiPassFilterCutOffID, audioProcessor.m_ParametersTreeState);
     
 }
 

@@ -35,8 +35,13 @@ private:
     DaKog_DistortAudioProcessor& audioProcessor;
     GUI* m_GUI;
 public:
-     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_DriveSliderValue;
+     //Input
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_InputGainSliderValue;
-
+     //Distortion
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_DriveSliderValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_ClippingFactorValue;
+     //Filter
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_LoCutFilterValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_HiCutFilterValue;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DaKog_DistortAudioProcessorEditor)
 };

@@ -15,6 +15,10 @@
               file="Source/GUI/DaKog_RotorSlider.cpp"/>
         <FILE id="BypIuv" name="DaKog_RotorSlider.h" compile="0" resource="0"
               file="Source/GUI/DaKog_RotorSlider.h"/>
+        <FILE id="oEG7FQ" name="DaKog_VerticalSlider.cpp" compile="1" resource="0"
+              file="Source/GUI/DaKog_VerticalSlider.cpp"/>
+        <FILE id="gpzBmg" name="DaKog_VerticalSlider.h" compile="0" resource="0"
+              file="Source/GUI/DaKog_VerticalSlider.h"/>
         <FILE id="CzesGw" name="GUI.cpp" compile="1" resource="0" file="Source/GUI/GUI.cpp"/>
         <FILE id="eACgj1" name="GUI.h" compile="0" resource="0" file="Source/GUI/GUI.h"/>
       </GROUP>

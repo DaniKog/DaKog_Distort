@@ -22,6 +22,18 @@ public:
         float sliderPosProportional, float rotaryStartAngle,
         float rotaryEndAngle, juce::Slider&) override;
 
+    void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+        float sliderPos,
+        float minSliderPos,
+        float maxSliderPos,
+        const juce::Slider::SliderStyle style, juce::Slider& slider) override;
+
+    void drawPointer(juce::Graphics& g, const float x, const float y, const float diameter,
+        const juce::Colour& colour, const int direction) noexcept;
+
+        //juce::Label* createSliderTextBox(juce::Slider& slider) override;
+        //juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
+
 
 private:
     static const char* rotor_png;

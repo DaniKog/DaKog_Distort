@@ -43,8 +43,7 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class GUI  : public juce::Component,
-             public juce::Slider::Listener
+class GUI  : public juce::Component
 {
 public:
     //==============================================================================
@@ -60,7 +59,6 @@ public:
 
     void paint (juce::Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (juce::Slider* sliderThatWasMoved) override;
 
     // Binary resources:
     static const char* _800600_backGround_png;
@@ -73,15 +71,30 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    //DaKog_DistortAudioProcessor& audioProcessor;
+    struct RotorTextDefinition
+    {
+        juce::String m_LeftValue;
+        juce::String m_RightValue;
+        juce::String m_RotorLabel;
+        juce::String m_ToolTip;
+        RotorTextDefinition(const char* leftValue, const char* rightValue, const char* rotorLabel, const char* tooltip) :
+            m_LeftValue(leftValue),
+            m_RightValue(rightValue),
+            m_RotorLabel(rotorLabel),
+            m_ToolTip(tooltip)
+        {};
+        RotorTextDefinition(){};
+
+    };
+    std::map<juce::String, RotorTextDefinition> RotorTextDefinitions;
     DaKog_LookandFeel m_LookAndFeel;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::GroupComponent> m_DriveGroup4;
-    std::unique_ptr<juce::GroupComponent> m_DriveGroup3;
+    std::unique_ptr<juce::GroupComponent> m_OutputMixGroup;
+    std::unique_ptr<juce::GroupComponent> m_InputMixGroup;
     std::unique_ptr<juce::GroupComponent> m_DriveGroup;
-    std::unique_ptr<juce::GroupComponent> m_DriveGroup2;
+    std::unique_ptr<juce::GroupComponent> m_SineWaveGroup;
     std::unique_ptr<DaKog_RotorSlider> m_DriveRotor;
     std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
     std::unique_ptr<DaKog_RotorSlider> m_ClippingFactorRotor;
@@ -104,5 +117,6 @@ private:
 };
 
 //[EndFile] You can add extra defines here...
+
 //[/EndFile]
 

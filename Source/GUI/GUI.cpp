@@ -40,17 +40,17 @@ GUI::GUI ()
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    m_DriveGroup4.reset (new juce::GroupComponent ("DriveGroup",
-                                                   TRANS("OutputMix")));
-    addAndMakeVisible (m_DriveGroup4.get());
+    m_OutputMixGroup.reset (new juce::GroupComponent ("OutputMixGroup",
+                                                      TRANS("OutputMix")));
+    addAndMakeVisible (m_OutputMixGroup.get());
 
-    m_DriveGroup4->setBounds (608, 104, 192, 498);
+    m_OutputMixGroup->setBounds (608, 104, 192, 498);
 
-    m_DriveGroup3.reset (new juce::GroupComponent ("DriveGroup",
-                                                   TRANS("InputMix")));
-    addAndMakeVisible (m_DriveGroup3.get());
+    m_InputMixGroup.reset (new juce::GroupComponent ("InputMix",
+                                                     TRANS("InputMix")));
+    addAndMakeVisible (m_InputMixGroup.get());
 
-    m_DriveGroup3->setBounds (0, 104, 80, 498);
+    m_InputMixGroup->setBounds (0, 104, 80, 498);
 
     m_DriveGroup.reset (new juce::GroupComponent ("DriveGroup",
                                                   TRANS("Distortion")));
@@ -58,11 +58,11 @@ GUI::GUI ()
 
     m_DriveGroup->setBounds (80, 104, 528, 166);
 
-    m_DriveGroup2.reset (new juce::GroupComponent ("DriveGroup",
-                                                   TRANS("SineWave")));
-    addAndMakeVisible (m_DriveGroup2.get());
+    m_SineWaveGroup.reset (new juce::GroupComponent ("SineWaveGroup",
+                                                     TRANS("SineWave")));
+    addAndMakeVisible (m_SineWaveGroup.get());
 
-    m_DriveGroup2->setBounds (80, 270, 528, 166);
+    m_SineWaveGroup->setBounds (80, 270, 528, 166);
 
     m_DriveRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_DriveRotor.get());
@@ -84,7 +84,6 @@ GUI::GUI ()
     m_SineFrequency->setRange (0, 20000, 0);
     m_SineFrequency->setSliderStyle (juce::Slider::RotaryHorizontalVerticalDrag);
     m_SineFrequency->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
-    m_SineFrequency->addListener (this);
 
     m_SineFrequency->setBounds (412, 288, 144, 144);
 
@@ -143,6 +142,10 @@ GUI::GUI ()
 
 
     //[Constructor] You can add your own custom stuff here..
+    RotorTextDefinitions.emplace(DriveID, RotorTextDefinition("0", "11", "Drive", "Drive Tooltip"));
+    RotorTextDefinitions.emplace(ClipFactorID, RotorTextDefinition("Soft", "Hard", "ClipFactor", "Clipping Factor Tooltip"));
+    RotorTextDefinitions.emplace(LoPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "LowPass", "LowCutFilter Tooltip"));
+    RotorTextDefinitions.emplace(HiPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "HighPass", "HighCutFilter Tooltip"));
     //[/Constructor]
 }
 
@@ -151,10 +154,10 @@ GUI::~GUI()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    m_DriveGroup4 = nullptr;
-    m_DriveGroup3 = nullptr;
+    m_OutputMixGroup = nullptr;
+    m_InputMixGroup = nullptr;
     m_DriveGroup = nullptr;
-    m_DriveGroup2 = nullptr;
+    m_SineWaveGroup = nullptr;
     m_DriveRotor = nullptr;
     m_InputSlider = nullptr;
     m_ClippingFactorRotor = nullptr;
@@ -224,74 +227,69 @@ void GUI::resized()
     //[/UserResized]
 }
 
-void GUI::sliderValueChanged (juce::Slider* sliderThatWasMoved)
-{
-    //[UsersliderValueChanged_Pre]
-    //[/UsersliderValueChanged_Pre]
-
-    if (sliderThatWasMoved == m_SineFrequency.get())
-    {
-        //[UserSliderCode_m_SineFrequency] -- add your slider handling code here..
-        //[/UserSliderCode_m_SineFrequency]
-    }
-
-    //[UsersliderValueChanged_Post]
-    //[/UsersliderValueChanged_Post]
-}
-
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> GUI::AttachSlider(const juce::String& parameterID,
     juce::AudioProcessorValueTreeState& parametersTreeState)
 {
-    juce::Slider* slider = nullptr;
+    DaKog_RotorSlider* daKog_slider = nullptr;
 
     //TODO find a better solution to remove this if/else madness
     if (parameterID == InputID)
-        slider = nullptr;
+    {
+        //TODO Clean this with a generic soltuion in this function
+        m_InputSlider.get()->setLookAndFeel(&m_LookAndFeel);
+    }
 
     //Filters
     else if (parameterID == LoPassFilterCutOffID)
-       slider = nullptr;
+        daKog_slider = m_LoPassFilterRotor.get();
 
     else if (parameterID == HiPassFilterCutOffID)
-        slider = nullptr;
+        daKog_slider = m_HighPassFilterRotor.get();
 
     //Distortion
     else if (parameterID == DriveID)
-        slider = &m_DriveRotor->GetSlider();
+        daKog_slider = m_DriveRotor.get();
 
     else if (parameterID == ClipFactorID)
-       slider = nullptr;
+        daKog_slider = m_ClippingFactorRotor.get();
 
     //SineWave
     else if (parameterID == SineFrequencyID)
-        slider = nullptr;
+        daKog_slider = nullptr;
 
     else if (parameterID == SineGainID)
-        slider = nullptr;
+        daKog_slider = nullptr;
 
     else if (parameterID == SineToggleID)
-       slider = nullptr;
+        daKog_slider = nullptr;
 
     //Output
     else if (parameterID == WetGainID)
-       slider = nullptr;
+        daKog_slider = nullptr;
 
     else if (parameterID == MixID)
-        slider = nullptr;
+        daKog_slider = nullptr;
 
     else if (parameterID == OutputGainID)
-       slider = nullptr;
+        daKog_slider = nullptr;
 
-    if (slider != nullptr)
+    if (daKog_slider != nullptr)
     {
+        juce::Slider& slider = daKog_slider->GetSlider();
         juce::RangedAudioParameter& rangedParameter = *parametersTreeState.getParameter(parameterID);
-        slider->setDoubleClickReturnValue(true, rangedParameter.getDefaultValue());
-        slider->setValue(rangedParameter.getDefaultValue());
-        slider->setLookAndFeel(&m_LookAndFeel);
-        return std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(parametersTreeState, parameterID, *slider);
+        RotorTextDefinition& textDefinitions = RotorTextDefinitions[parameterID];
+        daKog_slider->SetLeftLabel(textDefinitions.m_LeftValue);
+        daKog_slider->SetRightLabel(textDefinitions.m_RightValue);
+        daKog_slider->SetRotorLabel(textDefinitions.m_RotorLabel);
+        slider.setDoubleClickReturnValue(true, rangedParameter.getDefaultValue());
+        slider.setValue(rangedParameter.getDefaultValue());
+        slider.setTooltip(textDefinitions.m_ToolTip);
+        slider.setLookAndFeel(&m_LookAndFeel);
+        slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 40, 20);
+        return std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(parametersTreeState, parameterID, slider);
     }
     else
     {
@@ -322,13 +320,13 @@ BEGIN_JUCER_METADATA
            mode="0"/>
     <IMAGE pos="4 4 796 100" resource="title800_png" opacity="1.0" mode="0"/>
   </BACKGROUND>
-  <GROUPCOMPONENT name="DriveGroup" id="4f774ce508cb650" memberName="m_DriveGroup4"
+  <GROUPCOMPONENT name="OutputMixGroup" id="4f774ce508cb650" memberName="m_OutputMixGroup"
                   virtualName="" explicitFocusOrder="0" pos="608 104 192 498" title="OutputMix"/>
-  <GROUPCOMPONENT name="DriveGroup" id="5e3f59dfd70ef9a5" memberName="m_DriveGroup3"
+  <GROUPCOMPONENT name="InputMix" id="5e3f59dfd70ef9a5" memberName="m_InputMixGroup"
                   virtualName="" explicitFocusOrder="0" pos="0 104 80 498" title="InputMix"/>
   <GROUPCOMPONENT name="DriveGroup" id="5a111d8acf7610bf" memberName="m_DriveGroup"
                   virtualName="" explicitFocusOrder="0" pos="80 104 528 166" title="Distortion"/>
-  <GROUPCOMPONENT name="DriveGroup" id="a9f15bc1a8161323" memberName="m_DriveGroup2"
+  <GROUPCOMPONENT name="SineWaveGroup" id="a9f15bc1a8161323" memberName="m_SineWaveGroup"
                   virtualName="" explicitFocusOrder="0" pos="80 270 528 166" title="SineWave"/>
   <JUCERCOMP name="DriveRotor" id="5559e13b5d3139e3" memberName="m_DriveRotor"
              virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="144 120 144 144"
@@ -343,7 +341,7 @@ BEGIN_JUCER_METADATA
           virtualName="" explicitFocusOrder="0" pos="412 288 144 144" min="0.0"
           max="20000.0" int="0.0" style="RotaryHorizontalVerticalDrag"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
-          textBoxHeight="20" skewFactor="1.0" needsCallback="1"/>
+          textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>
   <GROUPCOMPONENT name="FilterGroup" id="e9f6c648edd08dc" memberName="m_FilterGroup"
                   virtualName="" explicitFocusOrder="0" pos="80 436 528 166" title="Filter"/>
   <JUCERCOMP name="WetGain" id="94b27180e5d42688" memberName="m_WetGain" virtualName=""

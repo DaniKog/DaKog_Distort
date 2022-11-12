@@ -45,6 +45,9 @@ public:
     //[UserMethods]     -- You can add your own custom methods in this section.
     juce::Slider& GetSlider() { return *m_DaKogRotorSilder.get();}
     DaKog_LookandFeel m_LookAndFeel;
+    void SetLeftLabel(juce::String& text) { m_LeftLabel.get()->setText(text,juce::NotificationType::dontSendNotification); }
+    void SetRightLabel(juce::String& text) { m_RightLabel.get()->setText(text,juce::NotificationType::dontSendNotification); }
+    void SetRotorLabel(juce::String& text) { m_RotorLabel.get()->setText(text,juce::NotificationType::dontSendNotification); }
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -60,9 +63,10 @@ private:
     //[/UserVariables]
 
     //==============================================================================
+    std::unique_ptr<juce::Label> m_RotorLabel;
     std::unique_ptr<juce::Slider> m_DaKogRotorSilder;
     std::unique_ptr<juce::Label> m_LeftLabel;
-    std::unique_ptr<juce::Label> m_LeftLabel2;
+    std::unique_ptr<juce::Label> m_RightLabel;
 
 
     //==============================================================================

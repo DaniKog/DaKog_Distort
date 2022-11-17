@@ -67,25 +67,23 @@ GUI::GUI ()
     m_DriveRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_DriveRotor.get());
     m_DriveRotor->setExplicitFocusOrder (1);
-    m_DriveRotor->setBounds (144, 120, 144, 144);
-
-    m_InputSlider.reset (new DaKog_VerticalSlider());
-    addAndMakeVisible (m_InputSlider.get());
-    m_InputSlider->setExplicitFocusOrder (1);
-    m_InputSlider->setBounds (8, 128, 64, 472);
+    m_DriveRotor->setBounds (160, 120, 144, 144);
 
     m_ClippingFactorRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_ClippingFactorRotor.get());
     m_ClippingFactorRotor->setExplicitFocusOrder (1);
-    m_ClippingFactorRotor->setBounds (412, 120, 144, 144);
+    m_ClippingFactorRotor->setBounds (432, 120, 144, 144);
 
     m_SineFrequency.reset (new juce::Slider ("SineFrequency"));
     addAndMakeVisible (m_SineFrequency.get());
-    m_SineFrequency->setRange (0, 20000, 0);
-    m_SineFrequency->setSliderStyle (juce::Slider::RotaryHorizontalVerticalDrag);
+    m_SineFrequency->setRange (0, 20000, 1);
+    m_SineFrequency->setSliderStyle (juce::Slider::LinearHorizontal);
     m_SineFrequency->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
+    m_SineFrequency->setColour (juce::Slider::backgroundColourId, juce::Colour (0xff707070));
+    m_SineFrequency->setColour (juce::Slider::thumbColourId, juce::Colours::white);
+    m_SineFrequency->setColour (juce::Slider::trackColourId, juce::Colour (0xffd0d0d0));
 
-    m_SineFrequency->setBounds (412, 288, 144, 144);
+    m_SineFrequency->setBounds (408, 360, 144, 72);
 
     m_FilterGroup.reset (new juce::GroupComponent ("FilterGroup",
                                                    TRANS("Filter")));
@@ -111,29 +109,39 @@ GUI::GUI ()
     m_LoPassFilterRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_LoPassFilterRotor.get());
     m_LoPassFilterRotor->setExplicitFocusOrder (1);
-    m_LoPassFilterRotor->setBounds (144, 448, 144, 144);
+    m_LoPassFilterRotor->setBounds (160, 448, 144, 144);
 
     m_HighPassFilterRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_HighPassFilterRotor.get());
     m_HighPassFilterRotor->setExplicitFocusOrder (1);
-    m_HighPassFilterRotor->setBounds (412, 448, 144, 144);
+    m_HighPassFilterRotor->setBounds (432, 448, 144, 144);
 
-    juce__slider.reset (new juce::Slider ("new slider"));
-    addAndMakeVisible (juce__slider.get());
-    juce__slider->setRange (0, 1, 0);
-    juce__slider->setSliderStyle (juce::Slider::LinearVertical);
-    juce__slider->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
+    m_SineWaveGain.reset (new juce::Slider ("SineWaveGain"));
+    addAndMakeVisible (m_SineWaveGain.get());
+    m_SineWaveGain->setRange (0, 1, 0.01);
+    m_SineWaveGain->setSliderStyle (juce::Slider::LinearVertical);
+    m_SineWaveGain->setTextBoxStyle (juce::Slider::NoTextBox, false, 80, 20);
+    m_SineWaveGain->setColour (juce::Slider::backgroundColourId, juce::Colour (0xff6d6d6d));
+    m_SineWaveGain->setColour (juce::Slider::thumbColourId, juce::Colours::white);
+    m_SineWaveGain->setColour (juce::Slider::trackColourId, juce::Colour (0xffc9c9c9));
 
-    juce__slider->setBounds (184, 288, 64, 136);
+    m_SineWaveGain->setBounds (184, 288, 42, 120);
 
     m_SineToggle.reset (new juce::ToggleButton ("SineToggle"));
     addAndMakeVisible (m_SineToggle.get());
 
-    m_SineToggle->setBounds (304, 288, 104, 24);
+    m_SineToggle->setBounds (424, 304, 104, 24);
+
+    m_InputSlider.reset (new DaKog_VerticalSlider());
+    addAndMakeVisible (m_InputSlider.get());
+    m_InputSlider->setExplicitFocusOrder (1);
+    m_InputSlider->setBounds (8, 128, 64, 472);
 
     cachedImage__800600_backGround_png_1 = juce::ImageCache::getFromMemory (_800600_backGround_png, _800600_backGround_pngSize);
     cachedImage_blackSquare_png_2 = juce::ImageCache::getFromMemory (blackSquare_png, blackSquare_pngSize);
     cachedImage_title800_png_3 = juce::ImageCache::getFromMemory (title800_png, title800_pngSize);
+    cachedImage_hiPassCurve_png_4 = juce::ImageCache::getFromMemory (hiPassCurve_png, hiPassCurve_pngSize);
+    cachedImage_lowPassCurve_png_5 = juce::ImageCache::getFromMemory (lowPassCurve_png, lowPassCurve_pngSize);
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -142,10 +150,18 @@ GUI::GUI ()
 
 
     //[Constructor] You can add your own custom stuff here..
-    RotorTextDefinitions.emplace(DriveID, RotorTextDefinition("0", "11", "Drive", "Drive Tooltip"));
-    RotorTextDefinitions.emplace(ClipFactorID, RotorTextDefinition("Soft", "Hard", "ClipFactor", "Clipping Factor Tooltip"));
-    RotorTextDefinitions.emplace(LoPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "LowPass", "LowCutFilter Tooltip"));
-    RotorTextDefinitions.emplace(HiPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "HighPass", "HighCutFilter Tooltip"));
+    //TODO find a way to properly pass the arguments to the emplace
+    m_RotorTextDefinitions.emplace(DriveID, RotorTextDefinition("0", "11", "Drive", "Drive Tooltip"));
+    m_RotorTextDefinitions.emplace(ClipFactorID, RotorTextDefinition("Soft", "Hard", "ClipFactor", "Clipping Factor Tooltip"));
+    m_RotorTextDefinitions.emplace(LoPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "LowPass", "LowCutFilter Tooltip"));
+    m_RotorTextDefinitions.emplace(HiPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "HighPass", "HighCutFilter Tooltip"));
+
+    m_VerticalSliderTextDefinitions.emplace(InputID, VerticalSliderTextDefinition("InputGain", "Input Tooltip"));
+    m_VerticalSliderTextDefinitions.emplace(WetGainID, VerticalSliderTextDefinition("WetGain", "WetGain Tooltip"));
+    m_VerticalSliderTextDefinitions.emplace(MixID, VerticalSliderTextDefinition("Mix", "Mix Tooltip"));
+    m_VerticalSliderTextDefinitions.emplace(OutputGainID, VerticalSliderTextDefinition("Output", "Output Tooltip"));
+
+    m_SineFrequency.get()->setTextValueSuffix("Hz");
     //[/Constructor]
 }
 
@@ -159,7 +175,6 @@ GUI::~GUI()
     m_DriveGroup = nullptr;
     m_SineWaveGroup = nullptr;
     m_DriveRotor = nullptr;
-    m_InputSlider = nullptr;
     m_ClippingFactorRotor = nullptr;
     m_SineFrequency = nullptr;
     m_FilterGroup = nullptr;
@@ -168,8 +183,9 @@ GUI::~GUI()
     m_OutPut = nullptr;
     m_LoPassFilterRotor = nullptr;
     m_HighPassFilterRotor = nullptr;
-    juce__slider = nullptr;
+    m_SineWaveGain = nullptr;
     m_SineToggle = nullptr;
+    m_InputSlider = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -198,7 +214,7 @@ void GUI::paint (juce::Graphics& g)
         int x = 0, y = 0, width = 800, height = 600;
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
-        g.setColour (juce::Colours::black.withAlpha (0.719f));
+        g.setColour (juce::Colours::black.withAlpha (0.868f));
         g.drawImage (cachedImage_blackSquare_png_2,
                      x, y, width, height,
                      0, 0, cachedImage_blackSquare_png_2.getWidth(), cachedImage_blackSquare_png_2.getHeight());
@@ -212,6 +228,27 @@ void GUI::paint (juce::Graphics& g)
         g.drawImage (cachedImage_title800_png_3,
                      x, y, width, height,
                      0, 0, cachedImage_title800_png_3.getWidth(), cachedImage_title800_png_3.getHeight());
+    }
+
+    {
+        int x = 516, y = 452, width = 24, height = 24;
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour (juce::Colours::black);
+        g.drawImage (cachedImage_hiPassCurve_png_4,
+                     x, y, width, height,
+                     0, 0, cachedImage_hiPassCurve_png_4.getWidth(), cachedImage_hiPassCurve_png_4.getHeight());
+    }
+
+    {
+        int x = 244, y = 452, width = 24, height = 24;
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour (juce::Colours::black);
+        g.drawImageWithin (cachedImage_lowPassCurve_png_5,
+                           x, y, width, height,
+                           juce::RectanglePlacement::centred,
+                           false);
     }
 
     //[UserPaint] Add your own custom painting code here..
@@ -230,71 +267,89 @@ void GUI::resized()
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> GUI::AttachSlider(const juce::String& parameterID,
+std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> GUI::AttachAndSetupSlider(const juce::String& parameterID,
     juce::AudioProcessorValueTreeState& parametersTreeState)
 {
-    DaKog_RotorSlider* daKog_slider = nullptr;
+    DaKog_RotorSlider* daKog_Rotorslider = nullptr;
+    DaKog_VerticalSlider* daKog_Verticalslider = nullptr;
+    juce::Slider* slider = nullptr;
 
     //TODO find a better solution to remove this if/else madness
     if (parameterID == InputID)
-    {
-        //TODO Clean this with a generic soltuion in this function
-        m_InputSlider.get()->setLookAndFeel(&m_LookAndFeel);
-    }
+        daKog_Verticalslider = m_InputSlider.get();
 
     //Filters
     else if (parameterID == LoPassFilterCutOffID)
-        daKog_slider = m_LoPassFilterRotor.get();
+        daKog_Rotorslider = m_LoPassFilterRotor.get();
 
     else if (parameterID == HiPassFilterCutOffID)
-        daKog_slider = m_HighPassFilterRotor.get();
+        daKog_Rotorslider = m_HighPassFilterRotor.get();
 
     //Distortion
     else if (parameterID == DriveID)
-        daKog_slider = m_DriveRotor.get();
+        daKog_Rotorslider = m_DriveRotor.get();
 
     else if (parameterID == ClipFactorID)
-        daKog_slider = m_ClippingFactorRotor.get();
+        daKog_Rotorslider = m_ClippingFactorRotor.get();
 
     //SineWave
     else if (parameterID == SineFrequencyID)
-        daKog_slider = nullptr;
+        slider = m_SineFrequency.get();
 
     else if (parameterID == SineGainID)
-        daKog_slider = nullptr;
-
-    else if (parameterID == SineToggleID)
-        daKog_slider = nullptr;
+        slider = m_SineWaveGain.get();
 
     //Output
     else if (parameterID == WetGainID)
-        daKog_slider = nullptr;
+        daKog_Verticalslider = m_WetGain.get();
 
     else if (parameterID == MixID)
-        daKog_slider = nullptr;
+        daKog_Verticalslider = m_Mix.get();
 
     else if (parameterID == OutputGainID)
-        daKog_slider = nullptr;
+        daKog_Verticalslider = m_OutPut.get();
 
-    if (daKog_slider != nullptr)
+
+
+    if (daKog_Rotorslider != nullptr)
     {
-        juce::Slider& slider = daKog_slider->GetSlider();
-        juce::RangedAudioParameter& rangedParameter = *parametersTreeState.getParameter(parameterID);
-        RotorTextDefinition& textDefinitions = RotorTextDefinitions[parameterID];
-        daKog_slider->SetLeftLabel(textDefinitions.m_LeftValue);
-        daKog_slider->SetRightLabel(textDefinitions.m_RightValue);
-        daKog_slider->SetRotorLabel(textDefinitions.m_RotorLabel);
-        slider.setDoubleClickReturnValue(true, rangedParameter.getDefaultValue());
-        slider.setValue(rangedParameter.getDefaultValue());
-        slider.setTooltip(textDefinitions.m_ToolTip);
-        slider.setLookAndFeel(&m_LookAndFeel);
-        slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 40, 20);
-        return std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(parametersTreeState, parameterID, slider);
+        slider = &daKog_Rotorslider->GetSlider();
+        RotorTextDefinition& textDefinitions = m_RotorTextDefinitions[parameterID];
+        daKog_Rotorslider->SetLeftLabel(textDefinitions.m_LeftValue);
+        daKog_Rotorslider->SetRightLabel(textDefinitions.m_RightValue);
+        daKog_Rotorslider->SetRotorLabel(textDefinitions.m_RotorLabel);
+        slider->setTooltip(textDefinitions.m_ToolTip);
+
+        //slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 40, 20);
+    }
+    else if (daKog_Verticalslider)
+    {
+        slider = &daKog_Verticalslider->GetSlider();
+        VerticalSliderTextDefinition& textDefinitions = m_VerticalSliderTextDefinitions[parameterID];
+        slider->setTooltip(textDefinitions.m_ToolTip);
+        daKog_Verticalslider->SetBottomLabel(textDefinitions.m_BottomText);
     }
     else
     {
         //TODO Assert
     }
+
+    if (slider)
+    {
+        juce::RangedAudioParameter& rangedParameter = *parametersTreeState.getParameter(parameterID);
+        slider->setDoubleClickReturnValue(true, rangedParameter.getDefaultValue());
+        slider->setValue(rangedParameter.getDefaultValue());
+        slider->setLookAndFeel(&m_LookAndFeel);
+        return std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(parametersTreeState, parameterID, *slider);
+    }
+    return nullptr;
+}
+std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> GUI::AttachAndSetupButton(const juce::String& parameterID,
+    juce::AudioProcessorValueTreeState& parametersTreeState)
+{
+    if (parameterID == SineToggleID)
+        return std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(parametersTreeState, parameterID, *m_SineToggle.get());
+
     return nullptr;
 }
 //[/MiscUserCode]
@@ -316,9 +371,13 @@ BEGIN_JUCER_METADATA
   <BACKGROUND backgroundColour="ff000000">
     <IMAGE pos="0 0 800 600" resource="_800600_backGround_png" opacity="1.0"
            mode="0"/>
-    <IMAGE pos="0 0 800 600" resource="blackSquare_png" opacity="0.719"
+    <IMAGE pos="0 0 800 600" resource="blackSquare_png" opacity="0.868"
            mode="0"/>
     <IMAGE pos="4 4 796 100" resource="title800_png" opacity="1.0" mode="0"/>
+    <IMAGE pos="516 452 24 24" resource="hiPassCurve_png" opacity="1.0"
+           mode="0"/>
+    <IMAGE pos="244 452 24 24" resource="lowPassCurve_png" opacity="1.0"
+           mode="1"/>
   </BACKGROUND>
   <GROUPCOMPONENT name="OutputMixGroup" id="4f774ce508cb650" memberName="m_OutputMixGroup"
                   virtualName="" explicitFocusOrder="0" pos="608 104 192 498" title="OutputMix"/>
@@ -329,19 +388,17 @@ BEGIN_JUCER_METADATA
   <GROUPCOMPONENT name="SineWaveGroup" id="a9f15bc1a8161323" memberName="m_SineWaveGroup"
                   virtualName="" explicitFocusOrder="0" pos="80 270 528 166" title="SineWave"/>
   <JUCERCOMP name="DriveRotor" id="5559e13b5d3139e3" memberName="m_DriveRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="144 120 144 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="160 120 144 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
-  <JUCERCOMP name="InputSlider" id="6702ec67b51a87bd" memberName="m_InputSlider"
-             virtualName="" explicitFocusOrder="1" pos="8 128 64 472" sourceFile="DaKog_VerticalSlider.cpp"
-             constructorParams=""/>
   <JUCERCOMP name="ClippingFactorRotor" id="913d8d69df73a4b0" memberName="m_ClippingFactorRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="412 120 144 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="432 120 144 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <SLIDER name="SineFrequency" id="a2cefe8b90d2e8da" memberName="m_SineFrequency"
-          virtualName="" explicitFocusOrder="0" pos="412 288 144 144" min="0.0"
-          max="20000.0" int="0.0" style="RotaryHorizontalVerticalDrag"
-          textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
-          textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>
+          virtualName="" explicitFocusOrder="0" pos="408 360 144 72" bkgcol="ff707070"
+          thumbcol="ffffffff" trackcol="ffd0d0d0" min="0.0" max="20000.0"
+          int="1.0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
+          needsCallback="0"/>
   <GROUPCOMPONENT name="FilterGroup" id="e9f6c648edd08dc" memberName="m_FilterGroup"
                   virtualName="" explicitFocusOrder="0" pos="80 436 528 166" title="Filter"/>
   <JUCERCOMP name="WetGain" id="94b27180e5d42688" memberName="m_WetGain" virtualName=""
@@ -354,19 +411,22 @@ BEGIN_JUCER_METADATA
              explicitFocusOrder="2" pos="736 128 64 472" sourceFile="DaKog_VerticalSlider.cpp"
              constructorParams=""/>
   <JUCERCOMP name="m_LoPassFilterRotor" id="ae722f728baf2bc7" memberName="m_LoPassFilterRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="144 448 144 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="160 448 144 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <JUCERCOMP name="HighPassFilterRotor" id="2e6da0299a52fac0" memberName="m_HighPassFilterRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="412 448 144 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="432 448 144 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
-  <SLIDER name="new slider" id="e3904d0d06b55f70" memberName="juce__slider"
-          virtualName="" explicitFocusOrder="0" pos="184 288 64 136" min="0.0"
-          max="1.0" int="0.0" style="LinearVertical" textBoxPos="TextBoxBelow"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
-          needsCallback="0"/>
+  <SLIDER name="SineWaveGain" id="e3904d0d06b55f70" memberName="m_SineWaveGain"
+          virtualName="" explicitFocusOrder="0" pos="184 288 42 120" bkgcol="ff6d6d6d"
+          thumbcol="ffffffff" trackcol="ffc9c9c9" min="0.0" max="1.0" int="0.01"
+          style="LinearVertical" textBoxPos="NoTextBox" textBoxEditable="1"
+          textBoxWidth="80" textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>
   <TOGGLEBUTTON name="SineToggle" id="8b914ec1052c2b02" memberName="m_SineToggle"
-                virtualName="" explicitFocusOrder="0" pos="304 288 104 24" buttonText="SineToggle"
+                virtualName="" explicitFocusOrder="0" pos="424 304 104 24" buttonText="SineToggle"
                 connectedEdges="0" needsCallback="0" radioGroupId="0" state="0"/>
+  <JUCERCOMP name="InputSlider" id="6702ec67b51a87bd" memberName="m_InputSlider"
+             virtualName="" explicitFocusOrder="1" pos="8 128 64 472" sourceFile="DaKog_VerticalSlider.cpp"
+             constructorParams=""/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
@@ -10255,6 +10315,36 @@ static const unsigned char resource_GUI_title800_png[] = { 137,80,78,71,13,10,26
 
 const char* GUI::title800_png = (const char*) resource_GUI_title800_png;
 const int GUI::title800_pngSize = 14983;
+
+// JUCER_RESOURCE: hiPassCurve_png, 551, "../../../DaKog_Distort_Art/HiPassCurve32.png"
+static const unsigned char resource_GUI_hiPassCurve_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,
+0,9,112,72,89,115,0,0,14,194,0,0,14,194,1,21,40,74,128,0,0,0,24,116,69,88,116,83,111,102,116,119,97,114,101,0,112,97,105,110,116,46,110,101,116,32,52,46,49,46,54,253,78,9,232,0,0,1,165,73,68,65,84,88,
+71,189,151,177,43,132,97,28,199,15,81,206,200,127,160,110,144,44,138,12,102,89,172,140,151,20,41,50,209,233,22,101,51,178,97,52,136,129,197,160,76,204,86,131,36,201,160,20,34,221,160,247,124,158,223,243,
+189,98,112,116,60,191,79,253,122,223,239,243,125,159,247,243,190,215,221,112,185,70,168,86,171,249,44,203,166,152,67,230,158,220,48,186,229,239,97,79,17,233,67,220,254,119,116,219,159,65,218,206,236,107,
+223,191,161,219,215,135,235,218,144,31,199,45,95,120,98,125,151,89,102,38,201,197,218,144,167,153,25,102,158,89,248,110,164,168,15,23,174,7,91,13,114,133,41,51,29,186,36,29,72,70,152,76,238,32,127,101,
+134,85,167,5,95,248,232,47,163,218,228,129,49,213,233,65,54,43,183,65,222,82,149,30,124,173,8,111,162,218,228,207,28,186,84,167,7,225,68,84,71,200,43,170,124,64,120,42,119,144,191,113,112,125,251,66,84,
+71,200,155,170,124,64,184,42,183,65,30,84,149,30,124,77,8,63,127,249,46,84,249,128,112,72,110,131,92,82,229,3,194,53,185,13,114,183,170,244,224,11,31,255,85,84,155,252,92,149,15,8,251,228,54,200,101,85,
+62,32,44,201,109,144,123,85,249,128,240,76,238,32,191,214,178,15,8,59,153,119,249,195,3,108,168,242,1,225,184,220,6,121,84,149,15,8,183,229,14,242,10,135,188,170,244,32,11,63,191,91,179,3,231,39,170,124,
+64,216,35,183,65,94,82,229,3,194,57,185,107,244,171,242,129,7,56,144,56,188,125,248,211,209,172,42,61,200,90,144,62,154,29,56,223,83,229,3,194,1,185,13,242,140,42,31,16,46,202,109,144,11,170,124,64,120,
+36,119,144,223,105,217,15,164,47,242,135,7,216,209,178,19,185,220,7,25,47,81,172,26,29,179,200,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* GUI::hiPassCurve_png = (const char*) resource_GUI_hiPassCurve_png;
+const int GUI::hiPassCurve_pngSize = 551;
+
+// JUCER_RESOURCE: lowPassCurve_png, 540, "../../../DaKog_Distort_Art/LowPassCurve32.png"
+static const unsigned char resource_GUI_lowPassCurve_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,
+0,0,9,112,72,89,115,0,0,14,194,0,0,14,194,1,21,40,74,128,0,0,0,24,116,69,88,116,83,111,102,116,119,97,114,101,0,112,97,105,110,116,46,110,101,116,32,52,46,49,46,54,253,78,9,232,0,0,1,154,73,68,65,84,88,
+71,189,151,177,43,132,113,24,199,15,81,206,200,127,160,110,144,44,138,12,102,89,172,140,151,148,75,145,137,78,183,40,155,145,13,163,65,12,44,6,101,98,182,26,36,73,6,165,16,201,160,151,207,243,123,190,
+175,178,32,199,243,169,167,223,125,223,239,235,253,60,57,87,167,240,86,7,89,150,221,48,123,204,4,177,88,248,13,254,168,250,97,137,91,142,178,30,251,115,252,199,255,14,22,217,97,90,245,248,239,225,230,
+217,47,102,134,169,48,147,60,187,156,15,121,156,89,96,182,200,247,204,39,184,126,192,209,34,197,255,130,172,141,169,49,47,174,119,200,43,186,37,6,132,131,204,147,252,182,128,49,164,58,6,132,35,102,213,
+14,182,196,25,71,204,91,145,131,116,221,245,14,121,74,85,12,56,59,144,62,184,62,45,112,201,209,172,58,6,164,139,174,119,200,99,170,98,192,105,191,133,103,215,167,5,142,84,197,129,116,77,254,4,185,164,
+42,6,132,253,114,39,200,75,170,226,64,122,42,127,254,199,216,160,42,6,164,85,215,59,228,1,85,49,32,236,148,59,65,94,86,21,7,210,19,249,109,129,115,142,240,183,161,230,122,135,220,163,42,6,132,221,114,
+39,200,85,85,113,32,189,144,223,22,56,214,229,56,144,174,202,111,11,188,50,237,170,98,64,56,44,127,130,60,170,42,6,156,69,164,31,223,152,120,189,161,42,14,164,135,242,219,2,87,28,225,31,199,121,215,59,
+228,46,85,49,224,236,117,181,195,2,211,170,98,192,217,136,212,254,121,73,240,122,87,85,28,72,183,229,183,5,238,56,154,84,197,128,180,226,122,135,220,167,42,6,132,37,185,19,228,57,85,113,32,189,150,223,
+22,216,215,229,56,144,110,202,207,2,217,227,59,112,252,81,172,2,17,67,109,0,0,0,0,73,69,78,68,174,66,96,130,0,0};
+
+const char* GUI::lowPassCurve_png = (const char*) resource_GUI_lowPassCurve_png;
+const int GUI::lowPassCurve_pngSize = 540;
 
 
 //[EndFile] You can add extra defines here...

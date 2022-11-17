@@ -26,13 +26,13 @@
 //[/Headers]
 
 #include "DaKog_RotorSlider.h"
-#include "DaKog_VerticalSlider.h"
 #include "DaKog_RotorSlider.h"
 #include "DaKog_VerticalSlider.h"
 #include "DaKog_VerticalSlider.h"
 #include "DaKog_VerticalSlider.h"
 #include "DaKog_RotorSlider.h"
 #include "DaKog_RotorSlider.h"
+#include "DaKog_VerticalSlider.h"
 
 
 //==============================================================================
@@ -53,7 +53,10 @@ public:
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>
-        AttachSlider(const juce::String& ID,
+        AttachAndSetupSlider(const juce::String& ID,
+        juce::AudioProcessorValueTreeState& parametersTreeState);
+
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> AttachAndSetupButton(const juce::String& parameterID,
         juce::AudioProcessorValueTreeState& parametersTreeState);
     //[/UserMethods]
 
@@ -67,6 +70,10 @@ public:
     static const int blackSquare_pngSize;
     static const char* title800_png;
     static const int title800_pngSize;
+    static const char* hiPassCurve_png;
+    static const int hiPassCurve_pngSize;
+    static const char* lowPassCurve_png;
+    static const int lowPassCurve_pngSize;
 
 
 private:
@@ -86,7 +93,20 @@ private:
         RotorTextDefinition(){};
 
     };
-    std::map<juce::String, RotorTextDefinition> RotorTextDefinitions;
+
+    struct VerticalSliderTextDefinition
+    {
+        juce::String m_BottomText;
+        juce::String m_ToolTip;
+        VerticalSliderTextDefinition(const char* bottomText, const char* toolTip) :
+            m_BottomText(bottomText),
+            m_ToolTip(toolTip)
+        {};
+        VerticalSliderTextDefinition() {};
+
+    };
+    std::map<juce::String, RotorTextDefinition> m_RotorTextDefinitions;
+    std::map<juce::String, VerticalSliderTextDefinition> m_VerticalSliderTextDefinitions;
     DaKog_LookandFeel m_LookAndFeel;
     //[/UserVariables]
 
@@ -96,7 +116,6 @@ private:
     std::unique_ptr<juce::GroupComponent> m_DriveGroup;
     std::unique_ptr<juce::GroupComponent> m_SineWaveGroup;
     std::unique_ptr<DaKog_RotorSlider> m_DriveRotor;
-    std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
     std::unique_ptr<DaKog_RotorSlider> m_ClippingFactorRotor;
     std::unique_ptr<juce::Slider> m_SineFrequency;
     std::unique_ptr<juce::GroupComponent> m_FilterGroup;
@@ -105,11 +124,14 @@ private:
     std::unique_ptr<DaKog_VerticalSlider> m_OutPut;
     std::unique_ptr<DaKog_RotorSlider> m_LoPassFilterRotor;
     std::unique_ptr<DaKog_RotorSlider> m_HighPassFilterRotor;
-    std::unique_ptr<juce::Slider> juce__slider;
+    std::unique_ptr<juce::Slider> m_SineWaveGain;
     std::unique_ptr<juce::ToggleButton> m_SineToggle;
+    std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
     juce::Image cachedImage__800600_backGround_png_1;
     juce::Image cachedImage_blackSquare_png_2;
     juce::Image cachedImage_title800_png_3;
+    juce::Image cachedImage_hiPassCurve_png_4;
+    juce::Image cachedImage_lowPassCurve_png_5;
 
 
     //==============================================================================

@@ -9,9 +9,20 @@
 */
 
 #include "DaKog_LookAndFeel.h"
+namespace
+{
+    static const int s_thumbExtendedSize = 16;
+};
+
 DaKog_LookandFeel::DaKog_LookandFeel()
 {
-    cachedImage_Rotor_png_1 = juce::ImageCache::getFromMemory(rotor_png, rotor_pngSize);
+    cachedImage_Rotor_png_1 = juce::ImageCache::getFromMemory(rotor_png, rotor_pngSize);  
+}
+
+int DaKog_LookandFeel::getSliderThumbRadius(juce::Slider& slider)
+{
+    return juce::jmin(12, slider.isHorizontal() ? static_cast<int> ((float)slider.getHeight() * 0.5f)
+        : static_cast<int> ((float)slider.getWidth() * 0.5f));
 }
 
 void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
@@ -79,11 +90,21 @@ void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int wi
         if (!isTwoVal)
         {
             g.setColour(slider.findColour(juce::Slider::thumbColourId));
-            int x = thumbPoint.getX();
-            int y = thumbPoint.getY();
+            //TODO Figure out how to draw something on screen
+            /*int x = maxPoint.getX();
+            int y = maxPoint.getY() - 200;
             m_ImgTransform.transformPoint(x, y);
-            g.drawImageTransformed(cachedImage_Rotor_png_1, m_ImgTransform);
-            g.fillEllipse(juce::Rectangle<float>(static_cast<float> (thumbWidth), static_cast<float> (thumbWidth)).withCentre(isThreeVal ? thumbPoint : maxPoint));
+            m_ImgTransform = m_ImgTransform.withAbsoluteTranslation(x, y);
+            g.drawImageTransformed(cachedImage_Rotor_png_1, m_ImgTransform2);
+            */
+            if (slider.isHorizontal())
+            {
+                g.fillRect(juce::Rectangle<float>(static_cast<float> (thumbWidth), static_cast<float> (thumbWidth + s_thumbExtendedSize)).withCentre(isThreeVal ? thumbPoint : maxPoint) );
+            }
+            else
+            {
+                g.fillRect(juce::Rectangle<float>(static_cast<float> (thumbWidth + s_thumbExtendedSize), static_cast<float> (thumbWidth)).withCentre(isThreeVal ? thumbPoint : maxPoint));
+            }
         }
 
         if (isTwoVal || isThreeVal)

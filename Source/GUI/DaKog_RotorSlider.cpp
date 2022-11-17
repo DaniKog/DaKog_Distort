@@ -76,7 +76,7 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_RightLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     m_RightLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    m_RightLabel->setBounds (56, 120, 64, 16);
+    m_RightLabel->setBounds (48, 120, 64, 16);
 
 
     //[UserPreSize]
@@ -161,7 +161,7 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Calibri" fontsize="19.2" kerning="0.0"
          bold="0" italic="0" justification="36"/>
   <LABEL name="RightLabel" id="dd847a6f3f0520e8" memberName="m_RightLabel"
-         virtualName="" explicitFocusOrder="0" pos="56 120 64 16" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="48 120 64 16" edTextCol="ff000000"
          edBkgCol="0" labelText="11" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Calibri" fontsize="19.2" kerning="0.0"
          bold="0" italic="0" justification="36"/>

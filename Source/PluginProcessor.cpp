@@ -379,7 +379,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
     parameters.add(std::make_unique<juce::AudioParameterFloat>(InputID, InputName, 0.f, 1.f, 1.f));
     //Distortion
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName,0.f,150.f,1.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName,1.f,150.f,1.0f));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(ClipFactorID, ClipFactorName,0.1f,30.f,1.f));
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));

@@ -31,6 +31,8 @@ public:
     void drawPointer(juce::Graphics& g, const float x, const float y, const float diameter,
         const juce::Colour& colour, const int direction) noexcept;
 
+    int getSliderThumbRadius(juce::Slider& slider) override;
+
         //juce::Label* createSliderTextBox(juce::Slider& slider) override;
         //juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
 
@@ -40,6 +42,7 @@ private:
     static const int rotor_pngSize;
     juce::Image cachedImage_Rotor_png_1;
     juce::AffineTransform m_ImgTransform;
+    juce::AffineTransform m_ImgTransform2;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DaKog_LookandFeel)
 };

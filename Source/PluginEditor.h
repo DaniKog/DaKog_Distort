@@ -26,10 +26,6 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 private:
-    void SetupRotors();
-    void SetupRotor(std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& sliderAttachment, const juce::String& parameterID, DaKog_RotorSlider& rotor);
-    juce::String GetToolTip(const juce::String& parameterID);
-private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     DaKog_DistortAudioProcessor& audioProcessor;
@@ -40,8 +36,16 @@ public:
      //Distortion
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_DriveSliderValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_ClippingFactorValue;
+     //SineWave
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineGainValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_SineToggleValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineFrequencyValue;
      //Filter
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_LoCutFilterValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_HiCutFilterValue;
+     //Mix
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_WetGainValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_MixValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_OutputValue;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DaKog_DistortAudioProcessorEditor)
 };

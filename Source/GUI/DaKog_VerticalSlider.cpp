@@ -32,24 +32,30 @@ DaKog_VerticalSlider::DaKog_VerticalSlider ()
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    juce__label.reset (new juce::Label ("new label",
-                                        TRANS("Text")));
-    addAndMakeVisible (juce__label.get());
-    juce__label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    juce__label->setJustificationType (juce::Justification::centred);
-    juce__label->setEditable (false, false, false);
-    juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+    m_BottomLabel.reset (new juce::Label ("new label",
+                                          TRANS("Text")));
+    addAndMakeVisible (m_BottomLabel.get());
+    m_BottomLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    m_BottomLabel->setJustificationType (juce::Justification::centred);
+    m_BottomLabel->setEditable (false, false, false);
+    m_BottomLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    m_BottomLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    juce__label->setBounds (0, 440, 64, 24);
+    m_BottomLabel->setBounds (0, 440, 64, 24);
 
     m_DaKogVerticalSlider.reset (new juce::Slider ("m_DaKogRotorSilder"));
     addAndMakeVisible (m_DaKogVerticalSlider.get());
-    m_DaKogVerticalSlider->setRange (0, 1, 0);
+    m_DaKogVerticalSlider->setRange (0, 1, 0.01);
     m_DaKogVerticalSlider->setSliderStyle (juce::Slider::LinearVertical);
-    m_DaKogVerticalSlider->setTextBoxStyle (juce::Slider::NoTextBox, false, 80, 20);
+    m_DaKogVerticalSlider->setTextBoxStyle (juce::Slider::NoTextBox, true, 80, 20);
+    m_DaKogVerticalSlider->setColour (juce::Slider::backgroundColourId, juce::Colour (0xff5b5b5b));
+    m_DaKogVerticalSlider->setColour (juce::Slider::thumbColourId, juce::Colours::white);
+    m_DaKogVerticalSlider->setColour (juce::Slider::trackColourId, juce::Colour (0xffc1c1c1));
+    m_DaKogVerticalSlider->setColour (juce::Slider::rotarySliderFillColourId, juce::Colours::white);
+    m_DaKogVerticalSlider->setColour (juce::Slider::rotarySliderOutlineColourId, juce::Colours::white);
+    m_DaKogVerticalSlider->setColour (juce::Slider::textBoxHighlightColourId, juce::Colour (0x66c6c6c6));
 
-    m_DaKogVerticalSlider->setBounds (16, 0, 32, 440);
+    m_DaKogVerticalSlider->setBounds (8, 0, 48, 440);
 
 
     //[UserPreSize]
@@ -67,7 +73,7 @@ DaKog_VerticalSlider::~DaKog_VerticalSlider()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    juce__label = nullptr;
+    m_BottomLabel = nullptr;
     m_DaKogVerticalSlider = nullptr;
 
 
@@ -114,15 +120,17 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
-  <LABEL name="new label" id="1b62d27a1e93c3fc" memberName="juce__label"
+  <LABEL name="new label" id="1b62d27a1e93c3fc" memberName="m_BottomLabel"
          virtualName="" explicitFocusOrder="0" pos="0 440 64 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Text" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
   <SLIDER name="m_DaKogRotorSilder" id="fb640ad76e405aa9" memberName="m_DaKogVerticalSlider"
-          virtualName="" explicitFocusOrder="0" pos="16 0 32 440" min="0.0"
-          max="1.0" int="0.0" style="LinearVertical" textBoxPos="NoTextBox"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
+          virtualName="" explicitFocusOrder="0" pos="8 0 48 440" bkgcol="ff5b5b5b"
+          thumbcol="ffffffff" trackcol="ffc1c1c1" rotarysliderfill="ffffffff"
+          rotaryslideroutline="ffffffff" textboxhighlight="66c6c6c6" min="0.0"
+          max="1.0" int="0.01" style="LinearVertical" textBoxPos="NoTextBox"
+          textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
 </JUCER_COMPONENT>
 

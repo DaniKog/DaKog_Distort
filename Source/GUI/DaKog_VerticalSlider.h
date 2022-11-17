@@ -42,6 +42,8 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    juce::Slider& GetSlider() { return *m_DaKogVerticalSlider.get(); }
+    void SetBottomLabel(juce::String& text) { m_BottomLabel.get()->setText(text, juce::NotificationType::dontSendNotification); }
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -54,7 +56,7 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Label> m_BottomLabel;
     std::unique_ptr<juce::Slider> m_DaKogVerticalSlider;
 
 

@@ -84,11 +84,14 @@ private:
         juce::String m_RightValue;
         juce::String m_RotorLabel;
         juce::String m_ToolTip;
-        RotorTextDefinition(const char* leftValue, const char* rightValue, const char* rotorLabel, const char* tooltip) :
+        juce::String m_ValueSuffix;
+        RotorTextDefinition(const char* leftValue, const char* rightValue, const char* rotorLabel, const char* tooltip,
+            const char* suffix) :
             m_LeftValue(leftValue),
             m_RightValue(rightValue),
             m_RotorLabel(rotorLabel),
-            m_ToolTip(tooltip)
+            m_ToolTip(tooltip),
+            m_ValueSuffix(suffix)
         {};
         RotorTextDefinition(){};
 
@@ -98,9 +101,11 @@ private:
     {
         juce::String m_BottomText;
         juce::String m_ToolTip;
-        VerticalSliderTextDefinition(const char* bottomText, const char* toolTip) :
+        juce::String m_ValueSuffix;
+        VerticalSliderTextDefinition(const char* bottomText, const char* toolTip, const char* suffix) :
             m_BottomText(bottomText),
-            m_ToolTip(toolTip)
+            m_ToolTip(toolTip),
+            m_ValueSuffix(suffix)
         {};
         VerticalSliderTextDefinition() {};
 
@@ -127,6 +132,8 @@ private:
     std::unique_ptr<juce::Slider> m_SineWaveGain;
     std::unique_ptr<juce::ToggleButton> m_SineToggle;
     std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
+    std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Label> m_SineGain;
     juce::Image cachedImage__800600_backGround_png_1;
     juce::Image cachedImage_blackSquare_png_2;
     juce::Image cachedImage_title800_png_3;

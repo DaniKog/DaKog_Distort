@@ -18,6 +18,8 @@ public:
     DaKog_LookandFeel();
     ~DaKog_LookandFeel() override {};
 
+    juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
+
     void drawRotarySlider(juce::Graphics&, int x, int y, int width, int height,
         float sliderPosProportional, float rotaryStartAngle,
         float rotaryEndAngle, juce::Slider&) override;
@@ -31,6 +33,16 @@ public:
     void drawPointer(juce::Graphics& g, const float x, const float y, const float diameter,
         const juce::Colour& colour, const int direction) noexcept;
 
+    void drawTickBox(juce::Graphics& g, juce::Component& component,
+        float x, float y, float w, float h,
+        const bool ticked,
+        const bool isEnabled,
+        const bool shouldDrawButtonAsHighlighted,
+        const bool shouldDrawButtonAsDown) override;
+
+    void drawToggleButton(juce::Graphics& g, juce::ToggleButton& button,
+        bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+
     int getSliderThumbRadius(juce::Slider& slider) override;
 
         //juce::Label* createSliderTextBox(juce::Slider& slider) override;
@@ -41,8 +53,19 @@ private:
     static const char* rotor_png;
     static const int rotor_pngSize;
     juce::Image cachedImage_Rotor_png_1;
+
+    static const char* button_middle_off_126_png;
+    static const int button_middle_off_126_pngSize;
+    juce::Image cachedImage_button_middle_off_126_png_1;
+    
+
+    static const char* button_middle_on_126_png;
+    static const int button_middle_on_126_pngSize;
+    juce::Image cachedImage_button_middle_on_126_png_2;
+    
+
     juce::AffineTransform m_ImgTransform;
-    juce::AffineTransform m_ImgTransform2;
+    juce::AffineTransform m_ImgTransform2; //TODO Check if Transform 2 is needed
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DaKog_LookandFeel)
 };

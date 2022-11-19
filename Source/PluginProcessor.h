@@ -76,7 +76,7 @@ private:
     std::vector <juce::dsp::IIR::Filter<float>> m_HiPassFilter;
 
     //Internal Parameters
-    juce::SmoothedValue<float> m_InputGain = 1.0f;
+    juce::SmoothedValue<float> m_InputGain = 0.0f;
     juce::SmoothedValue<float> m_WetGain = 1.0f;
     juce::SmoothedValue<float> m_Mix = 1.f;
     juce::SmoothedValue<float> m_OutputGain = 1.0f;

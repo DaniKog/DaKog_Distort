@@ -53,9 +53,6 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
-    // Binary resources:
-    static const char* rotor144_png;
-    static const int rotor144_pngSize;
 
 
 private:

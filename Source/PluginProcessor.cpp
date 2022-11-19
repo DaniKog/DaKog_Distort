@@ -380,21 +380,21 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
     juce::NormalisableRange<float> inputdbGainRange = makeRange::withCentre(-96, 6, -9);
     juce::NormalisableRange<float> outputdbGainRange = makeRange::withCentre(-96, 0, -15);
-    parameters.add(std::make_unique<juce::AudioParameterInt>(InputID, InputName, inputdbGainRange, 0.f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(InputID, InputName, inputdbGainRange, 0));
     //Distortion
     parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName,1.f,150.f,1.0f));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(ClipFactorID, ClipFactorName,0.1f,30.f,1.f));
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));
     parameters.add(std::make_unique<juce::AudioParameterInt>(SineFrequencyID, SineFrequencyName, makeRange::withCentre(20, 20000, 1000), 220));
-    parameters.add(std::make_unique<juce::AudioParameterInt>(SineGainID, SineGainName, inputdbGainRange, 0.5f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(SineGainID, SineGainName, inputdbGainRange, 0));
     //Filters
     parameters.add(std::make_unique<juce::AudioParameterInt>(LoPassFilterCutOffID, LoPassFilterCutOffName, makeRange::withCentre(20,20000,1000), 20000));
     parameters.add(std::make_unique<juce::AudioParameterInt>(HiPassFilterCutOffID, HiPassFilterCutOffName, makeRange::withCentre(20,20000,1000), 20));
     //Output
-    parameters.add(std::make_unique<juce::AudioParameterInt>(WetGainID, WetGainName, outputdbGainRange, 0.0f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(WetGainID, WetGainName, outputdbGainRange, 0));
     parameters.add(std::make_unique<juce::AudioParameterInt>(MixID, MixName, 0, 100, 50));
-    parameters.add(std::make_unique<juce::AudioParameterInt>(OutputGainID, OutputGainName, outputdbGainRange, 0.0f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(OutputGainID, OutputGainName, outputdbGainRange, 0));
     
 
     return parameters;

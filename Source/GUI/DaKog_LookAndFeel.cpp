@@ -233,7 +233,7 @@ void DaKog_LookandFeel::drawTickBox(juce::Graphics& g, juce::Component& componen
     juce::ignoreUnused(isEnabled, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
 
     juce::Rectangle<int> localBounds = component.getLocalBounds();
-    int imgX = localBounds.getCentreX() - cachedImage_button_middle_on_126_png_2.getWidth() * 0.5;;
+    int imgX = static_cast<int>(localBounds.getCentreX() - cachedImage_button_middle_on_126_png_2.getWidth() * 0.5f);
     int imgY = localBounds.getY();
     if (ticked)
     {
@@ -287,8 +287,8 @@ void DaKog_LookandFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int wi
     float rotaryEndAngle, juce::Slider& slider)
 {
     juce::Rectangle<int> localbounds = slider.getLocalBounds();
-    int imgCenter = cachedImage_Rotor_png_1.getWidth() * 0.5f;
-    int imgX = localbounds.getCentreX() - imgCenter;
+    int imgCenter = static_cast<int>(cachedImage_Rotor_png_1.getWidth() * 0.5f);
+    int imgX = static_cast<int>(localbounds.getCentreX() - imgCenter);
 
     auto toAngle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
     m_ImgTransform = m_ImgTransform.translation(imgX, y).

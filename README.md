@@ -11,7 +11,7 @@ Input Signal -> Filter -> Distortion -> (Optional) SineWave Generator -> Mix -> 
 <br />
 Filters = 4 Pole Butterworth
 <br />
-Distoariotn = Diadoe Distortion -> Soft Cliper
+Distortion = Diadoe Distortion -> Soft Cliper
 <br />
 ![DaKog_DistortSignalFlow drawio2](https://user-images.githubusercontent.com/12103063/202839676-d23195a9-f05a-4910-a6c1-f312ad400056.png)
 

@@ -112,7 +112,7 @@ void DaKog_DistortAudioProcessor::UpdateSineWaves(const juce::String& parameterI
     {
         for (int i = 0; i < getTotalNumOutputChannels(); ++i)
         {
-            m_SineWaves[i].SetSineGain(m_ParametersTreeState.getRawParameterValue(SineGainID)->load());
+            m_SineWaves[i].SetSineGain(juce::Decibels::decibelsToGain(m_ParametersTreeState.getRawParameterValue(SineGainID)->load()));
         }
     }
     else if (parameterID == SineToggleID)
@@ -311,7 +311,7 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            float inSample = buffer.getSample(channel, sample) * m_InputGain.getNextValue();
+            float inSample = buffer.getSample(channel, sample) * juce::Decibels::decibelsToGain(m_InputGain.getNextValue());
             float drySample = inSample;
 
             //Filters 
@@ -332,9 +332,10 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
             inSample = inSample > 1.0f ? 1.0f : inSample < -1.0f ? -1.0f : inSample;
 
             //Output
-            inSample = inSample * m_WetGain.getNextValue();
-            inSample = (drySample * (1.0f - m_Mix.getNextValue())) + (inSample * m_Mix.getNextValue());
-            channelData[sample] = inSample * m_OutputGain.getNextValue();
+            inSample = inSample * juce::Decibels::decibelsToGain(m_WetGain.getNextValue());
+            float mixVlaue = m_Mix.getNextValue() * 0.01f;
+            inSample = (drySample * (1.0f - mixVlaue)) + (inSample * mixVlaue);
+            channelData[sample] = inSample * juce::Decibels::decibelsToGain(m_OutputGain.getNextValue());
         }
     }
 }
@@ -377,21 +378,23 @@ void DaKog_DistortAudioProcessor::setStateInformation (const void* data, int siz
 juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor::SetupParameters()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(InputID, InputName, 0.f, 1.f, 1.f));
+    juce::NormalisableRange<float> inputdbGainRange = makeRange::withCentre(-96, 6, -9);
+    juce::NormalisableRange<float> outputdbGainRange = makeRange::withCentre(-96, 0, -15);
+    parameters.add(std::make_unique<juce::AudioParameterInt>(InputID, InputName, inputdbGainRange, 0.f));
     //Distortion
     parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName,1.f,150.f,1.0f));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(ClipFactorID, ClipFactorName,0.1f,30.f,1.f));
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));
     parameters.add(std::make_unique<juce::AudioParameterInt>(SineFrequencyID, SineFrequencyName, makeRange::withCentre(20, 20000, 1000), 220));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(SineGainID, SineGainName, 0.f, 1.f, 0.5f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(SineGainID, SineGainName, inputdbGainRange, 0.5f));
     //Filters
     parameters.add(std::make_unique<juce::AudioParameterInt>(LoPassFilterCutOffID, LoPassFilterCutOffName, makeRange::withCentre(20,20000,1000), 20000));
     parameters.add(std::make_unique<juce::AudioParameterInt>(HiPassFilterCutOffID, HiPassFilterCutOffName, makeRange::withCentre(20,20000,1000), 20));
     //Output
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(WetGainID, WetGainName, 0.f, 1.f, 1.0f));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(MixID, MixName, 0.f, 1.f, 0.5f));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(OutputGainID, OutputGainName, 0.f, 1.f, 1.0f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(WetGainID, WetGainName, outputdbGainRange, 0.0f));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(MixID, MixName, 0, 100, 50));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(OutputGainID, OutputGainName, outputdbGainRange, 0.0f));
     
 
     return parameters;

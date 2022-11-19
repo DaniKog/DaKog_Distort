@@ -21,7 +21,7 @@ DaKog_DistortAudioProcessorEditor::DaKog_DistortAudioProcessorEditor (DaKog_Dist
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize(800, 600);
+    setSize(600, 600);
 
     //Setup attachements
     m_InputGainSliderValue = m_GUI->AttachAndSetupSlider(InputID, audioProcessor.m_ParametersTreeState);

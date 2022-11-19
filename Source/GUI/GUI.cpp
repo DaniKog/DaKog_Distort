@@ -44,35 +44,35 @@ GUI::GUI ()
                                                       TRANS("OutputMix")));
     addAndMakeVisible (m_OutputMixGroup.get());
 
-    m_OutputMixGroup->setBounds (608, 104, 192, 498);
+    m_OutputMixGroup->setBounds (424, 96, 176, 504);
 
     m_InputMixGroup.reset (new juce::GroupComponent ("InputMix",
                                                      TRANS("InputMix")));
     addAndMakeVisible (m_InputMixGroup.get());
 
-    m_InputMixGroup->setBounds (0, 104, 80, 498);
+    m_InputMixGroup->setBounds (0, 96, 80, 504);
 
     m_DriveGroup.reset (new juce::GroupComponent ("DriveGroup",
                                                   TRANS("Distortion")));
     addAndMakeVisible (m_DriveGroup.get());
 
-    m_DriveGroup->setBounds (80, 104, 528, 166);
+    m_DriveGroup->setBounds (80, 96, 344, 168);
 
     m_SineWaveGroup.reset (new juce::GroupComponent ("SineWaveGroup",
                                                      TRANS("SineWave")));
     addAndMakeVisible (m_SineWaveGroup.get());
 
-    m_SineWaveGroup->setBounds (80, 270, 528, 166);
+    m_SineWaveGroup->setBounds (80, 264, 344, 168);
 
     m_DriveRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_DriveRotor.get());
     m_DriveRotor->setExplicitFocusOrder (1);
-    m_DriveRotor->setBounds (136, 120, 200, 144);
+    m_DriveRotor->setBounds (104, 112, 120, 144);
 
     m_ClippingFactorRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_ClippingFactorRotor.get());
     m_ClippingFactorRotor->setExplicitFocusOrder (1);
-    m_ClippingFactorRotor->setBounds (312, 120, 120, 144);
+    m_ClippingFactorRotor->setBounds (264, 112, 136, 144);
 
     m_SineFrequency.reset (new juce::Slider ("SineFrequency"));
     addAndMakeVisible (m_SineFrequency.get());
@@ -83,38 +83,38 @@ GUI::GUI ()
     m_SineFrequency->setColour (juce::Slider::thumbColourId, juce::Colours::white);
     m_SineFrequency->setColour (juce::Slider::trackColourId, juce::Colour (0xffd0d0d0));
 
-    m_SineFrequency->setBounds (304, 352, 136, 72);
+    m_SineFrequency->setBounds (264, 344, 136, 72);
 
     m_FilterGroup.reset (new juce::GroupComponent ("FilterGroup",
                                                    TRANS("Filter")));
     addAndMakeVisible (m_FilterGroup.get());
 
-    m_FilterGroup->setBounds (80, 436, 528, 166);
+    m_FilterGroup->setBounds (80, 432, 344, 168);
 
     m_WetGain.reset (new DaKog_VerticalSlider());
     addAndMakeVisible (m_WetGain.get());
     m_WetGain->setExplicitFocusOrder (2);
-    m_WetGain->setBounds (608, 128, 64, 472);
+    m_WetGain->setBounds (424, 112, 64, 480);
 
     m_Mix.reset (new DaKog_VerticalSlider());
     addAndMakeVisible (m_Mix.get());
     m_Mix->setExplicitFocusOrder (2);
-    m_Mix->setBounds (672, 128, 64, 472);
+    m_Mix->setBounds (480, 112, 64, 480);
 
     m_OutPut.reset (new DaKog_VerticalSlider());
     addAndMakeVisible (m_OutPut.get());
     m_OutPut->setExplicitFocusOrder (2);
-    m_OutPut->setBounds (736, 128, 64, 472);
+    m_OutPut->setBounds (536, 112, 64, 480);
 
     m_LoPassFilterRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_LoPassFilterRotor.get());
     m_LoPassFilterRotor->setExplicitFocusOrder (1);
-    m_LoPassFilterRotor->setBounds (136, 448, 120, 144);
+    m_LoPassFilterRotor->setBounds (104, 448, 168, 144);
 
     m_HighPassFilterRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_HighPassFilterRotor.get());
     m_HighPassFilterRotor->setExplicitFocusOrder (1);
-    m_HighPassFilterRotor->setBounds (320, 448, 192, 144);
+    m_HighPassFilterRotor->setBounds (264, 448, 200, 144);
 
     m_SineWaveGain.reset (new juce::Slider ("SineWaveGain"));
     addAndMakeVisible (m_SineWaveGain.get());
@@ -125,18 +125,18 @@ GUI::GUI ()
     m_SineWaveGain->setColour (juce::Slider::thumbColourId, juce::Colours::white);
     m_SineWaveGain->setColour (juce::Slider::trackColourId, juce::Colour (0xffc9c9c9));
 
-    m_SineWaveGain->setBounds (168, 312, 50, 120);
+    m_SineWaveGain->setBounds (144, 304, 50, 120);
 
     m_SineToggle.reset (new juce::ToggleButton ("SineToggle"));
     addAndMakeVisible (m_SineToggle.get());
     m_SineToggle->setColour (juce::ToggleButton::textColourId, juce::Colours::black);
 
-    m_SineToggle->setBounds (312, 288, 126, 66);
+    m_SineToggle->setBounds (264, 288, 126, 66);
 
     m_InputSlider.reset (new DaKog_VerticalSlider());
     addAndMakeVisible (m_InputSlider.get());
     m_InputSlider->setExplicitFocusOrder (1);
-    m_InputSlider->setBounds (8, 128, 64, 472);
+    m_InputSlider->setBounds (8, 112, 64, 480);
 
     juce__label.reset (new juce::Label ("new label",
                                         TRANS("v1.0")));
@@ -147,7 +147,7 @@ GUI::GUI ()
     juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    juce__label->setBounds (768, 88, 32, 16);
+    juce__label->setBounds (568, 0, 32, 16);
 
     m_SineGain.reset (new juce::Label ("SineGain",
                                        TRANS("SineGain")));
@@ -158,7 +158,7 @@ GUI::GUI ()
     m_SineGain->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     m_SineGain->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    m_SineGain->setBounds (160, 288, 72, 24);
+    m_SineGain->setBounds (136, 288, 72, 24);
 
     cachedImage__800600_backGround_png_1 = juce::ImageCache::getFromMemory (_800600_backGround_png, _800600_backGround_pngSize);
     cachedImage_blackSquare_png_2 = juce::ImageCache::getFromMemory (blackSquare_png, blackSquare_pngSize);
@@ -169,7 +169,7 @@ GUI::GUI ()
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (800, 600);
+    setSize (720, 600);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -179,12 +179,11 @@ GUI::GUI ()
     m_RotorTextDefinitions.emplace(LoPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "LowPass", "LowCutFilter Tooltip", "Hz"));
     m_RotorTextDefinitions.emplace(HiPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "HighPass", "HighCutFilter Tooltip", "Hz"));
 
-    m_VerticalSliderTextDefinitions.emplace(InputID, VerticalSliderTextDefinition("InputGain", "Input Tooltip", "dB"));
+    m_VerticalSliderTextDefinitions.emplace(InputID, VerticalSliderTextDefinition("Input", "Input Tooltip", "dB"));
     m_VerticalSliderTextDefinitions.emplace(WetGainID, VerticalSliderTextDefinition("WetGain", "WetGain Tooltip", "dB"));
     m_VerticalSliderTextDefinitions.emplace(MixID, VerticalSliderTextDefinition("Mix", "Mix Tooltip", "%"));
     m_VerticalSliderTextDefinitions.emplace(OutputGainID, VerticalSliderTextDefinition("Output", "Output Tooltip", "dB"));
 
-    m_SineFrequency.get()->setTextValueSuffix("Hz");
     //[/Constructor]
 }
 
@@ -226,7 +225,7 @@ void GUI::paint (juce::Graphics& g)
     g.fillAll (juce::Colours::black);
 
     {
-        int x = 0, y = 0, width = 800, height = 600;
+        int x = -100, y = 0, width = 800, height = 600;
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (juce::Colours::black);
@@ -236,7 +235,7 @@ void GUI::paint (juce::Graphics& g)
     }
 
     {
-        int x = 0, y = 0, width = 800, height = 600;
+        int x = 0, y = 0, width = 600, height = 600;
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (juce::Colours::black.withAlpha (0.868f));
@@ -246,7 +245,7 @@ void GUI::paint (juce::Graphics& g)
     }
 
     {
-        int x = 4, y = 4, width = 796, height = 100;
+        int x = 4, y = 12, width = 596, height = 84;
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (juce::Colours::black);
@@ -256,7 +255,7 @@ void GUI::paint (juce::Graphics& g)
     }
 
     {
-        int x = 420, y = 452, width = 24, height = 24;
+        int x = 372, y = 452, width = 24, height = 24;
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (juce::Colours::black);
@@ -266,7 +265,7 @@ void GUI::paint (juce::Graphics& g)
     }
 
     {
-        int x = 236, y = 452, width = 24, height = 24;
+        int x = 204, y = 452, width = 24, height = 24;
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (juce::Colours::black);
@@ -403,75 +402,75 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="GUI" componentName="" parentClasses="public juce::Component"
                  constructorParams="" variableInitialisers="" snapPixels="8" snapActive="1"
-                 snapShown="1" overlayOpacity="0.330" fixedSize="0" initialWidth="800"
+                 snapShown="1" overlayOpacity="0.330" fixedSize="0" initialWidth="720"
                  initialHeight="600">
   <BACKGROUND backgroundColour="ff000000">
-    <IMAGE pos="0 0 800 600" resource="_800600_backGround_png" opacity="1.0"
+    <IMAGE pos="-100 0 800 600" resource="_800600_backGround_png" opacity="1.0"
            mode="0"/>
-    <IMAGE pos="0 0 800 600" resource="blackSquare_png" opacity="0.868"
+    <IMAGE pos="0 0 600 600" resource="blackSquare_png" opacity="0.868"
            mode="0"/>
-    <IMAGE pos="4 4 796 100" resource="title800_png" opacity="1.0" mode="0"/>
-    <IMAGE pos="420 452 24 24" resource="hiPassCurve_png" opacity="1.0"
+    <IMAGE pos="4 12 596 84" resource="title800_png" opacity="1.0" mode="0"/>
+    <IMAGE pos="372 452 24 24" resource="hiPassCurve_png" opacity="1.0"
            mode="0"/>
-    <IMAGE pos="236 452 24 24" resource="lowPassCurve_png" opacity="1.0"
+    <IMAGE pos="204 452 24 24" resource="lowPassCurve_png" opacity="1.0"
            mode="1"/>
   </BACKGROUND>
   <GROUPCOMPONENT name="OutputMixGroup" id="4f774ce508cb650" memberName="m_OutputMixGroup"
-                  virtualName="" explicitFocusOrder="0" pos="608 104 192 498" title="OutputMix"/>
+                  virtualName="" explicitFocusOrder="0" pos="424 96 176 504" title="OutputMix"/>
   <GROUPCOMPONENT name="InputMix" id="5e3f59dfd70ef9a5" memberName="m_InputMixGroup"
-                  virtualName="" explicitFocusOrder="0" pos="0 104 80 498" title="InputMix"/>
+                  virtualName="" explicitFocusOrder="0" pos="0 96 80 504" title="InputMix"/>
   <GROUPCOMPONENT name="DriveGroup" id="5a111d8acf7610bf" memberName="m_DriveGroup"
-                  virtualName="" explicitFocusOrder="0" pos="80 104 528 166" title="Distortion"/>
+                  virtualName="" explicitFocusOrder="0" pos="80 96 344 168" title="Distortion"/>
   <GROUPCOMPONENT name="SineWaveGroup" id="a9f15bc1a8161323" memberName="m_SineWaveGroup"
-                  virtualName="" explicitFocusOrder="0" pos="80 270 528 166" title="SineWave"/>
+                  virtualName="" explicitFocusOrder="0" pos="80 264 344 168" title="SineWave"/>
   <JUCERCOMP name="DriveRotor" id="5559e13b5d3139e3" memberName="m_DriveRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="136 120 200 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="104 112 120 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <JUCERCOMP name="ClippingFactorRotor" id="913d8d69df73a4b0" memberName="m_ClippingFactorRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="312 120 120 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="264 112 136 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <SLIDER name="SineFrequency" id="a2cefe8b90d2e8da" memberName="m_SineFrequency"
-          virtualName="" explicitFocusOrder="0" pos="304 352 136 72" bkgcol="ff707070"
+          virtualName="" explicitFocusOrder="0" pos="264 344 136 72" bkgcol="ff707070"
           thumbcol="ffffffff" trackcol="ffd0d0d0" min="0.0" max="20000.0"
           int="1.0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="72" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
   <GROUPCOMPONENT name="FilterGroup" id="e9f6c648edd08dc" memberName="m_FilterGroup"
-                  virtualName="" explicitFocusOrder="0" pos="80 436 528 166" title="Filter"/>
+                  virtualName="" explicitFocusOrder="0" pos="80 432 344 168" title="Filter"/>
   <JUCERCOMP name="WetGain" id="94b27180e5d42688" memberName="m_WetGain" virtualName=""
-             explicitFocusOrder="2" pos="608 128 64 472" sourceFile="DaKog_VerticalSlider.cpp"
+             explicitFocusOrder="2" pos="424 112 64 480" sourceFile="DaKog_VerticalSlider.cpp"
              constructorParams=""/>
   <JUCERCOMP name="Mix" id="41e3a4f1252ed164" memberName="m_Mix" virtualName=""
-             explicitFocusOrder="2" pos="672 128 64 472" sourceFile="DaKog_VerticalSlider.cpp"
+             explicitFocusOrder="2" pos="480 112 64 480" sourceFile="DaKog_VerticalSlider.cpp"
              constructorParams=""/>
   <JUCERCOMP name="OutPut" id="71b824075c284826" memberName="m_OutPut" virtualName=""
-             explicitFocusOrder="2" pos="736 128 64 472" sourceFile="DaKog_VerticalSlider.cpp"
+             explicitFocusOrder="2" pos="536 112 64 480" sourceFile="DaKog_VerticalSlider.cpp"
              constructorParams=""/>
   <JUCERCOMP name="m_LoPassFilterRotor" id="ae722f728baf2bc7" memberName="m_LoPassFilterRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="136 448 120 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="104 448 168 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <JUCERCOMP name="HighPassFilterRotor" id="2e6da0299a52fac0" memberName="m_HighPassFilterRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="320 448 192 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="264 448 200 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <SLIDER name="SineWaveGain" id="e3904d0d06b55f70" memberName="m_SineWaveGain"
-          virtualName="" explicitFocusOrder="0" pos="168 312 50 120" bkgcol="ff6d6d6d"
+          virtualName="" explicitFocusOrder="0" pos="144 304 50 120" bkgcol="ff6d6d6d"
           thumbcol="ffffffff" trackcol="ffc9c9c9" min="0.0" max="1.0" int="0.01"
           style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>
   <TOGGLEBUTTON name="SineToggle" id="8b914ec1052c2b02" memberName="m_SineToggle"
-                virtualName="" explicitFocusOrder="0" pos="312 288 126 66" txtcol="ff000000"
+                virtualName="" explicitFocusOrder="0" pos="264 288 126 66" txtcol="ff000000"
                 buttonText="SineToggle" connectedEdges="0" needsCallback="0"
                 radioGroupId="0" state="0"/>
   <JUCERCOMP name="InputSlider" id="6702ec67b51a87bd" memberName="m_InputSlider"
-             virtualName="" explicitFocusOrder="1" pos="8 128 64 472" sourceFile="DaKog_VerticalSlider.cpp"
+             virtualName="" explicitFocusOrder="1" pos="8 112 64 480" sourceFile="DaKog_VerticalSlider.cpp"
              constructorParams=""/>
   <LABEL name="new label" id="c1c6951a8dcb36b0" memberName="juce__label"
-         virtualName="" explicitFocusOrder="0" pos="768 88 32 16" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="568 0 32 16" edTextCol="ff000000"
          edBkgCol="0" labelText="v1.0" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="10.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="SineGain" id="aa2ed05add77d9ed" memberName="m_SineGain"
-         virtualName="" explicitFocusOrder="0" pos="160 288 72 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="136 288 72 24" edTextCol="ff000000"
          edBkgCol="0" labelText="SineGain" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>

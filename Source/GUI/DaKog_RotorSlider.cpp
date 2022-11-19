@@ -41,7 +41,7 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_RotorLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     m_RotorLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    m_RotorLabel->setBounds (8, 0, 104, 24);
+    m_RotorLabel->setBounds (16, 0, 104, 24);
 
     m_DaKogRotorSilder.reset (new juce::Slider ("DaKog_RotorSilder"));
     addAndMakeVisible (m_DaKogRotorSilder.get());
@@ -54,13 +54,13 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_DaKogRotorSilder->setColour (juce::Slider::rotarySliderOutlineColourId, juce::Colour (0xff6b6b6b));
     m_DaKogRotorSilder->setColour (juce::Slider::textBoxHighlightColourId, juce::Colour (0x668b8b8b));
 
-    m_DaKogRotorSilder->setBounds (8, 24, 104, 112);
+    m_DaKogRotorSilder->setBounds (16, 24, 104, 112);
 
     m_LeftLabel.reset (new juce::Label ("LeftLabel",
                                         TRANS("0")));
     addAndMakeVisible (m_LeftLabel.get());
     m_LeftLabel->setFont (juce::Font ("Calibri", 19.20f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    m_LeftLabel->setJustificationType (juce::Justification::centred);
+    m_LeftLabel->setJustificationType (juce::Justification::centredRight);
     m_LeftLabel->setEditable (false, false, false);
     m_LeftLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     m_LeftLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
@@ -68,15 +68,15 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_LeftLabel->setBounds (-8, 96, 48, 16);
 
     m_RightLabel.reset (new juce::Label ("RightLabel",
-                                         TRANS("11")));
+                                         TRANS("11000")));
     addAndMakeVisible (m_RightLabel.get());
     m_RightLabel->setFont (juce::Font ("Calibri", 19.20f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    m_RightLabel->setJustificationType (juce::Justification::centred);
+    m_RightLabel->setJustificationType (juce::Justification::centredLeft);
     m_RightLabel->setEditable (false, false, false);
     m_RightLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     m_RightLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    m_RightLabel->setBounds (72, 96, 64, 16);
+    m_RightLabel->setBounds (88, 96, 64, 16);
 
 
     //[UserPreSize]
@@ -145,12 +145,12 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="144" initialHeight="144">
   <BACKGROUND backgroundColour="323e44"/>
   <LABEL name="RotorLabel" id="ce165a1f18d9fc20" memberName="m_RotorLabel"
-         virtualName="" explicitFocusOrder="0" pos="8 0 104 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="16 0 104 24" edTextCol="ff000000"
          edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
   <SLIDER name="DaKog_RotorSilder" id="4c17abbf426b9f3" memberName="m_DaKogRotorSilder"
-          virtualName="" explicitFocusOrder="1" pos="8 24 104 112" thumbcol="ffffffff"
+          virtualName="" explicitFocusOrder="1" pos="16 24 104 112" thumbcol="ffffffff"
           rotarysliderfill="ffd7d7d7" rotaryslideroutline="ff6b6b6b" textboxhighlight="668b8b8b"
           min="0.0" max="10.0" int="1.0" style="RotaryHorizontalVerticalDrag"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="72"
@@ -159,12 +159,12 @@ BEGIN_JUCER_METADATA
          virtualName="" explicitFocusOrder="0" pos="-8 96 48 16" edTextCol="ff000000"
          edBkgCol="0" labelText="0" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Calibri" fontsize="19.2" kerning="0.0"
-         bold="0" italic="0" justification="36"/>
+         bold="0" italic="0" justification="34"/>
   <LABEL name="RightLabel" id="dd847a6f3f0520e8" memberName="m_RightLabel"
-         virtualName="" explicitFocusOrder="0" pos="72 96 64 16" edTextCol="ff000000"
-         edBkgCol="0" labelText="11" editableSingleClick="0" editableDoubleClick="0"
+         virtualName="" explicitFocusOrder="0" pos="88 96 64 16" edTextCol="ff000000"
+         edBkgCol="0" labelText="11000" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Calibri" fontsize="19.2" kerning="0.0"
-         bold="0" italic="0" justification="36"/>
+         bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

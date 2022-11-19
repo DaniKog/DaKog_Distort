@@ -76,10 +76,10 @@ private:
     std::vector <juce::dsp::IIR::Filter<float>> m_HiPassFilter;
 
     //Internal Parameters
-    juce::SmoothedValue<float> m_InputGain = 0.0f;
-    juce::SmoothedValue<float> m_WetGain = 1.0f;
-    juce::SmoothedValue<float> m_Mix = 1.f;
-    juce::SmoothedValue<float> m_OutputGain = 1.0f;
+    juce::SmoothedValue<float> m_InputGain = 0;
+    juce::SmoothedValue<float> m_WetGain = 0;
+    juce::SmoothedValue<float> m_Mix = 50;
+    juce::SmoothedValue<float> m_OutputGain = 0;
     bool m_ToggleSineWave = false;
 
     //==============================================================================

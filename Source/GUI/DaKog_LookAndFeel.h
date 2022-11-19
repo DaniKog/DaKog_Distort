@@ -65,7 +65,6 @@ private:
     
 
     juce::AffineTransform m_ImgTransform;
-    juce::AffineTransform m_ImgTransform2; //TODO Check if Transform 2 is needed
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DaKog_LookandFeel)
 };

@@ -367,10 +367,6 @@ std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> GUI::Attac
         slider->setTextValueSuffix(textDefinitions.m_ValueSuffix);
         daKog_Verticalslider->SetBottomLabel(textDefinitions.m_BottomText);
     }
-    else
-    {
-        //TODO Assert
-    }
 
     if (slider)
     {

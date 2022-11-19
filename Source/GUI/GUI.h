@@ -132,7 +132,7 @@ private:
     std::unique_ptr<juce::Slider> m_SineWaveGain;
     std::unique_ptr<juce::ToggleButton> m_SineToggle;
     std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
-    std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Label> m_Version;
     std::unique_ptr<juce::Label> m_SineGain;
     juce::Image cachedImage__800600_backGround_png_1;
     juce::Image cachedImage_blackSquare_png_2;

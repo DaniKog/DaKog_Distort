@@ -138,16 +138,16 @@ GUI::GUI ()
     m_InputSlider->setExplicitFocusOrder (1);
     m_InputSlider->setBounds (8, 112, 64, 480);
 
-    juce__label.reset (new juce::Label ("new label",
-                                        TRANS("v1.0")));
-    addAndMakeVisible (juce__label.get());
-    juce__label->setFont (juce::Font (10.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    juce__label->setJustificationType (juce::Justification::centredLeft);
-    juce__label->setEditable (false, false, false);
-    juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+    m_Version.reset (new juce::Label ("Version",
+                                      TRANS("v1.0")));
+    addAndMakeVisible (m_Version.get());
+    m_Version->setFont (juce::Font (10.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    m_Version->setJustificationType (juce::Justification::centredRight);
+    m_Version->setEditable (false, false, false);
+    m_Version->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    m_Version->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    juce__label->setBounds (568, 0, 32, 16);
+    m_Version->setBounds (480, 0, 120, 24);
 
     m_SineGain.reset (new juce::Label ("SineGain",
                                        TRANS("SineGain")));
@@ -173,6 +173,12 @@ GUI::GUI ()
 
 
     //[Constructor] You can add your own custom stuff here..
+    //Version
+    juce::String versionString = "Preview V";
+    juce::String versionNumber = ProjectInfo::versionString;
+    versionString.append(versionNumber, 4);
+    m_Version->setText(versionString,juce::NotificationType::dontSendNotification);
+
     //TODO find a way to properly pass the arguments to the emplace
     m_RotorTextDefinitions.emplace(DriveID, RotorTextDefinition("0", "11", "Drive", "Drive Tooltip",""));
     m_RotorTextDefinitions.emplace(ClipFactorID, RotorTextDefinition("Soft", "Hard", "ClipFactor", "Clipping Factor Tooltip",""));
@@ -208,7 +214,7 @@ GUI::~GUI()
     m_SineWaveGain = nullptr;
     m_SineToggle = nullptr;
     m_InputSlider = nullptr;
-    juce__label = nullptr;
+    m_Version = nullptr;
     m_SineGain = nullptr;
 
 
@@ -245,7 +251,7 @@ void GUI::paint (juce::Graphics& g)
     }
 
     {
-        int x = 4, y = 12, width = 596, height = 84;
+        int x = 4, y = 8, width = 596, height = 96;
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (juce::Colours::black);
@@ -409,7 +415,7 @@ BEGIN_JUCER_METADATA
            mode="0"/>
     <IMAGE pos="0 0 600 600" resource="blackSquare_png" opacity="0.868"
            mode="0"/>
-    <IMAGE pos="4 12 596 84" resource="title800_png" opacity="1.0" mode="0"/>
+    <IMAGE pos="4 8 596 96" resource="title800_png" opacity="1.0" mode="0"/>
     <IMAGE pos="372 452 24 24" resource="hiPassCurve_png" opacity="1.0"
            mode="0"/>
     <IMAGE pos="204 452 24 24" resource="lowPassCurve_png" opacity="1.0"
@@ -464,11 +470,11 @@ BEGIN_JUCER_METADATA
   <JUCERCOMP name="InputSlider" id="6702ec67b51a87bd" memberName="m_InputSlider"
              virtualName="" explicitFocusOrder="1" pos="8 112 64 480" sourceFile="DaKog_VerticalSlider.cpp"
              constructorParams=""/>
-  <LABEL name="new label" id="c1c6951a8dcb36b0" memberName="juce__label"
-         virtualName="" explicitFocusOrder="0" pos="568 0 32 16" edTextCol="ff000000"
+  <LABEL name="Version" id="c1c6951a8dcb36b0" memberName="m_Version" virtualName=""
+         explicitFocusOrder="0" pos="480 0 120 24" edTextCol="ff000000"
          edBkgCol="0" labelText="v1.0" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="10.0"
-         kerning="0.0" bold="0" italic="0" justification="33"/>
+         kerning="0.0" bold="0" italic="0" justification="34"/>
   <LABEL name="SineGain" id="aa2ed05add77d9ed" memberName="m_SineGain"
          virtualName="" explicitFocusOrder="0" pos="136 288 72 24" edTextCol="ff000000"
          edBkgCol="0" labelText="SineGain" editableSingleClick="0" editableDoubleClick="0"

@@ -18,7 +18,9 @@ Distoariotn = Diadoe Distortion -> Soft Cliper
 # License
 DaKog_Distort is licensed under the GNU General Public License (GPLv3) agreement.
 <br />
-If you find any value in it feel free to buy me a beer :cheers:
+If you find any value in it feel free to buy me a beer 
+<br />
+[:Cheers:](https://paypal.me/DaKogAzulat?country.x=CA&locale.x=en_US)
 
 # Thanks and Credits
 [PresentSimple](https://linktr.ee/PresentSimple) - Bakcground Image 

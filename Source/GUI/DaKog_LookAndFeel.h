@@ -50,6 +50,8 @@ public:
 
 
 private:
+    juce::AffineTransform m_ImgTransform;
+
     static const char* rotor_png;
     static const int rotor_pngSize;
     juce::Image cachedImage_Rotor_png_1;
@@ -64,7 +66,14 @@ private:
     juce::Image cachedImage_button_middle_on_126_png_2;
     
 
-    juce::AffineTransform m_ImgTransform;
+    static const char* fader18_png;
+    static const int fader18_pngSize;
+    juce::Image cachedImage_fader18_png_1;
+
+    static const char* horizontalFader18_png;
+    static const int horizontalFader18_pngSize;
+    juce::Image cachedImage_horizontalFader18_png_1;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DaKog_LookandFeel)
 };

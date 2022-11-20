@@ -55,7 +55,7 @@ DaKog_VerticalSlider::DaKog_VerticalSlider ()
     m_DaKogVerticalSlider->setColour (juce::Slider::rotarySliderOutlineColourId, juce::Colours::white);
     m_DaKogVerticalSlider->setColour (juce::Slider::textBoxHighlightColourId, juce::Colour (0x66c6c6c6));
 
-    m_DaKogVerticalSlider->setBounds (8, 16, 48, 456);
+    m_DaKogVerticalSlider->setBounds (8, 24, 48, 448);
 
 
     //[UserPreSize]
@@ -126,7 +126,7 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
   <SLIDER name="m_DaKogRotorSilder" id="fb640ad76e405aa9" memberName="m_DaKogVerticalSlider"
-          virtualName="" explicitFocusOrder="0" pos="8 16 48 456" bkgcol="ff5b5b5b"
+          virtualName="" explicitFocusOrder="0" pos="8 24 48 448" bkgcol="ff5b5b5b"
           thumbcol="ffffffff" trackcol="ffc1c1c1" rotarysliderfill="ffffffff"
           rotaryslideroutline="ffffffff" textboxhighlight="66c6c6c6" min="0.0"
           max="1.0" int="1.0" style="LinearVertical" textBoxPos="TextBoxBelow"

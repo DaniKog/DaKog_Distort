@@ -12,6 +12,7 @@
 namespace
 {
     static const int s_thumbExtendedSize = 16;
+    static const int s_SliderThumbPadding = 4;
 };
 
 DaKog_LookandFeel::DaKog_LookandFeel()
@@ -19,6 +20,8 @@ DaKog_LookandFeel::DaKog_LookandFeel()
     cachedImage_Rotor_png_1 = juce::ImageCache::getFromMemory(rotor_png, rotor_pngSize);  
     cachedImage_button_middle_off_126_png_1 = juce::ImageCache::getFromMemory(button_middle_off_126_png, button_middle_off_126_pngSize);
     cachedImage_button_middle_on_126_png_2 = juce::ImageCache::getFromMemory(button_middle_on_126_png, button_middle_on_126_pngSize);
+    cachedImage_fader18_png_1 = juce::ImageCache::getFromMemory(fader18_png, fader18_pngSize);
+    cachedImage_horizontalFader18_png_1 = juce::ImageCache::getFromMemory(horizontalFader18_png, horizontalFader18_pngSize);
 }
 
 juce::Slider::SliderLayout DaKog_LookandFeel::getSliderLayout(juce::Slider& slider)
@@ -82,8 +85,14 @@ juce::Slider::SliderLayout DaKog_LookandFeel::getSliderLayout(juce::Slider& slid
 
         const int thumbIndent = getSliderThumbRadius(slider);
 
-        if (slider.isHorizontal())    layout.sliderBounds.reduce(thumbIndent, 0);
-        else if (slider.isVertical()) layout.sliderBounds.reduce(0, thumbIndent);
+        if (slider.isHorizontal())
+        {
+            layout.sliderBounds.reduce(thumbIndent, 0);
+        }
+        else if (slider.isVertical())
+        {
+            layout.sliderBounds.reduce(0, thumbIndent);
+        }
     }
 
     return layout;
@@ -91,8 +100,19 @@ juce::Slider::SliderLayout DaKog_LookandFeel::getSliderLayout(juce::Slider& slid
 
 int DaKog_LookandFeel::getSliderThumbRadius(juce::Slider& slider)
 {
+    /*
     return juce::jmin(12, slider.isHorizontal() ? static_cast<int> ((float)slider.getHeight() * 0.5f)
         : static_cast<int> ((float)slider.getWidth() * 0.5f));
+   */
+
+    if (slider.isHorizontal())
+    {
+        return static_cast<int>((cachedImage_horizontalFader18_png_1.getWidth() * 0.5f) + s_SliderThumbPadding);
+    }
+    else
+    {
+        return static_cast<int>((cachedImage_fader18_png_1.getHeight() * 0.5f) + s_SliderThumbPadding);
+    }
 }
 
 void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
@@ -149,9 +169,7 @@ void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int wi
             minPoint = startPoint;
             maxPoint = { kx, ky };
         }
-
-        auto thumbWidth = getSliderThumbRadius(slider);
-
+        
         valueTrack.startNewSubPath(minPoint);
         valueTrack.lineTo(isThreeVal ? thumbPoint : maxPoint);
         g.setColour(slider.findColour(juce::Slider::trackColourId));
@@ -160,14 +178,22 @@ void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int wi
         if (!isTwoVal)
         {
             g.setColour(slider.findColour(juce::Slider::thumbColourId));
-            //TODO Figure out how to draw something on screen
-            /*
-            int x = thumbPoint.getX();
-            int y = thumbPoint.getY();
-            m_ImgTransform.transformPoint(x, y);
-            m_ImgTransform = m_ImgTransform.withAbsoluteTranslation(x, y);
-            g.drawImageAt(cachedImage_Rotor_png_1, x, y, false);
-            */
+
+            if (slider.isHorizontal())
+            {
+                float imgX = maxPoint.getX() - (cachedImage_horizontalFader18_png_1.getWidth() * 0.5f);
+                float imgY = maxPoint.getY() - (cachedImage_horizontalFader18_png_1.getHeight() * 0.5f);
+                g.drawImageAt(cachedImage_horizontalFader18_png_1, imgX, imgY, false);
+            }
+            else
+            {
+                float imgX = maxPoint.getX() - (cachedImage_fader18_png_1.getWidth() * 0.5f);
+                float imgY = maxPoint.getY() - (cachedImage_fader18_png_1.getHeight() * 0.5f);
+                g.drawImageAt(cachedImage_fader18_png_1, imgX, imgY, false);
+            }
+
+            /* // Remove the Rectangular slider
+            auto thumbWidth = getSliderThumbRadius(slider);
             if (slider.isHorizontal())
             {
                 g.fillRect(juce::Rectangle<float>(static_cast<float> (thumbWidth), static_cast<float> (thumbWidth + s_thumbExtendedSize)).withCentre(isThreeVal ? thumbPoint : maxPoint) );
@@ -176,6 +202,7 @@ void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int wi
             {
                 g.fillRect(juce::Rectangle<float>(static_cast<float> (thumbWidth + s_thumbExtendedSize), static_cast<float> (thumbWidth)).withCentre(isThreeVal ? thumbPoint : maxPoint));
             }
+            */
         }
 
         if (isTwoVal || isThreeVal)
@@ -224,7 +251,7 @@ void DaKog_LookandFeel::drawPointer(juce::Graphics& g, const float x, const floa
 }
 
 void DaKog_LookandFeel::drawTickBox(juce::Graphics& g, juce::Component& component,
-    float x, float y, float w, float h,
+    float /*x*/, float /*y*/, float /*w*/, float /*h*/,
     const bool ticked,
     const bool isEnabled,
     const bool shouldDrawButtonAsHighlighted,
@@ -282,17 +309,18 @@ void DaKog_LookandFeel::drawToggleButton(juce::Graphics& g, juce::ToggleButton& 
         juce::Justification::centred, 10);
 }
 
-void DaKog_LookandFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height,
+void DaKog_LookandFeel::drawRotarySlider(juce::Graphics& g, int /*x*/, int y, int /*width*/, int /*height*/,
     float sliderPosProportional, float rotaryStartAngle,
     float rotaryEndAngle, juce::Slider& slider)
 {
     juce::Rectangle<int> localbounds = slider.getLocalBounds();
-    int imgCenter = static_cast<int>(cachedImage_Rotor_png_1.getWidth() * 0.5f);
-    int imgX = static_cast<int>(localbounds.getCentreX() - imgCenter);
+    float centerX = static_cast<float>(localbounds.getCentreX());
+    float imgCenter = cachedImage_Rotor_png_1.getWidth() * 0.5f;
+    float imgX = centerX - imgCenter;
 
     auto toAngle = rotaryStartAngle + sliderPosProportional * (rotaryEndAngle - rotaryStartAngle);
-    m_ImgTransform = m_ImgTransform.translation(imgX, y).
-        followedBy((juce::AffineTransform::rotation(toAngle, localbounds.getCentreX(), cachedImage_Rotor_png_1.getHeight() * 0.5f)));
+    m_ImgTransform = m_ImgTransform.translation(imgX, static_cast<float>(y)).
+        followedBy((juce::AffineTransform::rotation(toAngle, centerX, cachedImage_Rotor_png_1.getHeight() * 0.5f)));
     g.drawImageTransformed(cachedImage_Rotor_png_1, m_ImgTransform);
     //g.drawImageTransformed(cachedImage_Rotor_png_1, juce::AffineTransform::translation(imgX, y));
 }
@@ -741,3 +769,30 @@ static const unsigned char resource_DaKog_RotorSlider_button_middle_on_126_png[]
 
 const char* DaKog_LookandFeel::button_middle_on_126_png = (const char*)resource_DaKog_RotorSlider_button_middle_on_126_png;
 const int DaKog_LookandFeel::button_middle_on_126_pngSize = 8841;
+
+// JUCER_RESOURCE: fader_png, 621, "../../../DaKog_Distort_Art/Fader19.png"
+static const unsigned char resource_DaKog_VerticalSlider_fader18_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,18,0,0,0,36,8,6,0,0,0,132,237,106,231,0,0,0,4,103,65,77,65,0,0,177,143,11,
+252,97,5,0,0,0,9,112,72,89,115,0,0,14,194,0,0,14,194,1,21,40,74,128,0,0,0,24,116,69,88,116,83,111,102,116,119,97,114,101,0,112,97,105,110,116,46,110,101,116,32,52,46,49,46,54,253,78,9,232,0,0,1,188,73,
+68,65,84,72,75,173,213,201,106,42,65,20,6,224,243,112,217,228,17,238,198,133,138,32,8,138,160,160,162,130,11,55,226,60,34,162,136,130,162,43,135,141,3,138,243,136,162,1,113,39,234,74,95,226,191,86,133,
+64,72,122,145,120,178,248,232,166,187,250,116,215,169,230,47,106,181,90,175,141,70,3,205,102,243,27,113,189,94,175,203,227,87,159,199,140,199,227,23,234,245,122,216,239,247,138,118,187,157,226,245,207,
+196,152,209,104,244,70,203,229,18,215,235,245,105,151,203,5,235,245,26,52,28,14,113,60,30,89,166,211,41,40,26,141,130,171,88,44,130,172,86,43,244,122,61,75,48,24,4,57,157,78,152,205,102,150,88,44,6,178,
+88,44,138,111,249,13,249,69,110,183,27,162,24,71,60,30,7,121,189,94,136,98,28,233,116,26,228,241,120,96,183,219,89,82,169,212,251,212,196,202,113,36,18,9,80,56,28,150,205,226,40,20,10,32,113,226,247,251,
+89,242,249,60,40,16,8,192,231,243,177,200,66,153,76,6,185,92,142,165,90,173,190,247,40,20,10,177,200,30,25,141,70,168,84,42,22,49,61,74,38,147,242,63,224,40,149,74,160,114,185,140,90,173,198,34,34,87,
+54,59,155,205,178,84,42,21,144,8,111,145,146,28,157,78,7,244,8,110,197,248,252,141,217,108,6,234,118,187,216,108,54,44,226,171,72,52,171,223,239,179,180,219,109,208,118,187,197,253,126,199,237,118,123,
+154,168,65,98,126,167,211,137,101,177,88,128,6,131,1,14,135,3,203,100,50,1,205,231,115,156,207,103,150,213,106,245,135,59,173,88,62,209,108,14,81,227,239,182,108,151,203,37,247,38,165,80,255,9,241,172,
+12,127,135,195,1,147,201,244,52,145,103,145,72,4,100,179,217,96,48,24,88,100,161,199,118,251,79,171,213,66,137,70,163,129,90,173,86,188,247,65,167,211,61,50,169,102,250,15,141,145,84,103,6,77,222,123,
+0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
+
+const char* DaKog_LookandFeel::fader18_png = (const char*)resource_DaKog_VerticalSlider_fader18_png;
+const int DaKog_LookandFeel::fader18_pngSize = 574;
+
+// JUCER_RESOURCE: horizontalFader18_png, 248, "../../../DaKog_Distort_Art/HorizontalFader18.png"
+static const unsigned char resource_DaKog_VerticalSlider_horizontalFader18_png[] = { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,12,0,0,0,18,8,6,0,0,0,111,169,63,12,0,0,0,1,115,82,71,66,0,174,
+206,28,233,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,9,112,72,89,115,0,0,14,195,0,0,14,195,1,199,111,168,100,0,0,0,24,116,69,88,116,83,111,102,116,119,97,114,101,0,112,97,105,110,116,46,110,101,
+116,32,52,46,49,46,54,253,78,9,232,0,0,0,105,73,68,65,84,56,79,237,139,173,13,64,33,16,131,153,148,21,24,132,21,46,104,130,35,224,64,29,226,28,154,109,250,82,198,120,65,52,233,207,87,55,231,196,90,11,
+173,53,136,8,114,206,8,33,92,209,179,227,70,134,172,219,123,227,156,3,85,69,74,9,181,86,120,239,175,232,217,113,35,67,246,29,222,225,207,7,6,51,195,24,3,165,20,244,222,17,99,188,162,103,199,141,140,170,
+226,3,62,210,143,147,123,67,156,186,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
+
+const char* DaKog_LookandFeel::horizontalFader18_png = (const char*)resource_DaKog_VerticalSlider_horizontalFader18_png;
+const int DaKog_LookandFeel::horizontalFader18_pngSize = 248;
+

@@ -47,10 +47,6 @@ DaKog_DistortAudioProcessorEditor::~DaKog_DistortAudioProcessorEditor()
     delete m_GUI;
 }
 
-void DaKog_DistortAudioProcessorEditor::paint (juce::Graphics& g)
-{
-}
-
 void DaKog_DistortAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any

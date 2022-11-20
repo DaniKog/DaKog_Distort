@@ -83,7 +83,7 @@ GUI::GUI ()
     m_SineFrequency->setColour (juce::Slider::thumbColourId, juce::Colours::white);
     m_SineFrequency->setColour (juce::Slider::trackColourId, juce::Colour (0xffd0d0d0));
 
-    m_SineFrequency->setBounds (264, 344, 136, 72);
+    m_SineFrequency->setBounds (264, 344, 136, 80);
 
     m_FilterGroup.reset (new juce::GroupComponent ("FilterGroup",
                                                    TRANS("Filter")));
@@ -114,7 +114,7 @@ GUI::GUI ()
     m_HighPassFilterRotor.reset (new DaKog_RotorSlider());
     addAndMakeVisible (m_HighPassFilterRotor.get());
     m_HighPassFilterRotor->setExplicitFocusOrder (1);
-    m_HighPassFilterRotor->setBounds (264, 448, 200, 144);
+    m_HighPassFilterRotor->setBounds (264, 448, 160, 144);
 
     m_SineWaveGain.reset (new juce::Slider ("SineWaveGain"));
     addAndMakeVisible (m_SineWaveGain.get());
@@ -125,7 +125,7 @@ GUI::GUI ()
     m_SineWaveGain->setColour (juce::Slider::thumbColourId, juce::Colours::white);
     m_SineWaveGain->setColour (juce::Slider::trackColourId, juce::Colour (0xffc9c9c9));
 
-    m_SineWaveGain->setBounds (144, 304, 50, 120);
+    m_SineWaveGain->setBounds (144, 296, 50, 128);
 
     m_SineToggle.reset (new juce::ToggleButton ("SineToggle"));
     addAndMakeVisible (m_SineToggle.get());
@@ -158,7 +158,7 @@ GUI::GUI ()
     m_SineGain->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     m_SineGain->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    m_SineGain->setBounds (136, 288, 72, 24);
+    m_SineGain->setBounds (136, 280, 72, 24);
 
     cachedImage__800600_backGround_png_1 = juce::ImageCache::getFromMemory (_800600_backGround_png, _800600_backGround_pngSize);
     cachedImage_blackSquare_png_2 = juce::ImageCache::getFromMemory (blackSquare_png, blackSquare_pngSize);
@@ -179,16 +179,16 @@ GUI::GUI ()
     versionString.append(versionNumber, 4);
     m_Version->setText(versionString,juce::NotificationType::dontSendNotification);
 
-    //TODO find a way to properly pass the arguments to the emplace
-    m_RotorTextDefinitions.emplace(DriveID, RotorTextDefinition("0", "11", "Drive", "Drive Tooltip",""));
-    m_RotorTextDefinitions.emplace(ClipFactorID, RotorTextDefinition("Soft", "Hard", "ClipFactor", "Clipping Factor Tooltip",""));
-    m_RotorTextDefinitions.emplace(LoPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "LowPass", "LowCutFilter Tooltip", "Hz"));
-    m_RotorTextDefinitions.emplace(HiPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "HighPass", "HighCutFilter Tooltip", "Hz"));
+    //TODO find a way to properly pass the arguments to the emplace intead of contructing RotorTextDefinition
+    m_RotorTextDefinitions.emplace(DriveID, RotorTextDefinition("0", "11", "Drive", "Controls the Drive of the Disorotion",""));
+    m_RotorTextDefinitions.emplace(ClipFactorID, RotorTextDefinition("Soft", "Hard", "ClipFactor", "Controls the clipping factor of the distortio wave shaper",""));
+    m_RotorTextDefinitions.emplace(LoPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "LowPass", "The Low Pass Frequency to start the filter", "Hz"));
+    m_RotorTextDefinitions.emplace(HiPassFilterCutOffID, RotorTextDefinition("20hz", "20000hz", "HighPass", "The High Pass Frequency to start the filter", "Hz"));
 
-    m_VerticalSliderTextDefinitions.emplace(InputID, VerticalSliderTextDefinition("Input", "Input Tooltip", "dB"));
-    m_VerticalSliderTextDefinitions.emplace(WetGainID, VerticalSliderTextDefinition("WetGain", "WetGain Tooltip", "dB"));
-    m_VerticalSliderTextDefinitions.emplace(MixID, VerticalSliderTextDefinition("Mix", "Mix Tooltip", "%"));
-    m_VerticalSliderTextDefinitions.emplace(OutputGainID, VerticalSliderTextDefinition("Output", "Output Tooltip", "dB"));
+    m_VerticalSliderTextDefinitions.emplace(InputID, VerticalSliderTextDefinition("Input", "Input gain to the plug-in from the dry signal", "dB"));
+    m_VerticalSliderTextDefinitions.emplace(WetGainID, VerticalSliderTextDefinition("WetGain", "The overall gain of the wet signal", "dB"));
+    m_VerticalSliderTextDefinitions.emplace(MixID, VerticalSliderTextDefinition("Mix", "Mix % between wet and dry singal", "%"));
+    m_VerticalSliderTextDefinitions.emplace(OutputGainID, VerticalSliderTextDefinition("Output", "Overall output gain", "dB"));
 
     //[/Constructor]
 }
@@ -432,7 +432,7 @@ BEGIN_JUCER_METADATA
              virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="264 112 136 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <SLIDER name="SineFrequency" id="a2cefe8b90d2e8da" memberName="m_SineFrequency"
-          virtualName="" explicitFocusOrder="0" pos="264 344 136 72" bkgcol="ff707070"
+          virtualName="" explicitFocusOrder="0" pos="264 344 136 80" bkgcol="ff707070"
           thumbcol="ffffffff" trackcol="ffd0d0d0" min="0.0" max="20000.0"
           int="1.0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="72" textBoxHeight="20" skewFactor="1.0"
@@ -452,10 +452,10 @@ BEGIN_JUCER_METADATA
              virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="104 448 168 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <JUCERCOMP name="HighPassFilterRotor" id="2e6da0299a52fac0" memberName="m_HighPassFilterRotor"
-             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="264 448 200 144"
+             virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="264 448 160 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
   <SLIDER name="SineWaveGain" id="e3904d0d06b55f70" memberName="m_SineWaveGain"
-          virtualName="" explicitFocusOrder="0" pos="144 304 50 120" bkgcol="ff6d6d6d"
+          virtualName="" explicitFocusOrder="0" pos="144 296 50 128" bkgcol="ff6d6d6d"
           thumbcol="ffffffff" trackcol="ffc9c9c9" min="0.0" max="1.0" int="0.01"
           style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>
@@ -472,7 +472,7 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="10.0"
          kerning="0.0" bold="0" italic="0" justification="34"/>
   <LABEL name="SineGain" id="aa2ed05add77d9ed" memberName="m_SineGain"
-         virtualName="" explicitFocusOrder="0" pos="136 288 72 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="136 280 72 24" edTextCol="ff000000"
          edBkgCol="0" labelText="SineGain" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>

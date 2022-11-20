@@ -174,7 +174,7 @@ GUI::GUI ()
 
     //[Constructor] You can add your own custom stuff here..
     //Version
-    juce::String versionString = "Preview V";
+    juce::String versionString = "v";
     juce::String versionNumber = ProjectInfo::versionString;
     versionString.append(versionNumber, 4);
     m_Version->setText(versionString,juce::NotificationType::dontSendNotification);

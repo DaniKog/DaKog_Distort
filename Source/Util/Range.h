@@ -9,7 +9,7 @@ namespace makeRange
 {
 	using Range = juce::NormalisableRange<float>;
 
-	inline Range biased(float start, float end, float bias/*[-1, 1]*/) noexcept
+	inline Range biased(float start, float end, float bias/*[-1, 1]*/, bool clampToCieling) noexcept
 	{
 		// https://www.desmos.com/calculator/ps8q8gftcr
 		const auto a = bias * .5f + .5f;
@@ -22,11 +22,16 @@ namespace makeRange
 			return
 		{
 				start, end,
-				[a2, aM, aR](float min, float, float x)
+				[a2, aM, aR, clampToCieling](float min, float, float x)
 				{
 					const auto denom = aM - x + a2 * x;
 					if (denom == 0.f)
 						return min;
+
+					if (clampToCieling)
+					{
+						return std::ceilf(min + aR * x / denom);
+					}
 					return min + aR * x / denom;
 				},
 				[a2, aM, aR](float min, float, float x)
@@ -35,6 +40,7 @@ namespace makeRange
 					if (denom == 0.f)
 						return 0.f;
 					auto val = aM * (x - min) / denom;
+
 					return val > 1.f ? 1.f : val;
 				},
 				[](float min, float max, float x)
@@ -110,12 +116,12 @@ namespace makeRange
 
 	// advanced one(s):
 
-	inline Range withCentre(float start, float end, float centre) noexcept
+	inline Range withCentre(float start, float end, float centre,bool clampToCieling) noexcept
 	{
 		const auto r = end - start;
 		const auto v = (centre - start) / r;
 
-		return makeRange::biased(start, end, 2.f * v - 1.f);
+		return makeRange::biased(start, end, 2.f * v - 1.f, clampToCieling);
 	}
 
 }

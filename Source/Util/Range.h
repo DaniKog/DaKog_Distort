@@ -9,7 +9,7 @@ namespace makeRange
 {
 	using Range = juce::NormalisableRange<float>;
 
-	inline Range biased(float start, float end, float bias/*[-1, 1]*/, bool clampToCieling) noexcept
+	inline Range biased(float start, float end, float bias/*[-1, 1]*/, bool roundToInt) noexcept
 	{
 		// https://www.desmos.com/calculator/ps8q8gftcr
 		const auto a = bias * .5f + .5f;
@@ -22,15 +22,15 @@ namespace makeRange
 			return
 		{
 				start, end,
-				[a2, aM, aR, clampToCieling](float min, float, float x)
+				[a2, aM, aR, roundToInt](float min, float, float x)
 				{
 					const auto denom = aM - x + a2 * x;
 					if (denom == 0.f)
 						return min;
 
-					if (clampToCieling)
+					if (roundToInt)
 					{
-						return std::ceilf(min + aR * x / denom);
+						return std::round(min + aR * x / denom);
 					}
 					return min + aR * x / denom;
 				},
@@ -116,12 +116,12 @@ namespace makeRange
 
 	// advanced one(s):
 
-	inline Range withCentre(float start, float end, float centre,bool clampToCieling) noexcept
+	inline Range withCentre(float start, float end, float centre,bool roundToInt) noexcept
 	{
 		const auto r = end - start;
 		const auto v = (centre - start) / r;
 
-		return makeRange::biased(start, end, 2.f * v - 1.f, clampToCieling);
+		return makeRange::biased(start, end, 2.f * v - 1.f, roundToInt);
 	}
 
 }

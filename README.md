@@ -1,6 +1,8 @@
 # DaKog_Distort
 Experimental Soft<->Hard Diode Clip Distortion Plug-in
 <br />
+Check overview [video](https://youtu.be/uGx2PrfD_O8)
+<br />
 
 ![Screenshot](https://user-images.githubusercontent.com/12103063/202922684-402be326-502a-43aa-bc44-793bce421710.png)
 

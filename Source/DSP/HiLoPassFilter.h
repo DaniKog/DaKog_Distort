@@ -21,14 +21,14 @@ public:
 
     void CalculateCoefficients()
     {
-        m_tan = static_cast<SampleType>(std::tan(juce::MathConstants<SampleType>::pi * m_Cutoff / m_SampleRate));
-        m_a1 = (m_tan - 1.f) / (m_tan + 1.f);
+        m_Tan = static_cast<SampleType>(std::tan(juce::MathConstants<SampleType>::pi * m_Cutoff / m_SampleRate));
+        m_A1 = (m_Tan - 1.f) / (m_Tan + 1.f);
     }
 
-    SampleType PrcoessSample(SampleType& inSample, int channel) noexcept
+    SampleType ProcessSample(SampleType& inSample, int channel) noexcept
     {
-        SampleType filteredSample = m_a1 * inSample + m_StoredBuffer[channel];
-        m_StoredBuffer[channel] = inSample - m_a1 * filteredSample;
+        SampleType filteredSample = m_A1 * inSample + m_StoredBuffer[channel];
+        m_StoredBuffer[channel] = inSample - m_A1 * filteredSample;
         return (inSample + m_Sign * filteredSample);
     }
 
@@ -36,9 +36,9 @@ public:
     void SetCutoff(SampleType cutoff);
 private:
     int m_Sign = 1;
-    SampleType m_tan = 0;
-    SampleType m_a1 = 0;
-    SampleType m_Cutoff = 600;
+    SampleType m_Tan = SampleType(0);
+    SampleType m_A1 = SampleType(0);
+    SampleType m_Cutoff = SampleType(600);
     double m_SampleRate = 44100;
     std::vector<SampleType> m_StoredBuffer;
 };

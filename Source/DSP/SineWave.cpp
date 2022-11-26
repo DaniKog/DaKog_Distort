@@ -25,7 +25,7 @@ void SineWave<SampleType>::PreprareToPlay(double sampleRate)
 }
 
 template <typename SampleType>
-void SineWave<SampleType>::SetFrequecncy(const float frequency)
+void SineWave<SampleType>::SetFrequency(const float frequency)
 {
     m_CurrentTime = 0.0f;
     m_Frequency = frequency;

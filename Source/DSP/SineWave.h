@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#include <JuceHeader.h>
 #pragma once
+#include <JuceHeader.h>
 
 template <typename SampleType>
 class SineWave 
@@ -32,17 +32,17 @@ public:
     }
 
     void PreprareToPlay(double sampleRate);
-    void SetFrequecncy(const float frequency);
+    void SetFrequency(const float frequency);
     void SetSineGain(const float gain);
     void Reset();
 
 private:
 
-    juce::SmoothedValue<float> m_Frequency = 220;
+    juce::SmoothedValue<float> m_Frequency = 2200.f;
     juce::SmoothedValue<float> m_SinWaveGain = 0.5f;
 
-    double m_Period{0.0f};
-    double m_CurrentTime{0.0f};
-    double m_SampleRate{44100.0};
+    double m_Period = 0.0f;
+    double m_CurrentTime = 0.0f;
+    double m_SampleRate = 44100.0;
 
 };

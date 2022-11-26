@@ -105,7 +105,7 @@ void DaKog_DistortAudioProcessor::UpdateSineWaves(const juce::String& parameterI
     {
         for (int i = 0; i < getTotalNumOutputChannels(); ++i)
         {
-            m_SineWaves[i].SetFrequecncy(m_ParametersTreeState.getRawParameterValue(SineFrequencyID)->load());
+            m_SineWaves[i].SetFrequency(m_ParametersTreeState.getRawParameterValue(SineFrequencyID)->load());
         }
     }
     else if (parameterID == SineGainID)
@@ -320,7 +320,7 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
             
 
             //Distortion
-            inSample = m_DistortionDSP.PrcoessSample(inSample);
+            inSample = m_DistortionDSP.ProcessSample(inSample);
 
             //Sine Wave Generator
             if (m_ToggleSineWave)

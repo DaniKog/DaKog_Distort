@@ -100,11 +100,6 @@ juce::Slider::SliderLayout DaKog_LookandFeel::getSliderLayout(juce::Slider& slid
 
 int DaKog_LookandFeel::getSliderThumbRadius(juce::Slider& slider)
 {
-    /*
-    return juce::jmin(12, slider.isHorizontal() ? static_cast<int> ((float)slider.getHeight() * 0.5f)
-        : static_cast<int> ((float)slider.getWidth() * 0.5f));
-   */
-
     if (slider.isHorizontal())
     {
         return static_cast<int>((cachedImage_horizontalFader18_png_1.getWidth() * 0.5f) + s_SliderThumbPadding);
@@ -191,18 +186,6 @@ void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int wi
                 float imgY = maxPoint.getY() - (cachedImage_fader18_png_1.getHeight() * 0.5f);
                 g.drawImageAt(cachedImage_fader18_png_1, imgX, imgY, false);
             }
-
-            /* // Remove the Rectangular slider
-            auto thumbWidth = getSliderThumbRadius(slider);
-            if (slider.isHorizontal())
-            {
-                g.fillRect(juce::Rectangle<float>(static_cast<float> (thumbWidth), static_cast<float> (thumbWidth + s_thumbExtendedSize)).withCentre(isThreeVal ? thumbPoint : maxPoint) );
-            }
-            else
-            {
-                g.fillRect(juce::Rectangle<float>(static_cast<float> (thumbWidth + s_thumbExtendedSize), static_cast<float> (thumbWidth)).withCentre(isThreeVal ? thumbPoint : maxPoint));
-            }
-            */
         }
 
         if (isTwoVal || isThreeVal)
@@ -270,18 +253,6 @@ void DaKog_LookandFeel::drawTickBox(juce::Graphics& g, juce::Component& componen
     {
         g.drawImageAt(cachedImage_button_middle_off_126_png_1, imgX, imgY, false);
     }
-    /*
-    * juce::Rectangle<float> tickBounds(x, y, w, h);
-    g.setColour(component.findColour(juce::ToggleButton::tickDisabledColourId));
-    g.drawRoundedRectangle(tickBounds, 4.0f, 1.0f);
-
-    if (ticked)
-    {
-        g.setColour(component.findColour(juce::ToggleButton::tickColourId));
-        auto tick = getTickShape(0.75f);
-        g.fillPath(tick, tick.getTransformToScaleToFit(tickBounds.reduced(4, 5).toFloat(), false));
-    }
-    */
 }
 
 void DaKog_LookandFeel::drawToggleButton(juce::Graphics& g, juce::ToggleButton& button,
@@ -289,8 +260,6 @@ void DaKog_LookandFeel::drawToggleButton(juce::Graphics& g, juce::ToggleButton& 
 {
     auto fontSize = juce::jmin(15.0f, (float)button.getHeight() * 0.75f);
     auto tickWidth = fontSize * 1.1f;
-    //juce::Rectangle<int> textposition = juce::Rectangle<int>(button.getLocalBounds().getCentreX(), button.getLocalBounds().getCentreY());
-    //juce::Rectangle<int> textposition = button.getLocalBounds().withTrimmedLeft(juce::roundToInt(tickWidth) + 10).withTrimmedRight(2);
 
     drawTickBox(g, button, 0, 0,
         tickWidth, tickWidth,
@@ -322,7 +291,6 @@ void DaKog_LookandFeel::drawRotarySlider(juce::Graphics& g, int /*x*/, int y, in
     m_ImgTransform = m_ImgTransform.translation(imgX, static_cast<float>(y)).
         followedBy((juce::AffineTransform::rotation(toAngle, centerX, cachedImage_Rotor_png_1.getHeight() * 0.5f)));
     g.drawImageTransformed(cachedImage_Rotor_png_1, m_ImgTransform);
-    //g.drawImageTransformed(cachedImage_Rotor_png_1, juce::AffineTransform::translation(imgX, y));
 }
 
 

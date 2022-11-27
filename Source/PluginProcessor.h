@@ -14,6 +14,7 @@
 #include "DSP/SineWave.h"
 #include "DSP/HiLoPassFilter.h"
 
+static const int s_MaxProcssingChannels = 38; //36 Max for high order ambisoninics +2 for safety
 //==============================================================================
 /**
 */
@@ -71,9 +72,9 @@ private:
 
     //DSP
     Distortion<float> m_DistortionDSP;
-    std::vector<SineWave<float>> m_SineWaves;
-    std::vector <juce::dsp::IIR::Filter<float>> m_LoPassFilter;
-    std::vector <juce::dsp::IIR::Filter<float>> m_HiPassFilter;
+    std::array<SineWave<float>, s_MaxProcssingChannels> m_SineWaves;
+    std::array <juce::dsp::IIR::Filter<float>, s_MaxProcssingChannels> m_LoPassFilter;
+    std::array <juce::dsp::IIR::Filter<float>, s_MaxProcssingChannels> m_HiPassFilter;
 
     //Internal Parameters
     juce::SmoothedValue<float> m_InputGain = 0;

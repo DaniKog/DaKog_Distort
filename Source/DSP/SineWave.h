@@ -15,7 +15,9 @@ template <typename SampleType>
 class SineWave 
 {
 public:
-    SineWave(double sampleRate);
+    SineWave();
+
+    SineWave(double sampleRate); //Set Sample rate on constracting
 
     SampleType getNextSample() noexcept
     {

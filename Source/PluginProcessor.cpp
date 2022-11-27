@@ -143,7 +143,6 @@ void DaKog_DistortAudioProcessor::UpdateFilters(const juce::String& parameterID)
 
 void DaKog_DistortAudioProcessor::UpdateParameters()
 {
-    //m_Filter.SetCutoff(m_ParametersTreeState.getRawParameterValue(LoPassFilterCutOffID)->load());
     for (int i = 0; i < getTotalNumOutputChannels(); ++i)
     {
         m_LoPassFilter[i].coefficients = juce::dsp::FilterDesign<float>::designIIRLowpassHighOrderButterworthMethod(m_ParametersTreeState.getRawParameterValue(LoPassFilterCutOffID)->load(), getSampleRate(), s_ButterWorthFilterPole)[0];
@@ -233,26 +232,25 @@ void DaKog_DistortAudioProcessor::prepareToPlay (double sampleRate, int samplesP
     spec.numChannels = numberOfChannels;
 
     //Setup Filter
-    m_LoPassFilter.clear();
+
     for (int i = 0; i < numberOfChannels; ++i)
     {
-        m_LoPassFilter.emplace_back(juce::dsp::FilterDesign<float>::designIIRLowpassHighOrderButterworthMethod(20000, getSampleRate(), s_ButterWorthFilterPole)[0]);
+        m_LoPassFilter[i] = juce::dsp::FilterDesign<float>::designIIRLowpassHighOrderButterworthMethod(20000, sampleRate, s_ButterWorthFilterPole)[0];
     }
 
-    m_HiPassFilter.clear();
+
     for (int i = 0; i < numberOfChannels; ++i)
     {
-        m_HiPassFilter.emplace_back(juce::dsp::FilterDesign<float>::designIIRHighpassHighOrderButterworthMethod(20, getSampleRate(), s_ButterWorthFilterPole)[0]);
+        m_HiPassFilter[i] = juce::dsp::FilterDesign<float>::designIIRHighpassHighOrderButterworthMethod(20, sampleRate, s_ButterWorthFilterPole)[0];
     }
 
     //Setup Distortion
     m_DistortionDSP.PrepareToPlay(spec);
     
     //Setup Sinewaves 
-    m_SineWaves.clear();
     for (int i = 0; i < numberOfChannels; ++i)
     {
-        m_SineWaves.emplace_back(sampleRate);
+        m_SineWaves[i].PreprareToPlay(sampleRate);
     }
 
     //Reset Parameters
@@ -348,9 +346,7 @@ bool DaKog_DistortAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* DaKog_DistortAudioProcessor::createEditor()
 {
-   //return new GUI(*this);
    return new DaKog_DistortAudioProcessorEditor(*this);
-   //return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================

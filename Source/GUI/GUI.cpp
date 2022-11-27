@@ -25,13 +25,6 @@
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
-/*
-GUI::GUI(DaKog_DistortAudioProcessor& p)
-    : AudioProcessorEditor(&p), audioProcessor(p)
-{
-    GUI();
-}
-*/
 //[/MiscUserDefs]
 
 //==============================================================================

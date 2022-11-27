@@ -11,6 +11,12 @@
 #include "SineWave.h"
 
 template <typename SampleType>
+SineWave<SampleType>::SineWave()
+{
+    PreprareToPlay(m_SampleRate);
+}
+
+template <typename SampleType>
 SineWave<SampleType>::SineWave(double sampleRate)
 {
     PreprareToPlay(sampleRate);

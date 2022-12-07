@@ -11,7 +11,7 @@
 #pragma once
 #include <JuceHeader.h>
 
-constexpr float diode_Divisor = 1.68f * 0.0253f;
+constexpr float diode_Divisor = 1.0f / (1.68f * 0.0253f);
 
 template <typename SampleType>
 class Distortion
@@ -25,7 +25,7 @@ public:
         inSample = inSample * m_Drive.getNextValue();
         
         //Diode Distortion
-        inSample = inSample + 0.5f * (0.105f * (std::exp(0.1f * inSample / diode_Divisor) - 1));
+        inSample = inSample + 0.5f * (0.105f * (std::exp(0.1f * inSample * diode_Divisor) - 1.0f));
         
         //SoftClipping
         inSample = m_PiDivisor * std::atan(m_Factor.getNextValue() * inSample);

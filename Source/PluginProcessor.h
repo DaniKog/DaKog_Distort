@@ -78,6 +78,7 @@ private:
 
     //Internal Parameters
     juce::SmoothedValue<float> m_InputGain = 0;
+    juce::SmoothedValue<float> m_SineMix = 50;
     juce::SmoothedValue<float> m_WetGain = 0;
     juce::SmoothedValue<float> m_Mix = 50;
     juce::SmoothedValue<float> m_OutputGain = 0;

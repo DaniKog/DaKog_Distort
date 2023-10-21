@@ -26,8 +26,8 @@ const juce::String HiPassFilterCutOffName = "HiPassCutOff";
 const juce::String SineFrequencyID = "SINEFREQ";
 const juce::String SineFrequencyName = "Frequency";
 
-const juce::String SineGainID = "SINEGAIN";
-const juce::String SineGainName = "SineGain";
+const juce::String SineMixID = "SINEMIX";
+const juce::String SineMixName = "SineMix";
 
 const juce::String SineToggleID = "SINETOGGLE";
 const juce::String SineToggleName = "SineToggle";

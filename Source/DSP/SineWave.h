@@ -30,7 +30,7 @@ public:
 
         m_CurrentTime += m_Period;
 
-        return sample * m_SinWaveGain.getNextValue();
+        return sample;
     }
 
     void PreprareToPlay(double sampleRate);
@@ -41,7 +41,7 @@ public:
 private:
 
     juce::SmoothedValue<float> m_Frequency = 2200.f;
-    juce::SmoothedValue<float> m_SinWaveGain = 0.5f;
+    juce::SmoothedValue<float> m_SinWaveGain = 1.0f; //Unsued at the moment as moved to a Dry Wet approach for the SineWave
 
     double m_Period = 0.0f;
     double m_CurrentTime = 0.0f;

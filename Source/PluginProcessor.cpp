@@ -36,7 +36,7 @@ DaKog_DistortAudioProcessor::DaKog_DistortAudioProcessor()
 
     //SineWave
     m_ParametersTreeState.addParameterListener(SineFrequencyID, this);
-    m_ParametersTreeState.addParameterListener(SineGainID, this);
+    m_ParametersTreeState.addParameterListener(SineMixID, this);
     m_ParametersTreeState.addParameterListener(SineToggleID, this);
 
     //Distortion
@@ -57,7 +57,7 @@ DaKog_DistortAudioProcessor::~DaKog_DistortAudioProcessor()
 
     //SineWave
     m_ParametersTreeState.removeParameterListener(SineFrequencyID, this);
-    m_ParametersTreeState.removeParameterListener(SineGainID, this);
+    m_ParametersTreeState.removeParameterListener(SineMixID, this);
     m_ParametersTreeState.removeParameterListener(SineToggleID, this);
 
     //Distortion
@@ -87,9 +87,10 @@ void DaKog_DistortAudioProcessor::parameterChanged(const juce::String& parameter
         m_DistortionDSP.SetFactor(m_ParametersTreeState.getRawParameterValue(ClipFactorID)->load());
     //SineWave
     else if (parameterID == SineFrequencyID 
-        || parameterID == SineGainID 
         || parameterID == SineToggleID)
         UpdateSineWaves(parameterID);
+    else if (parameterID == SineMixID)
+        m_SineMix = m_ParametersTreeState.getRawParameterValue(SineMixID)->load();
     //Output
     else if (parameterID == WetGainID)
         m_WetGain = m_ParametersTreeState.getRawParameterValue(WetGainID)->load();
@@ -106,13 +107,6 @@ void DaKog_DistortAudioProcessor::UpdateSineWaves(const juce::String& parameterI
         for (int i = 0; i < getTotalNumOutputChannels(); ++i)
         {
             m_SineWaves[i].SetFrequency(m_ParametersTreeState.getRawParameterValue(SineFrequencyID)->load());
-        }
-    }
-    else if (parameterID == SineGainID)
-    {
-        for (int i = 0; i < getTotalNumOutputChannels(); ++i)
-        {
-            m_SineWaves[i].SetSineGain(juce::Decibels::decibelsToGain(m_ParametersTreeState.getRawParameterValue(SineGainID)->load()));
         }
     }
     else if (parameterID == SineToggleID)
@@ -323,7 +317,10 @@ void DaKog_DistortAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer
             //Sine Wave Generator
             if (m_ToggleSineWave)
             {
+                float sineDrySample = inSample;
                 inSample = inSample * m_SineWaves[channel].getNextSample();
+                float sineMixVlaue = m_SineMix.getNextValue() * 0.01f;
+                inSample = (sineDrySample * (1.0f - sineMixVlaue)) + (inSample * sineMixVlaue);
             }
 
             //Safety Hardclip
@@ -376,18 +373,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
     juce::NormalisableRange<float> inputdbGainRange = makeRange::withCentre(-96, 6, -9, false);
     juce::NormalisableRange<float> outputdbGainRange = makeRange::withCentre(-96, 0, -15, false);
-    juce::NormalisableRange<float> frequencyRange = makeRange::withCentre(20.f, 20000.f, 1000.f, false);
-    juce::NormalisableRange<float> filterRange = makeRange::withCentre(20.f, 20000.f, 1000.f, true);
+    juce::NormalisableRange<float> frequencyRange = makeRange::withCentre(20.f, 20000.f, 1000.f, true);
 
     auto gainAtributes = juce::AudioParameterFloatAttributes()
         .withStringFromValueFunction([](float value, int) { return juce::String(value, 1); })
         .withValueFromStringFunction([](const juce::String& text) { return text.getFloatValue(); });
 
     auto frequencyAtributes = juce::AudioParameterFloatAttributes()
-        .withStringFromValueFunction([](float value, int) { return juce::String(value, 2); })
-        .withValueFromStringFunction([](const juce::String& text) { return text.getFloatValue(); });
-
-    auto filterAtributes = juce::AudioParameterFloatAttributes()
         .withStringFromValueFunction([](float value, int) { return juce::String(value, 0); })
         .withValueFromStringFunction([](const juce::String& text) { return text.getFloatValue(); });
 
@@ -398,10 +390,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(SineFrequencyID, SineFrequencyName, frequencyRange, 432.f, frequencyAtributes));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(SineGainID, SineGainName, inputdbGainRange, 0.0f, gainAtributes));
+    parameters.add(std::make_unique<juce::AudioParameterInt>(SineMixID, SineMixName, 0, 100, 50));
     //Filters
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(LoPassFilterCutOffID, LoPassFilterCutOffName, filterRange, 20000.f, filterAtributes));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(HiPassFilterCutOffID, HiPassFilterCutOffName, filterRange, 20.f, filterAtributes));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(LoPassFilterCutOffID, LoPassFilterCutOffName, frequencyRange, 20000.f, frequencyAtributes));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(HiPassFilterCutOffID, HiPassFilterCutOffName, frequencyRange, 20.f, frequencyAtributes));
     //Output
     parameters.add(std::make_unique<juce::AudioParameterFloat>(WetGainID, WetGainName, outputdbGainRange, 0.0f, gainAtributes));
     parameters.add(std::make_unique<juce::AudioParameterInt>(MixID, MixName, 0, 100, 50));

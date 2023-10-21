@@ -37,7 +37,7 @@ public:
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_DriveSliderValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_ClippingFactorValue;
      //SineWave
-     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineGainValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineMixValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_SineToggleValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineFrequencyValue;
      //Filter

@@ -50,7 +50,7 @@ void SineWave<SampleType>::Reset()
     m_Frequency.setTargetValue(220.0f);
 
     m_SinWaveGain.reset(m_SampleRate, 0.02f);
-    m_SinWaveGain.setTargetValue(0.5f);
+    m_SinWaveGain.setTargetValue(1.0f);
 
     m_Period =  0.0f;
     m_CurrentTime = 0.0f;

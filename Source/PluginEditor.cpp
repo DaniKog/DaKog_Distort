@@ -29,7 +29,7 @@ DaKog_DistortAudioProcessorEditor::DaKog_DistortAudioProcessorEditor (DaKog_Dist
     m_DriveSliderValue = m_GUI->AttachAndSetupSlider(DriveID, audioProcessor.m_ParametersTreeState);
     m_ClippingFactorValue = m_GUI->AttachAndSetupSlider(ClipFactorID, audioProcessor.m_ParametersTreeState);
     //SineWave
-    m_SineGainValue = m_GUI->AttachAndSetupSlider(SineGainID, audioProcessor.m_ParametersTreeState);
+    m_SineMixValue = m_GUI->AttachAndSetupSlider(SineMixID, audioProcessor.m_ParametersTreeState);
     m_SineToggleValue = m_GUI->AttachAndSetupButton(SineToggleID, audioProcessor.m_ParametersTreeState);
     m_SineFrequencyValue = m_GUI->AttachAndSetupSlider(SineFrequencyID, audioProcessor.m_ParametersTreeState);
     //Filter

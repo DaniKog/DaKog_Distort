@@ -129,11 +129,11 @@ private:
     std::unique_ptr<DaKog_VerticalSlider> m_OutPut;
     std::unique_ptr<DaKog_RotorSlider> m_LoPassFilterRotor;
     std::unique_ptr<DaKog_RotorSlider> m_HighPassFilterRotor;
-    std::unique_ptr<juce::Slider> m_SineWaveGain;
+    std::unique_ptr<juce::Slider> m_SineWaveMix;
     std::unique_ptr<juce::ToggleButton> m_SineToggle;
     std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
     std::unique_ptr<juce::Label> m_Version;
-    std::unique_ptr<juce::Label> m_SineGain;
+    std::unique_ptr<juce::Label> m_SineMix;
     juce::Image cachedImage__800600_backGround_png_1;
     juce::Image cachedImage_blackSquare_png_2;
     juce::Image cachedImage_title800_png_3;

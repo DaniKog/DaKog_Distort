@@ -109,16 +109,16 @@ GUI::GUI ()
     m_HighPassFilterRotor->setExplicitFocusOrder (1);
     m_HighPassFilterRotor->setBounds (264, 448, 160, 144);
 
-    m_SineWaveGain.reset (new juce::Slider ("SineWaveGain"));
-    addAndMakeVisible (m_SineWaveGain.get());
-    m_SineWaveGain->setRange (0, 1, 0.01);
-    m_SineWaveGain->setSliderStyle (juce::Slider::LinearVertical);
-    m_SineWaveGain->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
-    m_SineWaveGain->setColour (juce::Slider::backgroundColourId, juce::Colour (0xff6d6d6d));
-    m_SineWaveGain->setColour (juce::Slider::thumbColourId, juce::Colours::white);
-    m_SineWaveGain->setColour (juce::Slider::trackColourId, juce::Colour (0xffc9c9c9));
+    m_SineWaveMix.reset (new juce::Slider ("SineWaveMix"));
+    addAndMakeVisible (m_SineWaveMix.get());
+    m_SineWaveMix->setRange (0, 1, 0.01);
+    m_SineWaveMix->setSliderStyle (juce::Slider::LinearVertical);
+    m_SineWaveMix->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
+    m_SineWaveMix->setColour (juce::Slider::backgroundColourId, juce::Colour (0xff6d6d6d));
+    m_SineWaveMix->setColour (juce::Slider::thumbColourId, juce::Colours::white);
+    m_SineWaveMix->setColour (juce::Slider::trackColourId, juce::Colour (0xffc9c9c9));
 
-    m_SineWaveGain->setBounds (144, 296, 50, 128);
+    m_SineWaveMix->setBounds (144, 296, 50, 128);
 
     m_SineToggle.reset (new juce::ToggleButton ("SineToggle"));
     addAndMakeVisible (m_SineToggle.get());
@@ -142,16 +142,16 @@ GUI::GUI ()
 
     m_Version->setBounds (480, 0, 120, 24);
 
-    m_SineGain.reset (new juce::Label ("SineGain",
-                                       TRANS ("SineGain")));
-    addAndMakeVisible (m_SineGain.get());
-    m_SineGain->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    m_SineGain->setJustificationType (juce::Justification::centred);
-    m_SineGain->setEditable (false, false, false);
-    m_SineGain->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    m_SineGain->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+    m_SineMix.reset (new juce::Label ("SineMix",
+                                      TRANS ("SineMix")));
+    addAndMakeVisible (m_SineMix.get());
+    m_SineMix->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    m_SineMix->setJustificationType (juce::Justification::centred);
+    m_SineMix->setEditable (false, false, false);
+    m_SineMix->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    m_SineMix->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    m_SineGain->setBounds (136, 280, 72, 24);
+    m_SineMix->setBounds (136, 280, 72, 24);
 
     cachedImage__800600_backGround_png_1 = juce::ImageCache::getFromMemory (_800600_backGround_png, _800600_backGround_pngSize);
     cachedImage_blackSquare_png_2 = juce::ImageCache::getFromMemory (blackSquare_png, blackSquare_pngSize);
@@ -204,11 +204,11 @@ GUI::~GUI()
     m_OutPut = nullptr;
     m_LoPassFilterRotor = nullptr;
     m_HighPassFilterRotor = nullptr;
-    m_SineWaveGain = nullptr;
+    m_SineWaveMix = nullptr;
     m_SineToggle = nullptr;
     m_InputSlider = nullptr;
     m_Version = nullptr;
-    m_SineGain = nullptr;
+    m_SineMix = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -322,10 +322,10 @@ std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> GUI::Attac
         slider->setTextValueSuffix("Hz");
     }
 
-    else if (parameterID == SineGainID)
+    else if (parameterID == SineMixID)
     {
-        slider = m_SineWaveGain.get();
-        slider->setTextValueSuffix("dB");
+        slider = m_SineWaveMix.get();
+        slider->setTextValueSuffix("%");
     }
 
     //Output
@@ -447,7 +447,7 @@ BEGIN_JUCER_METADATA
   <JUCERCOMP name="HighPassFilterRotor" id="2e6da0299a52fac0" memberName="m_HighPassFilterRotor"
              virtualName="DaKog_RotorSlider" explicitFocusOrder="1" pos="264 448 160 144"
              sourceFile="DaKog_RotorSlider.cpp" constructorParams=""/>
-  <SLIDER name="SineWaveGain" id="e3904d0d06b55f70" memberName="m_SineWaveGain"
+  <SLIDER name="SineWaveMix" id="e3904d0d06b55f70" memberName="m_SineWaveMix"
           virtualName="" explicitFocusOrder="0" pos="144 296 50 128" bkgcol="ff6d6d6d"
           thumbcol="ffffffff" trackcol="ffc9c9c9" min="0.0" max="1.0" int="0.01"
           style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
@@ -464,9 +464,9 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="v1.0" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="10.0"
          kerning="0.0" bold="0" italic="0" justification="34"/>
-  <LABEL name="SineGain" id="aa2ed05add77d9ed" memberName="m_SineGain"
-         virtualName="" explicitFocusOrder="0" pos="136 280 72 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="SineGain" editableSingleClick="0" editableDoubleClick="0"
+  <LABEL name="SineMix" id="aa2ed05add77d9ed" memberName="m_SineMix" virtualName=""
+         explicitFocusOrder="0" pos="136 280 72 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="SineMix" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
 </JUCER_COMPONENT>

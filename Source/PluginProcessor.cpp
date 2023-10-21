@@ -376,22 +376,36 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
     juce::NormalisableRange<float> inputdbGainRange = makeRange::withCentre(-96, 6, -9, false);
     juce::NormalisableRange<float> outputdbGainRange = makeRange::withCentre(-96, 0, -15, false);
-    parameters.add(std::make_unique<juce::AudioParameterInt>(InputID, InputName, inputdbGainRange, 0));
+    juce::NormalisableRange<float> frequencyRange = makeRange::withCentre(20.f, 20000.f, 1000.f, false);
+    juce::NormalisableRange<float> filterRange = makeRange::withCentre(20.f, 20000.f, 1000.f, true);
+
+    auto gainAtributes = juce::AudioParameterFloatAttributes()
+        .withStringFromValueFunction([](float value, int) { return juce::String(value, 1); })
+        .withValueFromStringFunction([](const juce::String& text) { return text.getFloatValue(); });
+
+    auto frequencyAtributes = juce::AudioParameterFloatAttributes()
+        .withStringFromValueFunction([](float value, int) { return juce::String(value, 2); })
+        .withValueFromStringFunction([](const juce::String& text) { return text.getFloatValue(); });
+
+    auto filterAtributes = juce::AudioParameterFloatAttributes()
+        .withStringFromValueFunction([](float value, int) { return juce::String(value, 0); })
+        .withValueFromStringFunction([](const juce::String& text) { return text.getFloatValue(); });
+
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(InputID, InputName, inputdbGainRange, 0.0f, gainAtributes));
     //Distortion
     parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName,1.f,150.f,1.0f));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(ClipFactorID, ClipFactorName,0.1f,30.f,1.f));
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));
-    parameters.add(std::make_unique<juce::AudioParameterInt>(SineFrequencyID, SineFrequencyName, makeRange::withCentre(20, 20000, 1000,true), 432));
-    parameters.add(std::make_unique<juce::AudioParameterInt>(SineGainID, SineGainName, inputdbGainRange, 0));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(SineFrequencyID, SineFrequencyName, frequencyRange, 432.f, frequencyAtributes));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(SineGainID, SineGainName, inputdbGainRange, 0.0f, gainAtributes));
     //Filters
-    parameters.add(std::make_unique<juce::AudioParameterInt>(LoPassFilterCutOffID, LoPassFilterCutOffName, makeRange::withCentre(20,20000,1000, true), 20000));
-    parameters.add(std::make_unique<juce::AudioParameterInt>(HiPassFilterCutOffID, HiPassFilterCutOffName, makeRange::withCentre(20,20000,1000, true), 20));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(LoPassFilterCutOffID, LoPassFilterCutOffName, filterRange, 20000.f, filterAtributes));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(HiPassFilterCutOffID, HiPassFilterCutOffName, filterRange, 20.f, filterAtributes));
     //Output
-    parameters.add(std::make_unique<juce::AudioParameterInt>(WetGainID, WetGainName, outputdbGainRange, 0));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(WetGainID, WetGainName, outputdbGainRange, 0.0f, gainAtributes));
     parameters.add(std::make_unique<juce::AudioParameterInt>(MixID, MixName, 0, 100, 50));
-    parameters.add(std::make_unique<juce::AudioParameterInt>(OutputGainID, OutputGainName, outputdbGainRange, 0));
-    
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(OutputGainID, OutputGainName, outputdbGainRange, 0.0f, gainAtributes));
 
     return parameters;
 }

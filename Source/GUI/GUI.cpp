@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 7.0.2
+  Created with Projucer version: 7.0.8
 
   ------------------------------------------------------------------------------
 
@@ -34,25 +34,25 @@ GUI::GUI ()
     //[/Constructor_pre]
 
     m_OutputMixGroup.reset (new juce::GroupComponent ("OutputMixGroup",
-                                                      TRANS("OutputMix")));
+                                                      TRANS ("OutputMix")));
     addAndMakeVisible (m_OutputMixGroup.get());
 
     m_OutputMixGroup->setBounds (424, 96, 176, 504);
 
     m_InputMixGroup.reset (new juce::GroupComponent ("InputMix",
-                                                     TRANS("InputMix")));
+                                                     TRANS ("InputMix")));
     addAndMakeVisible (m_InputMixGroup.get());
 
     m_InputMixGroup->setBounds (0, 96, 80, 504);
 
     m_DriveGroup.reset (new juce::GroupComponent ("DriveGroup",
-                                                  TRANS("Distortion")));
+                                                  TRANS ("Distortion")));
     addAndMakeVisible (m_DriveGroup.get());
 
     m_DriveGroup->setBounds (80, 96, 344, 168);
 
     m_SineWaveGroup.reset (new juce::GroupComponent ("SineWaveGroup",
-                                                     TRANS("SineWave")));
+                                                     TRANS ("SineWave")));
     addAndMakeVisible (m_SineWaveGroup.get());
 
     m_SineWaveGroup->setBounds (80, 264, 344, 168);
@@ -79,7 +79,7 @@ GUI::GUI ()
     m_SineFrequency->setBounds (264, 344, 136, 80);
 
     m_FilterGroup.reset (new juce::GroupComponent ("FilterGroup",
-                                                   TRANS("Filter")));
+                                                   TRANS ("Filter")));
     addAndMakeVisible (m_FilterGroup.get());
 
     m_FilterGroup->setBounds (80, 432, 344, 168);
@@ -132,7 +132,7 @@ GUI::GUI ()
     m_InputSlider->setBounds (8, 112, 64, 480);
 
     m_Version.reset (new juce::Label ("Version",
-                                      TRANS("v1.0")));
+                                      TRANS ("v1.0")));
     addAndMakeVisible (m_Version.get());
     m_Version->setFont (juce::Font (10.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     m_Version->setJustificationType (juce::Justification::centredRight);
@@ -143,7 +143,7 @@ GUI::GUI ()
     m_Version->setBounds (480, 0, 120, 24);
 
     m_SineGain.reset (new juce::Label ("SineGain",
-                                       TRANS("SineGain")));
+                                       TRANS ("SineGain")));
     addAndMakeVisible (m_SineGain.get());
     m_SineGain->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     m_SineGain->setJustificationType (juce::Justification::centred);

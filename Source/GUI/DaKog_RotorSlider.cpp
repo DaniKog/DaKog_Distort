@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 7.0.2
+  Created with Projucer version: 7.0.8
 
   ------------------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     //[/Constructor_pre]
 
     m_RotorLabel.reset (new juce::Label ("RotorLabel",
-                                         TRANS("label text")));
+                                         TRANS ("label text")));
     addAndMakeVisible (m_RotorLabel.get());
     m_RotorLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     m_RotorLabel->setJustificationType (juce::Justification::centred);
@@ -57,7 +57,7 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_DaKogRotorSilder->setBounds (16, 24, 104, 112);
 
     m_LeftLabel.reset (new juce::Label ("LeftLabel",
-                                        TRANS("0")));
+                                        TRANS ("0")));
     addAndMakeVisible (m_LeftLabel.get());
     m_LeftLabel->setFont (juce::Font ("Calibri", 19.20f, juce::Font::plain).withTypefaceStyle ("Regular"));
     m_LeftLabel->setJustificationType (juce::Justification::centredRight);
@@ -68,7 +68,7 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_LeftLabel->setBounds (-8, 96, 48, 16);
 
     m_RightLabel.reset (new juce::Label ("RightLabel",
-                                         TRANS("11000")));
+                                         TRANS ("11000")));
     addAndMakeVisible (m_RightLabel.get());
     m_RightLabel->setFont (juce::Font ("Calibri", 19.20f, juce::Font::plain).withTypefaceStyle ("Regular"));
     m_RightLabel->setJustificationType (juce::Justification::centredLeft);

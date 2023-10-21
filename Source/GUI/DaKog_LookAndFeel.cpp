@@ -178,13 +178,13 @@ void DaKog_LookandFeel::drawLinearSlider(juce::Graphics& g, int x, int y, int wi
             {
                 float imgX = maxPoint.getX() - (cachedImage_horizontalFader18_png_1.getWidth() * 0.5f);
                 float imgY = maxPoint.getY() - (cachedImage_horizontalFader18_png_1.getHeight() * 0.5f);
-                g.drawImageAt(cachedImage_horizontalFader18_png_1, imgX, imgY, false);
+                g.drawImageAt(cachedImage_horizontalFader18_png_1, int(imgX), int(imgY), false);
             }
             else
             {
                 float imgX = maxPoint.getX() - (cachedImage_fader18_png_1.getWidth() * 0.5f);
                 float imgY = maxPoint.getY() - (cachedImage_fader18_png_1.getHeight() * 0.5f);
-                g.drawImageAt(cachedImage_fader18_png_1, imgX, imgY, false);
+                g.drawImageAt(cachedImage_fader18_png_1, int(imgX), int(imgY), false);
             }
         }
 

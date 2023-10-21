@@ -373,6 +373,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
     juce::NormalisableRange<float> inputdbGainRange = makeRange::withCentre(-96, 6, -9, false);
     juce::NormalisableRange<float> outputdbGainRange = makeRange::withCentre(-96, 0, -15, false);
+    juce::NormalisableRange<float> driveRange = makeRange::withCentre(1, 150, 20, false);
     juce::NormalisableRange<float> frequencyRange = makeRange::withCentre(20.f, 20000.f, 1000.f, true);
 
     auto gainAtributes = juce::AudioParameterFloatAttributes()
@@ -385,7 +386,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
 
     parameters.add(std::make_unique<juce::AudioParameterFloat>(InputID, InputName, inputdbGainRange, 0.0f, gainAtributes));
     //Distortion
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName,1.f,150.f,1.0f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName, driveRange, 1.0f, gainAtributes));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(ClipFactorID, ClipFactorName,0.1f,30.f,1.f));
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));

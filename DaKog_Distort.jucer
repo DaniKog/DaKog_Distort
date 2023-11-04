@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="KogWorks"
               companyWebsite="www.danikogan.com" pluginFormats="buildVST3"
               pluginVST3Category="Distortion,Fx" cppLanguageStandard="17" companyEmail="dani.kogandk@gmail.com"
-              version="1.1" pluginAAXCategory="64,8192">
+              version="1.2" pluginAAXCategory="64,8192">
   <MAINGROUP id="onTKsJ" name="DaKog_Distort">
     <GROUP id="{9E50EAA1-846B-0338-9BF2-7021677BC841}" name="Source">
       <GROUP id="{A7742256-7F2B-7790-8CDA-49C101CB0943}" name="GUI">

@@ -84,6 +84,7 @@ private:
     juce::SmoothedValue<float> m_Mix = 50;
     juce::SmoothedValue<float> m_OutputGain = 0;
     bool m_ToggleSineWave = false;
+    bool m_ToggleSineDrive = false;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DaKog_DistortAudioProcessor)

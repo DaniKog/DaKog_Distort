@@ -33,6 +33,7 @@ DaKog_DistortAudioProcessorEditor::DaKog_DistortAudioProcessorEditor (DaKog_Dist
     m_SineMixValue = m_GUI->AttachAndSetupSlider(SineMixID, audioProcessor.m_ParametersTreeState);
     m_SineToggleValue = m_GUI->AttachAndSetupButton(SineToggleID, audioProcessor.m_ParametersTreeState);
     m_SineFrequencyValue = m_GUI->AttachAndSetupSlider(SineFrequencyID, audioProcessor.m_ParametersTreeState);
+    m_SineDriveValue = m_GUI->AttachAndSetupButton(SineDriveToggleID, audioProcessor.m_ParametersTreeState);
     //Filter
     m_LoCutFilterValue = m_GUI->AttachAndSetupSlider(LoPassFilterCutOffID, audioProcessor.m_ParametersTreeState);
     m_HiCutFilterValue = m_GUI->AttachAndSetupSlider(HiPassFilterCutOffID, audioProcessor.m_ParametersTreeState);

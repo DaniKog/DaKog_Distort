@@ -56,16 +56,6 @@ private:
     static const int rotor_pngSize;
     juce::Image cachedImage_Rotor_png_1;
 
-    static const char* button_middle_off_126_png;
-    static const int button_middle_off_126_pngSize;
-    juce::Image cachedImage_button_middle_off_126_png_1;
-    
-
-    static const char* button_middle_on_126_png;
-    static const int button_middle_on_126_pngSize;
-    juce::Image cachedImage_button_middle_on_126_png_2;
-    
-
     static const char* fader18_png;
     static const int fader18_pngSize;
     juce::Image cachedImage_fader18_png_1;
@@ -73,6 +63,14 @@ private:
     static const char* horizontalFader18_png;
     static const int horizontalFader18_pngSize;
     juce::Image cachedImage_horizontalFader18_png_1;
+
+    static const char* button_middle_off_80_png;
+    static const int button_middle_off_80_pngSize;
+    juce::Image cachedImage_button_middle_off_80_png_6;
+    
+    static const char* button_middle_on_80_png;
+    static const int button_middle_on_80_pngSize;
+    juce::Image cachedImage_button_middle_on_80_png_7;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DaKog_LookandFeel)

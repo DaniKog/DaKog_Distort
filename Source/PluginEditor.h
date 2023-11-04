@@ -41,6 +41,7 @@ public:
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineMixValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_SineToggleValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineFrequencyValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_SineDriveValue;
      //Filter
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_LoCutFilterValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_HiCutFilterValue;

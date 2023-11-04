@@ -122,9 +122,10 @@ GUI::GUI ()
 
     m_SineToggle.reset (new juce::ToggleButton ("SineToggle"));
     addAndMakeVisible (m_SineToggle.get());
+    m_SineToggle->setButtonText (TRANS ("On\\Off"));
     m_SineToggle->setColour (juce::ToggleButton::textColourId, juce::Colours::black);
 
-    m_SineToggle->setBounds (264, 288, 126, 66);
+    m_SineToggle->setBounds (240, 296, 88, 64);
 
     m_InputSlider.reset (new DaKog_VerticalSlider());
     addAndMakeVisible (m_InputSlider.get());
@@ -158,7 +159,14 @@ GUI::GUI ()
     m_DriveGainMatch->setButtonText (TRANS ("Gain Match"));
     m_DriveGainMatch->setColour (juce::ToggleButton::textColourId, juce::Colours::black);
 
-    m_DriveGainMatch->setBounds (224, 104, 56, 66);
+    m_DriveGainMatch->setBounds (208, 112, 88, 64);
+
+    m_SineDrive.reset (new juce::ToggleButton ("SineDrive"));
+    addAndMakeVisible (m_SineDrive.get());
+    m_SineDrive->setButtonText (TRANS ("Drive"));
+    m_SineDrive->setColour (juce::ToggleButton::textColourId, juce::Colours::black);
+
+    m_SineDrive->setBounds (328, 296, 88, 64);
 
     cachedImage__800600_backGround_png_1 = juce::ImageCache::getFromMemory (_800600_backGround_png, _800600_backGround_pngSize);
     cachedImage_blackSquare_png_2 = juce::ImageCache::getFromMemory (blackSquare_png, blackSquare_pngSize);
@@ -217,6 +225,7 @@ GUI::~GUI()
     m_Version = nullptr;
     m_SineMix = nullptr;
     m_DriveGainMatch = nullptr;
+    m_SineDrive = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -385,12 +394,20 @@ std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> GUI::Attac
     if (parameterID == SineToggleID)
     {
         m_SineToggle->setLookAndFeel(&m_LookAndFeel);
+        m_SineToggle->setTooltip("Toggles a sine wave that is added on top of the signal");
         return std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(parametersTreeState, parameterID, *m_SineToggle.get());
     }
     else  if (parameterID == DriveGainMatchID)
     {
         m_DriveGainMatch->setLookAndFeel(&m_LookAndFeel);
+        m_DriveGainMatch->setTooltip("Automatically adjusts the wet gain to avoid huge gain addition when driving the signal");
         return std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(parametersTreeState, parameterID, *m_DriveGainMatch.get());
+    }
+    else  if (parameterID == SineDriveToggleID)
+    {
+        m_SineDrive->setLookAndFeel(&m_LookAndFeel);
+        m_SineDrive->setTooltip("Changes where the Sinewave is added on the signal. Before the drive or after the drive");
+        return std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(parametersTreeState, parameterID, *m_SineDrive.get());
     }
     return nullptr;
 }
@@ -464,9 +481,9 @@ BEGIN_JUCER_METADATA
           style="LinearVertical" textBoxPos="TextBoxBelow" textBoxEditable="1"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>
   <TOGGLEBUTTON name="SineToggle" id="8b914ec1052c2b02" memberName="m_SineToggle"
-                virtualName="" explicitFocusOrder="0" pos="264 288 126 66" txtcol="ff000000"
-                buttonText="SineToggle" connectedEdges="0" needsCallback="0"
-                radioGroupId="0" state="0"/>
+                virtualName="" explicitFocusOrder="0" pos="240 296 88 64" txtcol="ff000000"
+                buttonText="On\Off" connectedEdges="0" needsCallback="0" radioGroupId="0"
+                state="0"/>
   <JUCERCOMP name="InputSlider" id="6702ec67b51a87bd" memberName="m_InputSlider"
              virtualName="" explicitFocusOrder="1" pos="8 112 64 480" sourceFile="DaKog_VerticalSlider.cpp"
              constructorParams=""/>
@@ -481,9 +498,13 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
   <TOGGLEBUTTON name="DriveGainMatch" id="43da6fd22793eec9" memberName="m_DriveGainMatch"
-                virtualName="" explicitFocusOrder="0" pos="224 104 56 66" txtcol="ff000000"
+                virtualName="" explicitFocusOrder="0" pos="208 112 88 64" txtcol="ff000000"
                 buttonText="Gain Match" connectedEdges="0" needsCallback="0"
                 radioGroupId="0" state="0"/>
+  <TOGGLEBUTTON name="SineDrive" id="1e1a1f42b385c322" memberName="m_SineDrive"
+                virtualName="" explicitFocusOrder="0" pos="328 296 88 64" txtcol="ff000000"
+                buttonText="Drive" connectedEdges="0" needsCallback="0" radioGroupId="0"
+                state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

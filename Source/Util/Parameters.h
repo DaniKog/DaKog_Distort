@@ -32,6 +32,9 @@ const juce::String SineMixName = "SineMix";
 const juce::String SineToggleID = "SINETOGGLE";
 const juce::String SineToggleName = "SineToggle";
 
+const juce::String SineDriveToggleID = "SINEDRIVETOGGLE";
+const juce::String SineDriveToggleName = "SineDriveToggle";
+
 //Distortion
 const juce::String DriveID = "DRIVE";
 const juce::String DriveName = "Drive";

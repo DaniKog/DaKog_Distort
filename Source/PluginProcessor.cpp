@@ -14,7 +14,8 @@
 namespace
 {
     static const int s_ButterWorthFilterPole = 4;
-    static const float s_OutputDBReductionDrive = -28.f;
+    static const float s_OutputDBReductionDrive_1 = -16.f;
+    static const float s_OutputDBReductionDrive_2 = -3.f;
     static const float s_OutputDBReductionClip = -6.f;
 }
 
@@ -183,17 +184,23 @@ void DaKog_DistortAudioProcessor::MatchGain()
             float currentClipValue = m_ParametersTreeState.getRawParameterValue(ClipFactorID)->load();
             
             float driveDbChange = 0;
-            if (currentDriveValue < 101) // After 100 we only get 0.2db gain which should not be compensated
+            float clipRatioBasedOnDrive = 1;
+            if (currentDriveValue < 11) // Biggest gain boost happens in between 0-10db
             {
-                driveDbChange = driveParameter->convertTo0to1((currentDriveValue - 1)) * s_OutputDBReductionDrive; // at 1 db this should be 0
+                driveDbChange = (currentDriveValue - 1)* 0.1f * s_OutputDBReductionDrive_1; // at 1 db this should be 0
+                clipRatioBasedOnDrive = 3 - 2*((currentDriveValue - 1) * 0.1f) ;
+            }
+            else if (currentDriveValue < 101) // After 100 we only get 0.2db gain which should not be compensated and between 10-100 to lower the scale
+            {
+                driveDbChange = s_OutputDBReductionDrive_1 + driveParameter->convertTo0to1((currentDriveValue - 11)) * s_OutputDBReductionDrive_2; // at 1 db this should be 0
             }
             else
             {
-                driveDbChange = s_OutputDBReductionDrive; // at 1 db this should be 0
+                driveDbChange = s_OutputDBReductionDrive_1 + s_OutputDBReductionDrive_2; // past 100 we lower by 2x the drive reduction of 0-10
             }
 
             float clipDbChange = 0;
-            clipDbChange = clipParameter->convertTo0to1((currentClipValue - 1)) * s_OutputDBReductionClip; // at 1 db this should be 0
+            clipDbChange = clipParameter->convertTo0to1((currentClipValue - 1)) * s_OutputDBReductionClip * clipRatioBasedOnDrive;
 
             float newWetValue = clipDbChange + driveDbChange;
             juce::RangedAudioParameter* parameter = m_ParametersTreeState.getParameter(WetGainID);

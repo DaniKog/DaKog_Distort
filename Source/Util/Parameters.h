@@ -39,6 +39,9 @@ const juce::String DriveName = "Drive";
 const juce::String ClipFactorID = "CLIPFACTOR";
 const juce::String ClipFactorName = "ClipFactor";
 
+const juce::String DriveGainMatchID = "DRIVEGAINMATCH";
+const juce::String DriveGainMatchName = "DriveGainMatch";
+
 //Output
 const juce::String WetGainID = "WETGAIN";
 const juce::String WetGainName = "WetGain";

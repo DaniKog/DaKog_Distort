@@ -36,6 +36,7 @@ public:
      //Distortion
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_DriveSliderValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_ClippingFactorValue;
+     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_DriveGainMatchValue;
      //SineWave
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_SineMixValue;
      std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_SineToggleValue;

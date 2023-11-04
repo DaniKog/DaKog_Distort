@@ -134,6 +134,7 @@ private:
     std::unique_ptr<DaKog_VerticalSlider> m_InputSlider;
     std::unique_ptr<juce::Label> m_Version;
     std::unique_ptr<juce::Label> m_SineMix;
+    std::unique_ptr<juce::ToggleButton> m_DriveGainMatch;
     juce::Image cachedImage__800600_backGround_png_1;
     juce::Image cachedImage_blackSquare_png_2;
     juce::Image cachedImage_title800_png_3;

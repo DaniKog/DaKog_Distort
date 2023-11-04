@@ -14,6 +14,8 @@
 namespace
 {
     static const int s_ButterWorthFilterPole = 4;
+    static const float s_OutputDBReductionDrive = -24.f;
+    static const float s_OutputDBReductionClip = -9.f;
 }
 
 //==============================================================================
@@ -42,6 +44,7 @@ DaKog_DistortAudioProcessor::DaKog_DistortAudioProcessor()
     //Distortion
     m_ParametersTreeState.addParameterListener(DriveID,this);
     m_ParametersTreeState.addParameterListener(ClipFactorID,this);
+    m_ParametersTreeState.addParameterListener(DriveGainMatchID,this);
 
     //Output
     m_ParametersTreeState.addParameterListener(WetGainID,this);
@@ -82,9 +85,19 @@ void DaKog_DistortAudioProcessor::parameterChanged(const juce::String& parameter
         UpdateFilters(parameterID);
     //Distortion
     else if (parameterID == DriveID)
+    {//TODO Make this prettier
         m_DistortionDSP.SetDrive(m_ParametersTreeState.getRawParameterValue(DriveID)->load());
+        MatchGain();
+    }
     else if (parameterID == ClipFactorID)
+    {
         m_DistortionDSP.SetFactor(m_ParametersTreeState.getRawParameterValue(ClipFactorID)->load());
+        MatchGain();
+    }
+    else if (parameterID == DriveGainMatchID)
+    {
+        MatchGain();
+    }
     //SineWave
     else if (parameterID == SineFrequencyID 
         || parameterID == SineToggleID)
@@ -150,8 +163,36 @@ void DaKog_DistortAudioProcessor::UpdateParameters()
     m_DistortionDSP.SetDrive(m_ParametersTreeState.getRawParameterValue(DriveID)->load());
     m_DistortionDSP.SetFactor(m_ParametersTreeState.getRawParameterValue(ClipFactorID)->load());
 
-    m_DistortionDSP.SetFactor(m_ParametersTreeState.getRawParameterValue(ClipFactorID)->load());
     m_InputGain = m_ParametersTreeState.getRawParameterValue(InputID)->load();
+}
+
+void DaKog_DistortAudioProcessor::MatchGain()
+{
+        if (m_ParametersTreeState.getRawParameterValue(DriveGainMatchID)->load())
+        {
+            juce::RangedAudioParameter* driveParameter = m_ParametersTreeState.getParameter(DriveID);
+            float currentDriveValue = m_ParametersTreeState.getRawParameterValue(DriveID)->load();
+            juce::RangedAudioParameter* clipParameter = m_ParametersTreeState.getParameter(ClipFactorID);
+            float currentClipValue = m_ParametersTreeState.getRawParameterValue(ClipFactorID)->load();
+            
+            float driveDbChange = 0;
+            if (currentDriveValue < 101) // After 100 we only get 0.2db gain which should not be compensated
+            {
+                driveDbChange = driveParameter->convertTo0to1((currentDriveValue - 1)) * s_OutputDBReductionDrive; // at 1 db this should be 0
+            }
+            else
+            {
+                driveDbChange = s_OutputDBReductionDrive; // at 1 db this should be 0
+            }
+
+            float clipDbChange = 0;
+            clipDbChange = clipParameter->convertTo0to1((currentClipValue - 1)) * s_OutputDBReductionClip; // at 1 db this should be 0
+
+            float newWetValue = clipDbChange + driveDbChange;
+            juce::RangedAudioParameter* parameter = m_ParametersTreeState.getParameter(OutputGainID);
+            float normalizedValvue0to1 = parameter->convertTo0to1(newWetValue);
+            parameter->setValueNotifyingHost(normalizedValvue0to1);
+        }
 }
 
 //==============================================================================
@@ -388,6 +429,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     //Distortion
     parameters.add(std::make_unique<juce::AudioParameterFloat>(DriveID, DriveName, driveRange, 1.0f, gainAtributes));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(ClipFactorID, ClipFactorName,0.1f,30.f,1.f));
+    parameters.add(std::make_unique<juce::AudioParameterBool>(DriveGainMatchID, DriveGainMatchName, true));
     //SineWave
     parameters.add(std::make_unique<juce::AudioParameterBool>(SineToggleID, SineToggleName,false));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(SineFrequencyID, SineFrequencyName, frequencyRange, 432.f, frequencyAtributes));
@@ -400,6 +442,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout DaKog_DistortAudioProcessor:
     parameters.add(std::make_unique<juce::AudioParameterInt>(MixID, MixName, 0, 100, 50));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(OutputGainID, OutputGainName, outputdbGainRange, 0.0f, gainAtributes));
 
+    
     return parameters;
 }
 

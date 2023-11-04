@@ -67,6 +67,7 @@ private:
     juce::AudioProcessorValueTreeState::ParameterLayout SetupParameters();
     void parameterChanged(const juce::String& parameterID, float newValue) override;
     void UpdateParameters();
+    void MatchGain();
     void UpdateSineWaves(const juce::String& parameterID);
     void UpdateFilters(const juce::String& parameterID);
 

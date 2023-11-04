@@ -153,6 +153,13 @@ GUI::GUI ()
 
     m_SineMix->setBounds (136, 280, 72, 24);
 
+    m_DriveGainMatch.reset (new juce::ToggleButton ("DriveGainMatch"));
+    addAndMakeVisible (m_DriveGainMatch.get());
+    m_DriveGainMatch->setButtonText (TRANS ("Gain Match"));
+    m_DriveGainMatch->setColour (juce::ToggleButton::textColourId, juce::Colours::black);
+
+    m_DriveGainMatch->setBounds (224, 104, 56, 66);
+
     cachedImage__800600_backGround_png_1 = juce::ImageCache::getFromMemory (_800600_backGround_png, _800600_backGround_pngSize);
     cachedImage_blackSquare_png_2 = juce::ImageCache::getFromMemory (blackSquare_png, blackSquare_pngSize);
     cachedImage_title800_png_3 = juce::ImageCache::getFromMemory (title800_png, title800_pngSize);
@@ -209,6 +216,7 @@ GUI::~GUI()
     m_InputSlider = nullptr;
     m_Version = nullptr;
     m_SineMix = nullptr;
+    m_DriveGainMatch = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -379,8 +387,11 @@ std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> GUI::Attac
         m_SineToggle->setLookAndFeel(&m_LookAndFeel);
         return std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(parametersTreeState, parameterID, *m_SineToggle.get());
     }
-
-
+    else  if (parameterID == DriveGainMatchID)
+    {
+        m_DriveGainMatch->setLookAndFeel(&m_LookAndFeel);
+        return std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(parametersTreeState, parameterID, *m_DriveGainMatch.get());
+    }
     return nullptr;
 }
 //[/MiscUserCode]
@@ -469,6 +480,10 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="SineMix" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
+  <TOGGLEBUTTON name="DriveGainMatch" id="43da6fd22793eec9" memberName="m_DriveGainMatch"
+                virtualName="" explicitFocusOrder="0" pos="224 104 56 66" txtcol="ff000000"
+                buttonText="Gain Match" connectedEdges="0" needsCallback="0"
+                radioGroupId="0" state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

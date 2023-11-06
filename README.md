@@ -1,13 +1,15 @@
 # DaKog_Distort
 Experimental Soft<->Hard Diode Clip Distortion Plug-in
 <br />
-Check overview [video](https://youtu.be/uGx2PrfD_O8)
+Overview [Video](https://youtu.be/uGx2PrfD_O8)
+<br />
+Live Demo [Video](https://www.youtube.com/watch?v=hituBj3D0fo)
 <br />
 
 ![Screenshot](https://user-images.githubusercontent.com/12103063/202922684-402be326-502a-43aa-bc44-793bce421710.png)
 
 # How to Install
-1. Download Latest Version [Here](https://github.com/DaniKog/DaKog_Distort/tags)
+1. Download Latest Version [Here](https://github.com/DaniKog/DaKog_Distort/releases)
 2. Copy .vst3 file to the vst folder of your DAW (default C:\Program Files\Common Files\VST3)
 3. Run DAW and Distort away!
 # Signal Flow & Specs

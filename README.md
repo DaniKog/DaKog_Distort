@@ -6,7 +6,7 @@ Overview [Video](https://youtu.be/uGx2PrfD_O8)
 Live Demo [Video](https://www.youtube.com/watch?v=hituBj3D0fo)
 <br />
 
-![Screenshot](https://user-images.githubusercontent.com/12103063/202922684-402be326-502a-43aa-bc44-793bce421710.png)
+![image](https://github.com/DaniKog/DaKog_Distort/assets/12103063/e4cbbe41-c491-4cc3-86c9-5b9ad65ff858)
 
 # How to Install
 1. Download Latest Version [Here](https://github.com/DaniKog/DaKog_Distort/releases)

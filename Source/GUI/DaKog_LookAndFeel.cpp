@@ -11,7 +11,6 @@
 #include "DaKog_LookAndFeel.h"
 namespace
 {
-    static const int s_thumbExtendedSize = 16;
     static const int s_SliderThumbPadding = 4;
 };
 

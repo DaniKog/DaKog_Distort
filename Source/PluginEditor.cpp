@@ -15,8 +15,8 @@ DaKog_DistortAudioProcessorEditor::DaKog_DistortAudioProcessorEditor (DaKog_Dist
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     //Add Background 
-    m_GUI = new GUI();
-    addAndMakeVisible(m_GUI);
+    m_GUI = std::make_unique<GUI>();
+    addAndMakeVisible(m_GUI.get());
 
 
     // Make sure that before the constructor has finished, you've set the
@@ -42,11 +42,6 @@ DaKog_DistortAudioProcessorEditor::DaKog_DistortAudioProcessorEditor (DaKog_Dist
     m_MixValue = m_GUI->AttachAndSetupSlider(MixID, audioProcessor.m_ParametersTreeState);
     m_OutputValue = m_GUI->AttachAndSetupSlider(OutputGainID, audioProcessor.m_ParametersTreeState);
     
-}
-
-DaKog_DistortAudioProcessorEditor::~DaKog_DistortAudioProcessorEditor()
-{
-    delete m_GUI;
 }
 
 void DaKog_DistortAudioProcessorEditor::resized()

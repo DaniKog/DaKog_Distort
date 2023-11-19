@@ -59,7 +59,7 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_LeftLabel.reset (new juce::Label ("LeftLabel",
                                         TRANS ("0")));
     addAndMakeVisible (m_LeftLabel.get());
-    m_LeftLabel->setFont (juce::Font ("Calibri", 19.20f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    m_LeftLabel->setFont (juce::Font ("Calibri", 15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     m_LeftLabel->setJustificationType (juce::Justification::centredRight);
     m_LeftLabel->setEditable (false, false, false);
     m_LeftLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
@@ -70,7 +70,7 @@ DaKog_RotorSlider::DaKog_RotorSlider ()
     m_RightLabel.reset (new juce::Label ("RightLabel",
                                          TRANS ("11000")));
     addAndMakeVisible (m_RightLabel.get());
-    m_RightLabel->setFont (juce::Font ("Calibri", 19.20f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    m_RightLabel->setFont (juce::Font ("Calibri", 15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     m_RightLabel->setJustificationType (juce::Justification::centredLeft);
     m_RightLabel->setEditable (false, false, false);
     m_RightLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
@@ -158,12 +158,12 @@ BEGIN_JUCER_METADATA
   <LABEL name="LeftLabel" id="65e4b92ab4a78c89" memberName="m_LeftLabel"
          virtualName="" explicitFocusOrder="0" pos="-8 96 48 16" edTextCol="ff000000"
          edBkgCol="0" labelText="0" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Calibri" fontsize="19.2" kerning="0.0"
+         focusDiscardsChanges="0" fontname="Calibri" fontsize="15.0" kerning="0.0"
          bold="0" italic="0" justification="34"/>
   <LABEL name="RightLabel" id="dd847a6f3f0520e8" memberName="m_RightLabel"
          virtualName="" explicitFocusOrder="0" pos="88 96 64 16" edTextCol="ff000000"
          edBkgCol="0" labelText="11000" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Calibri" fontsize="19.2" kerning="0.0"
+         focusDiscardsChanges="0" fontname="Calibri" fontsize="15.0" kerning="0.0"
          bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 

@@ -20,7 +20,6 @@ class DaKog_DistortAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
     DaKog_DistortAudioProcessorEditor (DaKog_DistortAudioProcessor&);
-    ~DaKog_DistortAudioProcessorEditor() override;
 
     //==============================================================================
     //void paint (juce::Graphics&) override;
@@ -29,7 +28,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     DaKog_DistortAudioProcessor& audioProcessor;
-    GUI* m_GUI;
+    std::unique_ptr<GUI> m_GUI;
 public:
      //Input
      std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_InputGainSliderValue;
